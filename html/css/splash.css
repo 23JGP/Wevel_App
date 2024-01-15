@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-style: normal;
+    font-weight: normal;
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+}
+
+body {
+    width: 360px;
+    height: 800px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ED4B62;
+    justify-content: space-between;
+}
+
+#logo {
+    width: 133px;
+    margin-top: 251px;
+}
+
+#airplane {
+    width: 360px;
+    position: fixed;
+    bottom: 0;
+}
+
+#title {
+    top: 644px;
+    font-size: 24px;
+    color: #ED4B62;
+    position: absolute;
+    font-family: 'NanumSquareRound';
+}
+
+#sub-title {
+    top: 679px;
+    font-size: 16px;
+    color: #ED4B62;
+    position: absolute;
+    font-family: 'NanumSquareRound';
+}
