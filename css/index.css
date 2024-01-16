@@ -1,23 +1,34 @@
 body {
+    margin: 0;
     width: 360px;
     height: 800px;
     display: flex;
+    position: relative;
     align-content: center;
     justify-content: center;
 }
 
+#banner {
+    width: 360px;
+    height: 285px;
+    flex-shrink: 0;
+}
+
 header {
-    width: 100%;
+    top: 0;
+    z-index: 1;
+    width: 360px;
     height: 56px;
     display: flex;
-    padding: 0 20px;
+    position: absolute;
     align-items: center;
     justify-content: space-between;
 }
 
 #logo-box {
-    display: flex;
     align-items: center;
+    display: flex;
+    padding-left: 20px;
     justify-content: flex-start;
 }
 
@@ -36,4 +47,5 @@ header {
 
 #bell {
     width: 24px;
+    padding-right: 20px;
 }
