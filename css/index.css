@@ -49,3 +49,43 @@ header {
     width: 24px;
     padding-right: 20px;
 }
+
+footer {
+    bottom: 0;
+    width: 360px;
+    height: 72px;
+    flex-shrink: 0;
+    position: fixed;
+    background-color: #FFF;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.10));
+}
+
+#nav-list {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    justify-content: space-around;
+}
+
+.nav-item {
+    display: flex;
+    margin-top: 16px;
+    column-gap: 70px;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nav-item p {
+    font-size: 10px;
+    color: #C0C0C0;
+    margin-top: 4px;
+    font-family: 'NanumSquareRound';
+}
+
+.nav-img {
+    width: 24px;
+}
