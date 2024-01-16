@@ -86,6 +86,10 @@ footer {
     font-family: 'NanumSquareRound';
 }
 
+#page {
+    color: #ED4B62;
+}
+
 .nav-img {
     width: 24px;
 }
