@@ -1,0 +1,39 @@
+body {
+    width: 360px;
+    height: 800px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+header {
+    width: 100%;
+    height: 56px;
+    display: flex;
+    padding: 0 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#logo-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#logo {
+    width: 39px;
+    height: 20px;
+}
+
+#logo-title {
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 32px;
+    font-family: 'NanumSquareRound';
+    color: var(--naver-text, #FFF);
+}
+
+#bell {
+    width: 24px;
+}
