@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/all.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <img src="./img/banner.png" id="banner">
+    <img src="./img/banner-bubble.png" id="bubble">
+
+    <header>
+        <div id="logo-box">
+            <img src="./img/logo.png" id="logo">
+            <p id="logo-title">Wevle</p>
+        </div>
+        <img src="./img/bell.png" id="bell">
+    </header>
+
+    <main>
+        <p id="recent-title">최근 여행</p>
+
+        <a href="#">
+            <section id="recent-container">
+                <div>
+                    <p id="title">일본</p>
+                    <p id="spend-money">사용금액 <span id="money">30,000</span> <span id="recent-unit">¥</span></p>
+                    <p id="trip-date">여행기간</p>
+                    <p id="date">2024.01.06 - 01.28</p>
+                </div>
+                <img src="./img/right.png" id="right">
+            </section>
+        </a>
+
+        <section id="budget-container">
+            <div id="budget">
+                <img src="./img/japen-trip.png" id="trip-img">
+                <p id="trip-title">일본</p>
+                <p id="budget-cash">예산금액 <span id="cash">100,000 ¥</span></p>
+            </div>
+            <div id="budget-line"></div>
+            <div id="remain">
+                <div id="remain-box1">
+                    <p id="remain-money">남은금액</p>
+                    <p id="remain-amount">70,000 ¥</p>
+                </div>
+                <div id="remain-box2">
+                    <p id="use"><span id="percentage">30% </span>사용</p>
+                    <div id="progress-bar">
+                        <div id="progress"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="memo-container">
+            <p id="memo-title">메모 <span id="memo-cnt">2</span></p>
+            <div id="memo-menu">
+                <p>전체</p>
+                <p>줘야하는 돈</p>
+                <p>받아야하는 돈</p>
+            </div>
+            <div class="memo-box">
+                <div>
+                    <p class="memo" id="give">줘야하는 돈</p>
+                    <p class="memo-content">지현이에게 200엔 줘야함</p>
+                    <p class="memo-date">2024.01.16</p>
+                </div>
+                <div class="check-box">
+                    <img src="./img/check-not.png" class="check">
+                </div>
+            </div>
+            <div class="memo-box">
+                <div>
+                    <p class="memo" id="receive">받아야하는 돈</p>
+                    <p class="memo-content">가윤이에게 300엔 받아야함</p>
+                    <p class="memo-date">2024.01.16</p>
+                </div>
+                <div class="check-box">
+                    <img src="./img/check-not.png" class="check">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <nav>
+            <ul id="nav-list">
+                <li class="nav-item">
+                    <img src="./img/home-index.png" class="nav-img">
+                    <p id="page">홈</p>
+                </li>
+                <li class="nav-item">
+                    <img src="./img/receipt.png" class="nav-img">
+                    <p>영수증</p>
+                </li>
+                <li class="nav-item">
+                    <img src="./img/scan.png" class="nav-img">
+                    <p>스캔</p>
+                </li>
+                <li class="nav-item">
+                    <img src="./img/my.png" class="nav-img">
+                    <p>마이페이지</p>
+                </li>
+            </ul>
+        </nav>
+    </footer>
+
+    <script src="./js/index.js"></script>
+</body>
+</html>
