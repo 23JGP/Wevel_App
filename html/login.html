@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../css/all.css">
-    <link rel="stylesheet" href="../css/login.css">
-</head>
-<body>
-    
-    <img src="../img/logo-color.png" id="logo">
+    <link rel="stylesheet" href="../css/all.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+  </head>
+  <body>
+    <img src="../img/logo-color.png" id="logo" />
 
     <p id="title">자동 영수증 번역·정리 서비스</p>
 
     <div id="login-container">
-        <div id="login-line">
-            <div class="line"></div>
-            <p id="start">시작하기</p>
-            <div class="line"></div>
+      <div id="login-line">
+        <div class="line"></div>
+        <p id="start">시작하기</p>
+        <div class="line"></div>
+      </div>
+
+      <div id="login-box">
+        <a href="http://localhost:8080/oauth2/authorization/google">
+          <div id="google">
+            <img src="../img/google.png" class="login-img" />구글로 로그인
+          </div>
+        </a>
+        <div id="kakao">
+          <img src="../img/kakao.png" class="login-img" />카카오로 로그인
         </div>
-    
-        <div id="login-box">
-            <div id="google">
-                <img src="../img/google.png" class="login-img">구글로 로그인
-            </div>
-            <div id="kakao">
-                <img src="../img/kakao.png" class="login-img">카카오로 로그인
-            </div>
-            <div id="naver">
-                <img src="../img/naver.png" class="login-img">네이버로 로그인
-            </div>
-        </div>
+        <a href="/oauth2/authorization/naver">
+          <div id="naver">
+            <img src="../img/naver.png" class="login-img" />네이버로 로그인
+          </div>
+        </a>
+      </div>
     </div>
 
-
     <script src="../js/login.js"></script>
-</body>
+  </body>
 </html>
