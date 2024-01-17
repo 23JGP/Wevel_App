@@ -12,8 +12,8 @@ const checkElements = document.querySelectorAll('.check');
 checkElements.forEach(checkElement => {
     checkElement.addEventListener('click', function () {
         const currentSrc = checkElement.getAttribute('src');
-        const checkImagePath = '../img/check.png';
-        const checkNotImagePath = '../img/check-not.png';
+        const checkImagePath = './img/check.png';
+        const checkNotImagePath = './img/check-not.png';
 
         if (currentSrc === checkNotImagePath)
             checkElement.setAttribute('src', checkImagePath);
