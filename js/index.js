@@ -21,3 +21,6 @@ checkElements.forEach(checkElement => {
             checkElement.setAttribute('src', checkNotImagePath);
     });
 });
+
+// splash -> login -> index
+window.location.href = "./html/splash.html";
