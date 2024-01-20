@@ -81,11 +81,28 @@
 
         // 받아온 데이터를 HTML 엘리먼트에 채워넣는 함수
         function fillData(data) {
+          // data.startDate와 data.endDate가 문자열 형태의 날짜인 경우
+          var startDate = new Date(data.startDate);
+          var endDate = new Date(data.endDate);
+
+          // 시작일과 종료일의 년, 월, 일을 가져오기
+          var startYear = startDate.getFullYear();
+          var startMonth = ("0" + (startDate.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅
+          var startDay = ("0" + startDate.getDate()).slice(-2); // 일도 두 자리로 포맷팅
+
+          var endYear = endDate.getFullYear();
+          var endMonth = ("0" + (endDate.getMonth() + 1)).slice(-2);
+          var endDay = ("0" + endDate.getDate()).slice(-2);
+
+          // 포맷된 시작일과 종료일
+          var formattedStartDate = `${startYear}.${startMonth}.${startDay}`;
+          var formattedEndDate = `${endYear}.${endMonth}.${endDay}`;
+
           // 사용금액 업데이트
           $("#money").text(data.spentAmount);
 
           // 여행기간 업데이트 TODO : 날짜 포멧팅 형식 맞추기
-          $("#date").text(data.startDate + " - " + data.endDate);
+          $("#date").text(formattedStartDate + " - " + formattedEndDate);
 
           // 예산금액 업데이트
           $("#cash").text(data.totalBudget);
