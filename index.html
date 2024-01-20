@@ -98,10 +98,14 @@
           var formattedStartDate = `${startYear}.${startMonth}.${startDay}`;
           var formattedEndDate = `${endYear}.${endMonth}.${endDay}`;
 
+          // 나라 이름 업데이트
+          $("#title").text(data.tripName);
+          $("#trip-title").text(data.tripName);
+
           // 사용금액 업데이트
           $("#money").text(data.spentAmount);
 
-          // 여행기간 업데이트 TODO : 날짜 포멧팅 형식 맞추기
+          // 여행기간 업데이트
           $("#date").text(formattedStartDate + " - " + formattedEndDate);
 
           // 예산금액 업데이트
