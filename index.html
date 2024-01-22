@@ -132,8 +132,8 @@
         <p id="memo-title">메모 <span id="memo-cnt">2</span></p>
         <div id="memo-menu">
           <p onclick="loadMemos('all')">전체</p>
-          <p onclick="loadMemos('given')">줘야하는 돈</p>
-          <p onclick="loadMemos('received')">받아야하는 돈</p>
+          <p onclick="loadMemos('give')">줘야하는 돈</p>
+          <p onclick="loadMemos('receive')">받아야하는 돈</p>
         </div>
         <div id="memo-list"></div>
         <div class="memo-box">
@@ -177,8 +177,7 @@
         });
       }
 
-      // TODO : 날짜 포맷 형식 맞추기
-      // TODO : 체크 박스 하면 이미지 변경되게 추가하기
+      // TODO: 날짜 포맷 형식 맞추기
       function displayMemos(memos, menu) {
         const memoListDiv = $("#memo-list");
         memoListDiv.empty(); // 이전 메모 삭제
@@ -186,71 +185,82 @@
         // 메모 배열의 길이를 이용하여 메모의 수 파악
         let memoCount = 0;
 
+        function formatDate(dateString) {
+          const memoDate = new Date(dateString);
+          const formattedDate = `${memoDate.getFullYear()}.${(
+            memoDate.getMonth() + 1
+          )
+            .toString()
+            .padStart(2, "0")}.${memoDate
+            .getDate()
+            .toString()
+            .padStart(2, "0")}`;
+          return formattedDate;
+        }
+
         if (menu === "all") {
           memoCount = memos.givenMemos.length + memos.receivedMemos.length;
           // 전체 메모 출력
           memos.givenMemos.forEach((memo) => {
-            var MemoDate = new Date(memo.date);
-            var Year = MemoDate.getFullYear();
-            var Month = ("0" + (MemoDate.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅
-            var Day = ("0" + MemoDate.getDate()).slice(-2); // 일도 두 자리로 포맷팅
-            var formattedMemotDate = `${Year}.${Month}.${Day}`;
-
+            const formattedDate = formatDate(memo.date);
             const memoBoxDiv = createMemoBox(
               "give",
               memo.amountGiven,
-              formattedMemotDate
+              formattedDate
             );
             memoListDiv.append(memoBoxDiv);
           });
 
           memos.receivedMemos.forEach((memo) => {
+            const formattedDate = formatDate(memo.date);
             const memoBoxDiv = createMemoBox(
               "receive",
               memo.amountReceived,
-              memo.date
+              formattedDate
             );
             memoListDiv.append(memoBoxDiv);
           });
-        } else if (menu === "given") {
+        } else if (menu === "give" || menu === "receive") {
           memoCount = memos.length;
-          // 전체 메모 출력
           memos.forEach((memo) => {
+            const formattedDate = formatDate(memo.date);
+            console.log(menu);
             const memoBoxDiv = createMemoBox(
-              "give",
-              memo.amountGiven,
-              memo.date
-            );
-            memoListDiv.append(memoBoxDiv);
-          });
-        } else if (menu === "received") {
-          memoCount = memos.length;
-          // 전체 메모 출력
-          memos.forEach((memo) => {
-            const memoBoxDiv = createMemoBox(
-              "receive",
-              memo.amountReceived,
-              memo.date
+              menu,
+              menu === "give" ? memo.amountGiven : memo.amountReceived,
+              formattedDate
             );
             memoListDiv.append(memoBoxDiv);
           });
         }
+
         // 메모 수를 #memo-cnt에 동적으로 업데이트
         $("#memo-cnt").text(memoCount);
       }
 
       function createMemoBox(type, amount, date) {
+        console.log(type);
         const memoBoxDiv = $("<div>").addClass("memo-box");
         const contentDiv = $("<div>");
+        let id = "";
+        let money = "";
+        if (type === "give") {
+          id = "give";
+          money = "줘야하는 돈";
+        } else if (type === "receive") {
+          id = "receive";
+          money = "받아야하는 돈";
+        }
+
         const checkDiv = $(`
           <div class="check-box">
               <img src="./img/check-not.png" class="check" />
           </div>
        `);
         contentDiv.html(`
-          <p class="memo" id="${type === "give" ? "give" : "receive"}">${
-          type === "give" ? "줘야하는 돈" : "받아야하는 돈"
-        }</p>
+          <p class="memo" id="${
+            type === "give" ? "give" : "receive"
+          }">${money}</p>
           <p class="memo-content">${amount}</p>
           <p class="memo-date">${date}</p>
       `);
