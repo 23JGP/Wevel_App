@@ -255,6 +255,17 @@
           <p class="memo-date">${date}</p>
       `);
 
+        // check 이미지에 클릭 이벤트 리스너 추가
+        checkDiv.find(".check").on("click", function () {
+          const currentSrc = $(this).attr("src");
+          const checkImagePath = "./img/check.png";
+          const checkNotImagePath = "./img/check-not.png";
+
+          if (currentSrc === checkNotImagePath)
+            $(this).attr("src", checkImagePath);
+          else $(this).attr("src", checkNotImagePath);
+        });
+
         memoBoxDiv.append(contentDiv);
         memoBoxDiv.append(checkDiv);
         return memoBoxDiv;
