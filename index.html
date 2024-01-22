@@ -177,59 +177,85 @@
         });
       }
 
+      // TODO : 날짜 포맷 형식 맞추기
+      // TODO : 체크박스 이미지 css 조절하기
       function displayMemos(memos, menu) {
         const memoListDiv = $("#memo-list");
         memoListDiv.empty(); // 이전 메모 삭제
 
         // 메모 배열의 길이를 이용하여 메모의 수 파악
-        const memoCount = memos.length;
+        let memoCount = 0;
 
-        memos.forEach((memo) => {
-          const memoBoxDiv = $("<div>").addClass("memo-box");
-          const contentDiv = $("<div>");
-          const contentDiv2 = $("<div>");
+        if (menu === "all") {
+          memoCount = memos.givenMemos.length + memos.receivedMemos.length;
+          // 전체 메모 출력
+          memos.givenMemos.forEach((memo) => {
+            var MemoDate = new Date(memo.date);
+            var Year = MemoDate.getFullYear();
+            var Month = ("0" + (MemoDate.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅
+            var Day = ("0" + MemoDate.getDate()).slice(-2); // 일도 두 자리로 포맷팅
+            var formattedMemotDate = `${Year}.${Month}.${Day}`;
 
-          // TODO : 전체 태그 눌렀을 때 css 조정하기
-          // TODO : check-box 이미지 넣기
-          if (menu === "all") {
-            if (memo.amountGiven !== null) {
-              contentDiv.html(`
-          <p class="memo" id="give">${"줘야하는 돈"}</p>
-          <p class="memo-content">${memo.amountGiven}</p>
-          <p class="memo-date">${memo.date}</p>
-          
-        `);
-            }
-            if (memo.amountReceived !== null) {
-              contentDiv2.html(`
-          <p class="memo" id="receive">${"받아야하는 돈"}</p>
-          <p class="memo-content">${memo.amountReceived}</p>
-          <p class="memo-date">${memo.date}</p>
-          
-        `);
-            }
-          } else if (menu === "given") {
-            contentDiv.html(`
-          <p class="memo" id="give">${"줘야하는 돈"}</p>
-          <p class="memo-content">${memo.amountGiven}</p>
-          <p class="memo-date">${memo.date}</p>
-         
-        `);
-          } else if (menu === "received") {
-            contentDiv.html(`
-          <p class="memo" id="receive">${"받아야하는 돈"}</p>
-          <p class="memo-content">${memo.amountReceived}</p>
-          <p class="memo-date">${memo.date}</p>
-          
-        `);
-          }
-          memoBoxDiv.append(contentDiv);
-          memoBoxDiv.append(contentDiv2);
-          memoListDiv.append(memoBoxDiv);
-        });
+            const memoBoxDiv = createMemoBox(
+              "give",
+              memo.amountGiven,
+              formattedMemotDate
+            );
+            memoListDiv.append(memoBoxDiv);
+          });
 
+          memos.receivedMemos.forEach((memo) => {
+            const memoBoxDiv = createMemoBox(
+              "receive",
+              memo.amountReceived,
+              memo.date
+            );
+            memoListDiv.append(memoBoxDiv);
+          });
+        } else if (menu === "given") {
+          memoCount = memos.length;
+          // 전체 메모 출력
+          memos.forEach((memo) => {
+            const memoBoxDiv = createMemoBox(
+              "give",
+              memo.amountGiven,
+              memo.date
+            );
+            memoListDiv.append(memoBoxDiv);
+          });
+        } else if (menu === "received") {
+          memoCount = memos.length;
+          // 전체 메모 출력
+          memos.forEach((memo) => {
+            const memoBoxDiv = createMemoBox(
+              "receive",
+              memo.amountReceived,
+              memo.date
+            );
+            memoListDiv.append(memoBoxDiv);
+          });
+        }
         // 메모 수를 #memo-cnt에 동적으로 업데이트
         $("#memo-cnt").text(memoCount);
+      }
+
+      function createMemoBox(type, amount, date) {
+        const memoBoxDiv = $("<div>").addClass("memo-box");
+        const contentDiv = $("<div>");
+
+        contentDiv.html(`
+          <p class="memo" id="${type === "give" ? "give" : "receive"}">${
+          type === "give" ? "줘야하는 돈" : "받아야하는 돈"
+        }</p>
+          <p class="memo-content">${amount}</p>
+          <p class="memo-date">${date}</p>
+          <div class="check-box">
+            <img src="./img/check-not.png" class="check" />
+          </div>
+      `);
+
+        memoBoxDiv.append(contentDiv);
+        return memoBoxDiv;
       }
     </script>
 
