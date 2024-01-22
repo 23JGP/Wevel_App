@@ -178,7 +178,7 @@
       }
 
       // TODO : 날짜 포맷 형식 맞추기
-      // TODO : 체크박스 이미지 css 조절하기
+      // TODO : 체크 박스 하면 이미지 변경되게 추가하기
       function displayMemos(memos, menu) {
         const memoListDiv = $("#memo-list");
         memoListDiv.empty(); // 이전 메모 삭제
@@ -242,19 +242,21 @@
       function createMemoBox(type, amount, date) {
         const memoBoxDiv = $("<div>").addClass("memo-box");
         const contentDiv = $("<div>");
-
+        const checkDiv = $(`
+          <div class="check-box">
+              <img src="./img/check-not.png" class="check" />
+          </div>
+       `);
         contentDiv.html(`
           <p class="memo" id="${type === "give" ? "give" : "receive"}">${
           type === "give" ? "줘야하는 돈" : "받아야하는 돈"
         }</p>
           <p class="memo-content">${amount}</p>
           <p class="memo-date">${date}</p>
-          <div class="check-box">
-            <img src="./img/check-not.png" class="check" />
-          </div>
       `);
 
         memoBoxDiv.append(contentDiv);
+        memoBoxDiv.append(checkDiv);
         return memoBoxDiv;
       }
     </script>
