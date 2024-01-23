@@ -1,0 +1,240 @@
+body {
+    margin: 0;
+    width: 360px;
+    height: 100vh;
+    display: flex;
+    position: relative;
+    align-content: center;
+    justify-content: center;
+}
+
+#banner {
+    width: 360px;
+    height: 353px;
+    flex-shrink: 0;
+}
+
+#bubble {
+    width: 360px;
+    margin-top: 66px;
+    position: absolute;
+}
+
+header {
+    top: 0;
+    z-index: 1;
+    width: 360px;
+    height: 56px;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#logo-box {
+    display: flex;
+    padding-left: 20px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#logo {
+    width: 39px;
+    height: 20px;
+}
+
+#logo-title {
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 32px;
+    font-family: 'NanumSquareRound';
+    color: var(--naver-text, #FFF);
+}
+
+#bell {
+    width: 24px;
+    padding-right: 20px;
+}
+
+main {
+    left: 0px;
+    width: 360px;
+    overflow-y: auto;
+    position: absolute;
+    padding-bottom: 72px; 
+}
+
+#menu-list {
+    width: 320px;
+    height: 41px;
+    display: flex;
+    flex-shrink: 0;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    margin: 76px auto 90px auto;
+    border: 1px solid #981427;
+    background: rgba(189, 46, 67, 0.75);
+    box-shadow: 0px 0px 4px 0px rgba(138, 24, 41, 0.14) inset;
+}
+
+.menu-item {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 5px 10px;
+    font-style: normal;
+    line-height: 22.4px;
+    list-style-type: none;
+    font-family: 'Pretendard';
+    color: var(--Gray-01, var(--naver-text, #E59AA4));
+}
+
+.menu-item:hover {
+    border-radius: 30px;
+    background: var(--naver-text, #FFF);
+    color: var(--Primary-main, #ED4B62);
+}
+
+#menu-container {
+    height: auto;
+    flex-shrink: 0;
+    padding: 0 20px;
+    position: relative;
+    border-radius: 20px 20px 0px 0px;
+    background: var(--naver-text, #FFF);
+}
+
+.menu-div {
+    height: 152px;
+    flex-shrink: 0;
+    position: relative;
+    margin-bottom: 27px;
+}
+
+.flag {
+    top: -51px;
+    left: 20px;
+    z-index: 1;
+    width: 62px;
+    height: 40px;
+    flex-shrink: 0;
+    position: absolute;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0px 5px 12px rgba(0, 0, 0, 0.12));
+}
+
+.menu-div:nth-child(1) .flag {
+    background-image: url("../img/flag-japen.png");
+}
+
+.menu-div:nth-child(2) .flag {
+    background-image: url("../img/flag-usa.png");
+}
+
+.menu-box {
+    top: -39px;
+    width: 320px;
+    height: 141px;
+    flex-shrink: 0;
+    position: absolute;
+    border-radius: 12px;
+    background-size: cover;
+    background-color: #981427;
+    background-repeat: no-repeat;
+}
+
+.menu-div:nth-child(1) .menu-box {
+    background-image: url("../img/menubox-japen.png");
+}
+
+.menu-div:nth-child(2) .menu-box {
+    background-image: url("../img/menubox-usa.png");
+}
+
+.menu-box p {
+    padding-left: 20px;
+}
+
+.menu-title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 32px;
+    padding-top: 41px;
+    font-style: normal;
+    padding: 41px 0 4px 0;
+    font-family: 'NanumSquareRound';
+    color: var(--Gray-01, var(--naver-text, #FFF));
+}
+
+.menu-recent,
+.menu-date {
+    font-size: 10px;
+    margin-top: 2px;
+    font-weight: 400;
+    line-height: 16px;
+    font-style: normal;
+    font-family: 'Pretendard';
+    color: var(--Gray-01, var(--naver-text, #FFF));
+}
+
+#plus {
+    margin: 0;
+    width: 52px;
+    right: 30px;
+    height: 52px;
+    bottom: 100px;
+    color: #FFF;
+    flex-shrink: 0;
+    position: fixed;
+    font-size: 26px;
+    line-height: 46px;
+    text-align: center;
+    border-radius: 30px;
+    background-color: #ED4B62;
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.16));
+}
+
+footer {
+    bottom: 0;
+    width: 360px;
+    height: 72px;
+    flex-shrink: 0;
+    position: fixed;
+    background-color: #FFF;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.10));
+}
+
+#nav-list {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    justify-content: space-around;
+}
+
+.nav-item {
+    display: flex;
+    margin-top: 16px;
+    column-gap: 70px;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nav-item p {
+    font-size: 10px;
+    margin-top: 4px;
+    color: #C0C0C0;
+    font-family: 'NanumSquareRound';
+}
+
+#page {
+    color: #ED4B62;
+}
+
+.nav-img {
+    width: 24px;
+}
