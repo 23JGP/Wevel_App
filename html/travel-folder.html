@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/travel-folder.css">
+</head>
+<body>
+    <header>
+        <a href="../html/travel.html"><img src="../img/left.png" id="left"></a>
+        <p id="title">여행폴더</p>
+    </header>
+
+    <main>
+        <div id="travel-name">
+            <p class="title">여행 이름</p>
+            <input type="text" id="name-input" placeholder="이름을 입력해 주세요">
+        </div>
+
+        <div id="travel-nation">
+            <p class="title">여행 국가</p>
+            <div id="nation-container">
+                <div class="nation-box">
+                    <div id="usa-img" class="nation-img"></div>
+                    <p class="nation-title">미국</p>
+                </div>
+                <div class="nation-box">
+                    <div id="vietnam-img" class="nation-img"></div>
+                    <p class="nation-title">베트남</p>
+                </div>
+                <div class="nation-box">
+                    <div id="japen-img" class="nation-img"></div>
+                    <p class="nation-title">일본</p>
+                </div>
+                <div class="nation-box">
+                    <div id="thailand-img" class="nation-img"></div>
+                    <p class="nation-title">태국</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="travel-date">
+            <p class="title">기간</p>
+            <div id="date-container">
+                <input type="date" data-placeholder="출발하는 날" required aria-required="true">
+                <p>-</p>
+                <input type="date" data-placeholder="돌아오는 날" required aria-required="true">
+            </div>
+
+        </div>
+
+        <div id="travel-recent">
+            <p class="title">예산</p>
+            <div id="recent-container">
+                <p id="recent-money">0</p>
+                <div id="recent-bar">
+                    <input type="range" id="money-range" min="0" max="1000000000" value="0" step="1" oninput="updateMoneyValue(this.value)">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        저장하기
+    </footer>
+
+    <script src="../js/travel-folder.js"></script>
+</body>
+</html>
