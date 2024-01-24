@@ -1,0 +1,249 @@
+body {
+    margin: 0;
+    width: 360px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+header {
+    width: 100%;
+    height: 56px;
+    display: flex;
+    position: absolute;
+    align-items: center;
+}
+
+#left {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    margin-left: 13px;
+}
+
+#title {
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 8px;
+    font-style: normal;
+    line-height: 28px;
+    font-family: 'NanumSquareRound';
+    color: var(--kakao-logo, #000);
+}
+
+main {
+    width: 100%;
+    margin: 76px 20px 0 20px;
+    height: calc(100vh - 162px);
+}
+
+#travel-name {
+    height: 38px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 22.4px;
+    font-family: 'Pretendard';
+    color: var(--Gray-05, #2C2C2C);
+}
+
+#name-input {
+    width: 232px;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 4px 6px;
+    line-height: 22px;
+    border-radius: 8px;
+    justify-content: center;
+    font-family: 'Pretendard';
+    background: var(--naver-text, #FFF);
+    border: 1px solid var(--Gray-02, #F0F2F6);
+}
+
+#name-input:focus {
+    outline: none;
+    border: 1px solid red;
+    color: var(--Gray-05, #2C2C2C);
+}
+
+#travel-nation {
+    height: 121px;
+    display: flex;
+    margin-bottom: 32px;
+    flex-direction: column;
+    justify-content: start;
+}
+
+#nation-container {
+    display: flex;
+    margin-top: 16px;
+    column-gap: 16px;
+    align-items: center;
+}
+
+.nation-box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nation-img {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    position: relative;
+    border-radius: 30px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.nation-img::before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    content: "";
+    height: 100%;
+    position: absolute;
+    border-radius: 30px;
+    background: rgba(0, 0, 0, 0);
+}
+
+.nation-img.active::before,
+.nation-img:hover::before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    content: url('../img/nation-check.png');
+}
+
+.nation-img.active + .nation-title,
+.nation-img:hover + .nation-title {
+    color: var(--Primary-main, #ED4B62);
+}
+
+#usa-img {
+    background-image: url('../img/nation-usa.png');
+}
+
+#vietnam-img {
+    background-image: url('../img/nation-vietnam.png');
+}
+
+#japen-img {
+    background-image: url('../img/nation-japen.png');
+}
+
+#thailand-img {
+    background-image: url('../img/nation-thailand.png');
+}
+
+.nation-title {
+    font-size: 12px;
+    margin-top: 6px;
+    font-weight: 400;
+    text-align: center;
+    font-style: normal;
+    line-height: 19.2px;
+    font-family: 'Pretendard';
+    color: var(--Gray-04, #707174);
+}
+
+#travel-date {
+    height: 66px;
+    display: flex;
+    margin-bottom: 20px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#date-container {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#date-container input {
+    width: 140px;
+    min-width: 140px;
+    max-width: 140px;
+    border-radius: 10px;
+    background: var(--naver-text, #FFF);
+    border: 1px solid var(--Gray-02, #F0F2F6);
+}
+
+input[type='date']::before {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    font-style: normal;
+    line-height: 22.4px;
+    font-family: 'Pretendard';
+    content: attr(data-placeholder);
+    color: var(--Gray-03, #C0C2C8);
+}
+  
+input[type='date']:focus::before,
+input[type='date']:valid::before {
+    display: none;
+}
+
+#travel-recent {
+    height: 121px;
+    display: flex;
+    flex-direction: column;
+}
+
+#recent-container {
+    margin-top: 16px;
+    text-align: center;
+}
+
+#recent-money {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 32px;
+    text-align: center;
+    font-style: normal;
+    margin-bottom: 32px;
+    font-family: 'NanumSquareRound';
+    color: var(--Gray-05, #2C2C2C);
+}
+
+#recent-bar {
+    width: 100%;
+}
+
+#money-range {
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+footer {
+    width: 320px;
+    height: 46px;
+    bottom: 40px;
+    display: flex;
+    font-size: 14px;
+    font-weight: 500;
+    position: absolute;
+    font-style: normal;
+    border-radius: 8px;
+    line-height: 22.4px;
+    align-items: center;
+    background: #F79FAB;
+    justify-content: center;
+    font-family: 'Pretendard';
+    color: var(--Gray-White, var(--naver-text, #FFF));
+}
