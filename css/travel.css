@@ -89,7 +89,7 @@ main {
     color: var(--Gray-01, var(--naver-text, #E59AA4));
 }
 
-.menu-item:hover {
+.menu-item-hover {
     border-radius: 30px;
     background: var(--naver-text, #FFF);
     color: var(--Primary-main, #ED4B62);
