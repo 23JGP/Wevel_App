@@ -4,10 +4,13 @@
 }
 
 @font-face {
-    font-style: normal;
-    font-weight: normal;
     font-family: 'NanumSquareRound';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    src: url('../font/NanumSquareRound.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../font/Pretendard.otf') format('opentype');
 }
 
 a {
