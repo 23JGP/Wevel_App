@@ -8,11 +8,11 @@
     src: url('../font/NanumSquareRound.otf') format('opentype');
 }
 
-
 @font-face {
     font-family: 'Pretendard';
     src: url('../font/Pretendard.otf') format('opentype');
 }
+
 a {
     text-decoration: none;
 }
