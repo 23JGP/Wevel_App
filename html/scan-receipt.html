@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/scan-receipt.css">
+</head>
+<body>
+    <header>
+        <div id="logo-box">
+            <a href="../html/scan.html">
+                <img src="../img/x-black.png" id="x" />
+            </a>
+          <p id="logo-title">영수증</p>
+        </div>
+        <a href="#">
+            <p id="correction">수정</p>
+        </a>
+    </header>
+
+    <main>
+        <div id="receipt-container">
+            <div id="input-box">
+                <input type="text" id="receipt-title" placeholder="영수증 이름">
+                <div id="line"></div>
+                <input type="date" id="receipt-date">
+            </div>
+
+            <div id="list-box">
+                <table id="list">
+                    <tr>
+                        <td>상품명</td>
+                        <td>수량</td>
+                        <td>금액</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" id="list-line"></td>
+                    </tr>
+                    <tr>
+                        <td>나가라강의 천연수</td>
+                        <td>1</td>
+                        <td>68</td>
+                    </tr>
+                    <tr>
+                        <td>테마키 주먹밥</td>
+                        <td>1</td>
+                        <td>98</td>
+                    </tr>
+                    <tr>
+                        <td>딸기초콜릿</td>
+                        <td>1</td>
+                        <td>228</td>
+                    </tr>
+                    <tr>
+                        <td>코이케야 돈카코스아보카</td>
+                        <td>1</td>
+                        <td>88</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="dotted-line"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">소비세</td>
+                        <td>45</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="dotted-line"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">합계</td>
+                        <td id="sum">527¥</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="give-container">
+            <p class="container-title">줘야하는 돈</p>
+            <input type="textarea" placeholder="누구에게 얼마를 주어야하는지 입력해 주세요" id="give-box">
+        </div>
+
+        <div id="receive-container">
+            <p class="container-title">받아야하는 돈</p>
+            <input type="textarea" placeholder="누구에게 얼마를 받아야하는지 입력해 주세요" id="receive-box">
+        </div>
+    </main>
+
+    <footer>
+        <div id="flex-box">
+            <a href="#">
+                <div id="share-box">나누기</div>
+            </a>
+            <a href="#">
+                <div id="save-box">저장하기</div>
+            </a>
+        </div>
+    </footer>
+
+    <!-- <script src="../js/scan-receipt.js"></script> -->
+</body>
+</html>
