@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../css/all.css">
-    <link rel="stylesheet" href="../css/travel.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../css/all.css" />
+    <link rel="stylesheet" href="../css/travel.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  </head>
+  <body>
     <img src="../img/banner.png" id="banner" />
     <img src="../img/banner-bubble2.png" id="bubble" />
 
@@ -20,38 +21,141 @@
     </header>
 
     <main>
-        <nav>
-            <ul id="menu-list">
-                <li class="menu-item menu-item-hover">최근순</li>
-                <li class="menu-item">오래된순</li>
-                <li class="menu-item">내림차순</li>
-                <li class="menu-item">오름차순</li>
-            </ul>
-        </nav>
+      <nav>
+        <ul id="menu-list">
+          <li class="menu-item menu-item-hover" onclick="getTrips('recent')">
+            최근순
+          </li>
+          <li class="menu-item" onclick="getTrips('oldest')">오래된순</li>
+          <li class="menu-item" onclick="getTrips('desc')">내림차순</li>
+          <li class="menu-item" onclick="getTrips('asc')">오름차순</li>
+        </ul>
+      </nav>
 
-        <div id="menu-container">
-            <div class="menu-div">
-                <div class="flag"></div>
-                <div class="menu-box">
-                    <p class="menu-title">일본</p>
-                    <p class="menu-recent">여행예산 &nbsp;| &nbsp;<span>100,000 ¥</span></p>
-                    <p class="menu-date">여행기간 &nbsp;| &nbsp;<span>2024. 01. 06 ~ 01. 28</span></p>
-                </div>
-            </div>
-
-            <div class="menu-div">
-                <div class="flag"></div>
-                <div class="menu-box">
-                    <p class="menu-title">미국</p>
-                    <p class="menu-recent">여행예산 &nbsp;| &nbsp;<span>446.26 $</span></p>
-                    <p class="menu-date">여행기간 &nbsp;| &nbsp;<span>2023. 05. 23 ~ 05. 25</span></p>
-                </div>
-            </div>
+      <div id="menu-container"></div>
+      <!-- <div id="menu-container">
+        <div class="menu-div">
+          <div class="flag"></div>
+          <div class="menu-box">
+            <p class="menu-title">일본</p>
+            <p class="menu-recent">
+              여행예산 &nbsp;| &nbsp;<span>100,000 ¥</span>
+            </p>
+            <p class="menu-date">
+              여행기간 &nbsp;| &nbsp;<span>2024. 01. 06 ~ 01. 28</span>
+            </p>
+          </div>
         </div>
-        <a href="../html/travel-folder.html">
-          <div id="plus">+</div>
-        </a>
+
+        <div class="menu-div">
+          <div class="flag"></div>
+          <div class="menu-box">
+            <p class="menu-title">미국</p>
+            <p class="menu-recent">
+              여행예산 &nbsp;| &nbsp;<span>446.26 $</span>
+            </p>
+            <p class="menu-date">
+              여행기간 &nbsp;| &nbsp;<span>2023. 05. 23 ~ 05. 25</span>
+            </p>
+          </div>
+        </div>
+      </div> -->
+      <a href="../html/travel-folder.html">
+        <div id="plus">+</div>
+      </a>
     </main>
+    <script>
+      function getTrips(orderBy) {
+        var userId = "1";
+
+        $.ajax({
+          url:
+            "http://localhost:8080/api/trips/trip-info/" +
+            userId +
+            "?orderBy=" +
+            orderBy,
+          type: "GET",
+          success: function (data) {
+            $("#menu-container").empty();
+
+            for (var i = 0; i < data.length; i++) {
+              var trip = data[i];
+              var countryImage = ImgCountry(trip.country);
+
+              var html = '<div class="menu-div">';
+              html +=
+                '<div class="flag" style="background-image: url(' +
+                countryImage.flagImg +
+                ');"></div>';
+              html +=
+                '<div class="menu-box"style="background-image: url(' +
+                countryImage.backImg +
+                ');">';
+              html += '<p class="menu-title">' + trip.tripName + "</p>";
+              html +=
+                '<p class="menu-recent">여행예산 &nbsp;| &nbsp;<span>' +
+                trip.totalBudget +
+                countryImage.currency +
+                "</span></p>";
+              html +=
+                '<p class="menu-date">여행기간 &nbsp;| &nbsp;<span>' +
+                trip.startDate +
+                " ~ " +
+                trip.endDate +
+                "</span></p>";
+              html += "</div></div>";
+
+              $("#menu-container").append(html);
+            }
+          },
+          error: function (error) {
+            console.error("Error fetching trips:", error);
+          },
+        });
+      }
+
+      function ImgCountry(country) {
+        var countryImage = {
+          backImg: "",
+          flagImg: "",
+          currency: "",
+        };
+
+        switch (country) {
+          case "일본":
+            countryImage.backImg = "../img/menubox-japen.png";
+            countryImage.flagImg = "../img/flag-japen.png";
+            countryImage.currency = " ¥";
+            break;
+          case "미국":
+            countryImage.backImg = "../img/menubox-usa.png";
+            countryImage.flagImg = "../img/flag-usa.png";
+            countryImage.currency = " $";
+            break;
+          case "베트남":
+            countryImage.backImg = "../img/menubox-vietnam.png";
+            countryImage.flagImg = "../img/flag-vietnam.png";
+            countryImage.currency = " ₫";
+            break;
+          case "태국":
+            countryImage.backImg = "../img/menubox-thailand.png";
+            countryImage.flagImg = "../img/flag-thailand.png";
+            countryImage.currency = " ฿";
+            break;
+          // 다른 국가에 대한 경우를 추가할 수 있음
+          default:
+            // 기본 이미지 설정
+            countryImage.backImg = "default-image.png";
+            countryImage.flagImg = "default-flag.png";
+            countryImage.currency = "";
+        }
+
+        return countryImage;
+      }
+      $(document).ready(function () {
+        getTrips("recent");
+      });
+    </script>
 
     <footer>
       <nav>
@@ -85,5 +189,5 @@
     </footer>
 
     <script src="../js/travel.js"></script>
-</body>
+  </body>
 </html>

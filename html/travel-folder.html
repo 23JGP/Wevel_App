@@ -23,19 +23,19 @@
       <div id="travel-nation">
         <p class="title">여행 국가</p>
         <div id="nation-container">
-          <div class="nation-box">
+          <div class="nation-box" onclick="selectCountry('미국')">
             <div id="usa-img" class="nation-img"></div>
-            <p class="nation-title">미국</p>
+            <p class="nation-title" i>미국</p>
           </div>
-          <div class="nation-box">
+          <div class="nation-box" onclick="selectCountry('베트남')">
             <div id="vietnam-img" class="nation-img"></div>
             <p class="nation-title">베트남</p>
           </div>
-          <div class="nation-box">
+          <div class="nation-box" onclick="selectCountry('일본')">
             <div id="japen-img" class="nation-img"></div>
             <p class="nation-title">일본</p>
           </div>
-          <div class="nation-box">
+          <div class="nation-box" onclick="selectCountry('태국')">
             <div id="thailand-img" class="nation-img"></div>
             <p class="nation-title">태국</p>
           </div>
@@ -83,11 +83,14 @@
 
     <script src="../js/travel-folder.js"></script>
     <script>
+      let selectedCountry;
+
+      function selectCountry(country) {
+        selectedCountry = country;
+        console.log(selectedCountry); // 또는 다른 동작 수행
+      }
       function saveTrip() {
         var tripName = $("#name-input").val();
-
-        // 여행 국가 선택 로직 추가 (예시: 첫 번째 국가를 선택으로 가정)
-        var country = $(".nation-title:first").text();
 
         var startDate = $("input[type=date]:first").val();
         var endDate = $("input[type=date]:last").val();
@@ -100,7 +103,7 @@
 
         var requestData = {
           tripName: tripName,
-          country: country,
+          country: selectedCountry,
           startDate: startDate,
           endDate: endDate,
           totalBudget: totalBudget,
@@ -117,6 +120,7 @@
           data: JSON.stringify(requestData),
           success: function (response) {
             console.log("Trip saved successfully:");
+            window.location.href = "./travel.html";
           },
           error: function (error) {
             console.error("Error saving trip:");
