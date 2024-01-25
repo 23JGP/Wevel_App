@@ -235,15 +235,20 @@ footer {
     height: 46px;
     bottom: 40px;
     display: flex;
-    font-size: 14px;
-    font-weight: 500;
     position: absolute;
-    font-style: normal;
     border-radius: 8px;
-    line-height: 22.4px;
     align-items: center;
     background: #F79FAB;
     justify-content: center;
+}
+
+button {
+    border: none;
+    font-size: 14px;
+    background: none;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 22.4px;
     font-family: 'Pretendard';
     color: var(--Gray-White, var(--naver-text, #FFF));
 }
