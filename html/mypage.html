@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../css/all.css" />
     <link rel="stylesheet" href="../css/mypage.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../js/moneyFormat.js" defer></script>
+    <script src="../js/currencySymbol.js" defer></script>
   </head>
   <body>
     <header>
@@ -43,6 +45,7 @@
             <p id="travel-title"></p>
             <p id="travel-recent">
               여행예산 &nbsp;|&nbsp; <span id="totalBudget"></span>
+              <span id="currency"></span>
             </p>
             <p id="travel-date">
               여행기간 &nbsp;|&nbsp; <span id="date"></span>
@@ -97,7 +100,8 @@
           }
 
           var countryImage = ""; // 초기값 설정
-
+          let totalBudget = formatNumberWithCommas(data.totalBudget);
+          let currency = getCurrencySymbol(data.country);
           switch (data.country) {
             case "일본":
               countryImage = "nation-japen.png";
@@ -130,12 +134,13 @@
           // 나라 이름 업데이트
           $("#travel-title").text(data.tripName);
           $("#trip-title").text(data.tripName);
+          $("#currency").text(currency);
 
           // 여행기간 업데이트
           $("#date").text(formattedStartDate + " ~ " + formattedEndDate);
 
           // 예산금액 업데이트
-          $("#totalBudget").text(data.totalBudget);
+          $("#totalBudget").text(totalBudget);
         }
 
         // 페이지 로드 시 데이터 가져오기

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/all.css" />
     <link rel="stylesheet" href="./css/index.css" />
     <script src="../js/dateFormat.js" defer></script>
+    <script src="../js/moneyFormat.js" defer></script>
     <script src="../js/currencySymbol.js" defer></script>
   </head>
   <body>
@@ -29,13 +30,13 @@
       <a href="./html/recent.html">
         <section id="recent-container">
           <div>
-            <p id="title">일본</p>
+            <p id="title"></p>
             <p id="spend-money">
-              사용금액 <span id="money">30,000</span>
-              <span id="currency">¥</span>
+              사용금액 <span id="money"></span>
+              <span class="currency"></span>
             </p>
             <p id="trip-date">여행기간</p>
-            <p id="date">2024.01.06 - 01.28</p>
+            <p id="date"></p>
           </div>
           <img src="./img/right.png" id="right" />
         </section>
@@ -46,17 +47,18 @@
           <img src="./img/japen-trip.png" id="trip-img" />
           <p id="trip-title"></p>
           <p id="budget-cash">
-            예산금액 <span id="cash"></span><span id="currency"></span>
+            예산금액 <span id="cash"></span><span class="currency"></span>
           </p>
         </div>
         <div id="budget-line"></div>
         <div id="remain">
           <div id="remain-box1">
             <p id="remain-money">남은금액</p>
-            <p id="remain-amount"><span id="currency"></span></p>
+            <p id="remain-amount"></p>
+            <span class="currency"></span>
           </div>
           <div id="remain-box2">
-            <p id="use"><span id="percentage"></span>사용</p>
+            <p id="use"><span id="percentage"></span> 사용</p>
             <div id="progress-bar">
               <div id="progress"></div>
             </div>
@@ -87,6 +89,9 @@
           var formattedEndDate = formatDate(data.endDate);
           var country = data.country;
           var currencySymbol = getCurrencySymbol(country);
+          var spentAmount = formatNumberWithCommas(data.spentAmount);
+          let totalBudget = formatNumberWithCommas(data.totalBudget);
+          let remainingAmount = formatNumberWithCommas(data.remainingAmount);
           console.log("화폐 기호:", currencySymbol);
 
           // 나라 이름 업데이트
@@ -94,17 +99,17 @@
           $("#trip-title").text(data.tripName);
 
           // 사용금액 업데이트
-          $("#money").text(data.spentAmount);
+          $("#money").text(spentAmount);
 
           // 여행기간 업데이트
           $("#date").text(formattedStartDate + " ~ " + formattedEndDate);
 
           // 예산금액 업데이트
-          $("#cash").text(data.totalBudget);
+          $("#cash").text(totalBudget);
 
           // 남은금액 업데이트
-          $("#remain-amount").text(data.remainingAmount);
-          $("#currency").text(currencySymbol);
+          $("#remain-amount").text(remainingAmount);
+          $(".currency").text(currencySymbol);
 
           // 사용 비율 및 프로그레스 업데이트
           var percentage = (data.spentAmount / data.totalBudget) * 100;
@@ -125,7 +130,7 @@
           <p onclick="loadMemos('receive')">받아야하는 돈</p>
         </div>
         <div id="memo-list"></div>
-        <div class="memo-box">
+        <!-- <div class="memo-box">
           <div>
             <p class="memo" id="give">줘야하는 돈</p>
             <p class="memo-content">지현이에게 200엔 줘야함</p>
@@ -144,7 +149,7 @@
           <div class="check-box">
             <img src="./img/check-not.png" class="check" />
           </div>
-        </div>
+        </div> -->
       </section>
     </main>
 
@@ -257,6 +262,11 @@
         memoBoxDiv.append(checkDiv);
         return memoBoxDiv;
       }
+
+      // 페이지 로드 시 데이터 가져오기
+      $(document).ready(function () {
+        loadMemos("all");
+      });
     </script>
 
     <footer>
