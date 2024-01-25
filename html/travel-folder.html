@@ -1,71 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../css/all.css">
-    <link rel="stylesheet" href="../css/travel-folder.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../css/all.css" />
+    <link rel="stylesheet" href="../css/travel-folder.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  </head>
+  <body>
     <header>
-        <a href="../html/travel.html"><img src="../img/left.png" id="left"></a>
-        <p id="title">여행폴더</p>
+      <a href="../html/travel.html"><img src="../img/left.png" id="left" /></a>
+      <p id="title">여행폴더</p>
     </header>
 
     <main>
-        <div id="travel-name">
-            <p class="title">여행 이름</p>
-            <input type="text" id="name-input" placeholder="이름을 입력해 주세요">
-        </div>
+      <div id="travel-name">
+        <p class="title">여행 이름</p>
+        <input type="text" id="name-input" placeholder="이름을 입력해 주세요" />
+      </div>
 
-        <div id="travel-nation">
-            <p class="title">여행 국가</p>
-            <div id="nation-container">
-                <div class="nation-box">
-                    <div id="usa-img" class="nation-img"></div>
-                    <p class="nation-title">미국</p>
-                </div>
-                <div class="nation-box">
-                    <div id="vietnam-img" class="nation-img"></div>
-                    <p class="nation-title">베트남</p>
-                </div>
-                <div class="nation-box">
-                    <div id="japen-img" class="nation-img"></div>
-                    <p class="nation-title">일본</p>
-                </div>
-                <div class="nation-box">
-                    <div id="thailand-img" class="nation-img"></div>
-                    <p class="nation-title">태국</p>
-                </div>
-            </div>
+      <div id="travel-nation">
+        <p class="title">여행 국가</p>
+        <div id="nation-container">
+          <div class="nation-box">
+            <div id="usa-img" class="nation-img"></div>
+            <p class="nation-title">미국</p>
+          </div>
+          <div class="nation-box">
+            <div id="vietnam-img" class="nation-img"></div>
+            <p class="nation-title">베트남</p>
+          </div>
+          <div class="nation-box">
+            <div id="japen-img" class="nation-img"></div>
+            <p class="nation-title">일본</p>
+          </div>
+          <div class="nation-box">
+            <div id="thailand-img" class="nation-img"></div>
+            <p class="nation-title">태국</p>
+          </div>
         </div>
+      </div>
 
-        <div id="travel-date">
-            <p class="title">기간</p>
-            <div id="date-container">
-                <input type="date" data-placeholder="출발하는 날" required aria-required="true">
-                <p>-</p>
-                <input type="date" data-placeholder="돌아오는 날" required aria-required="true">
-            </div>
-
+      <div id="travel-date">
+        <p class="title">기간</p>
+        <div id="date-container">
+          <input
+            type="date"
+            data-placeholder="출발하는 날"
+            required
+            aria-required="true" />
+          <p>-</p>
+          <input
+            type="date"
+            data-placeholder="돌아오는 날"
+            required
+            aria-required="true" />
         </div>
+      </div>
 
-        <div id="travel-recent">
-            <p class="title">예산</p>
-            <div id="recent-container">
-                <p id="recent-money">0</p>
-                <div id="recent-bar">
-                    <input type="range" id="money-range" min="0" max="1000000000" value="0" step="1" oninput="updateMoneyValue(this.value)">
-                </div>
-            </div>
+      <div id="travel-recent">
+        <p class="title">예산</p>
+        <div id="recent-container">
+          <p id="recent-money">0</p>
+          <div id="recent-bar">
+            <input
+              type="range"
+              id="money-range"
+              min="0"
+              max="1000000000"
+              value="0"
+              step="1"
+              oninput="updateMoneyValue(this.value)" />
+          </div>
         </div>
+      </div>
     </main>
 
     <footer>
-        저장하기
+      <button onclick="saveTrip()">저장하기</button>
     </footer>
 
     <script src="../js/travel-folder.js"></script>
-</body>
+    <script>
+      function saveTrip() {
+        var tripName = $("#name-input").val();
+
+        // 여행 국가 선택 로직 추가 (예시: 첫 번째 국가를 선택으로 가정)
+        var country = $(".nation-title:first").text();
+
+        var startDate = $("input[type=date]:first").val();
+        var endDate = $("input[type=date]:last").val();
+
+        // 서버에서 요구하는 날짜 형식으로 가공 (필요에 따라 수정)
+        startDate = formatDate(startDate);
+        endDate = formatDate(endDate);
+
+        var totalBudget = $("#recent-money").text().replace(/,/g, ""); //, 빼기
+
+        var requestData = {
+          tripName: tripName,
+          country: country,
+          startDate: startDate,
+          endDate: endDate,
+          totalBudget: totalBudget,
+        };
+
+        // 콘솔 로그 추가
+        console.log("requestData:", requestData);
+
+        // Send Ajax request
+        $.ajax({
+          url: "http://localhost:8080/api/trips/create",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(requestData),
+          success: function (response) {
+            console.log("Trip saved successfully:");
+          },
+          error: function (error) {
+            console.error("Error saving trip:");
+          },
+        });
+      }
+
+      // 날짜 형식을 서버에서 요구하는 형식으로 가공하는 함수
+      function formatDate(dateString) {
+        var dateObject = new Date(dateString);
+        var formattedDate = dateObject.toISOString().split("T")[0];
+        return formattedDate;
+      }
+    </script>
+  </body>
 </html>

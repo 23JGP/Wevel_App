@@ -1,119 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../css/all.css">
-    <link rel="stylesheet" href="../css/mypage.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../css/all.css" />
+    <link rel="stylesheet" href="../css/mypage.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  </head>
+  <body>
     <header>
-        <p id="title">마이페이지</p>
-        <a href="../html/setting.html"><img src="../img/setting.png" id="setting"></a>
+      <p id="title">마이페이지</p>
+      <a href="../html/setting.html"
+        ><img src="../img/setting.png" id="setting"
+      /></a>
     </header>
 
     <main>
-        <a href="../html/information.html">
-            <div id="login-container">
-                <div>
-                    <p id="user-id"></p>
-                    <div id="user-flex">
-                        <div id="user-login"></div>
-                        <p id="user-email"></p>
-                    </div>
-                </div>
-                <img src="../img/notice-right.png" class="right">
+      <a href="../html/information.html">
+        <div id="login-container">
+          <div>
+            <p id="user-id"></p>
+            <div id="user-flex">
+              <div id="user-login"></div>
+              <p id="user-email"></p>
             </div>
+          </div>
+          <img src="../img/notice-right.png" class="right" />
+        </div>
+      </a>
+
+      <div id="with-container">
+        <p id="with-title">함께한 여행</p>
+        <p id="with-cnt"></p>
+      </div>
+
+      <div id="travel-container">
+        <p class="container-title">여행중</p>
+        <div id="travel-box">
+          <div id="travel-img"></div>
+          <div id="travel-content">
+            <p id="travel-title"></p>
+            <p id="travel-recent">
+              여행예산 &nbsp;|&nbsp; <span id="totalBudget"></span>
+            </p>
+            <p id="travel-date">
+              여행기간 &nbsp;|&nbsp; <span id="date"></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <script>
+        function fetchData() {
+          $.ajax({
+            url: "http://localhost:8080/api/trips/count/1",
+            type: "GET",
+            success: function (count) {
+              $("#with-cnt").text(count);
+            },
+          });
+          $.ajax({
+            url: "http://localhost:8080/api/trips/latest/1", // TODO : 여기에 사용자 아이디(id)를 동적으로 설정
+            type: "GET",
+            success: function (data) {
+              // 성공적으로 데이터를 받아왔을 때 실행되는 코드
+              fillData(data);
+            },
+            error: function () {
+              // 에러가 발생했을 때 실행되는 코드
+              console.error("Failed to fetch data from the server.");
+            },
+          });
+        }
+
+        // 받아온 데이터를 HTML 엘리먼트에 채워넣는 함수
+        function fillData(data) {
+          // data.startDate와 data.endDate가 문자열 형태의 날짜인 경우
+          var startDate = new Date(data.startDate);
+          var endDate = new Date(data.endDate);
+
+          // 시작일과 종료일의 년, 월, 일을 가져오기
+          var startYear = startDate.getFullYear();
+          var startMonth = ("0" + (startDate.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅
+          var startDay = ("0" + startDate.getDate()).slice(-2); // 일도 두 자리로 포맷팅
+
+          var endYear = endDate.getFullYear();
+          var endMonth = ("0" + (endDate.getMonth() + 1)).slice(-2);
+          var endDay = ("0" + endDate.getDate()).slice(-2);
+
+          // 포맷된 시작일과 종료일
+          var formattedStartDate = `${startYear}.${startMonth}.${startDay}`;
+          var formattedEndDate = `${endMonth}.${endDay}`;
+
+          if (startYear !== endMonth) {
+            var formattedEndDate = `${endYear}.${endMonth}.${endDay}`;
+          }
+
+          var countryImage = ""; // 초기값 설정
+
+          switch (data.country) {
+            case "일본":
+              countryImage = "nation-japen.png";
+              break;
+            case "미국":
+              countryImage = "nation-usa.png";
+              break;
+            case "베트남":
+              countryImage = "nation-vietnam.png";
+              break;
+            case "태국":
+              countryImage = "nation-thailand.png";
+              break;
+            // 다른 국가에 대한 경우를 추가할 수 있음
+            default:
+              // 기본 이미지 설정
+              countryImage = "default-image.png";
+          }
+
+          // 이미지를 추가하는 부분
+          if (countryImage) {
+            // 이미지 경로에 큰따옴표를 포함하지 않도록 수정
+            $("#travel-img").html(
+              '<img src="../img/' +
+                countryImage +
+                '" alt="Travel Image" ' +
+                'style="width: 56px; height: 56px; flex-shrink: 0; margin-left: 5px; border-radius: 30px;">'
+            );
+          }
+          // 나라 이름 업데이트
+          $("#travel-title").text(data.tripName);
+          $("#trip-title").text(data.tripName);
+
+          // 여행기간 업데이트
+          $("#date").text(formattedStartDate + " ~ " + formattedEndDate);
+
+          // 예산금액 업데이트
+          $("#totalBudget").text(data.totalBudget);
+        }
+
+        // 페이지 로드 시 데이터 가져오기
+        $(document).ready(function () {
+          fetchData();
+        });
+      </script>
+      <div id="help-container">
+        <p class="container-title">도움말</p>
+        <a href="#">
+          <div class="help-box">
+            <div class="flex-box">
+              <img src="../img/notice.png" class="help-icon" />
+              <p class="help-content">공지사항</p>
+            </div>
+            <img src="../img/notice-right.png" class="right" />
+          </div>
         </a>
-
-        <div id="with-container">
-            <p id="with-title">함께한 여행</p>
-            <p id="with-cnt"></p>
-        </div>
-
-        <div id="travel-container">
-            <p class="container-title">여행중</p>
-            <div id="travel-box">
-                <div id="travel-img"></div>
-                <div id="travel-content">
-                    <p id="travel-title"></p>
-                    <p id="travel-recent">여행예산 &nbsp;|&nbsp; <span></span></p>
-                    <p id="travel-date">여행기간 &nbsp;|&nbsp; <span></span></p>
-                </div>
+        <a href="#">
+          <div class="help-box">
+            <div class="flex-box">
+              <img src="../img/information.png" class="help-icon" />
+              <p class="help-content">개인정보처리방침</p>
             </div>
-        </div>
-
-        <div id="help-container">
-            <p class="container-title">도움말</p>
-            <a href="#">
-                <div class="help-box">
-                    <div class="flex-box">
-                        <img src="../img/notice.png" class="help-icon">
-                        <p class="help-content">공지사항</p>
-                    </div>
-                    <img src="../img/notice-right.png" class="right">
-                </div>
-            </a>
-            <a href="#">
-                <div class="help-box">
-                    <div class="flex-box">
-                        <img src="../img/information.png" class="help-icon">
-                        <p class="help-content">개인정보처리방침</p>
-                    </div>
-                    <img src="../img/notice-right.png" class="right">
-                </div>
-            </a>
-            <a href="#">
-                <div class="help-box">
-                    <div class="flex-box">
-                        <img src="../img/service.png" class="help-icon">
-                        <p class="help-content">서비스 이용약관</p>
-                    </div>
-                    <img src="../img/notice-right.png" class="right">
-                </div>
-            </a>
-            <div class="help-box">
-                <div class="help-box">
-                    <div class="flex-box">
-                        <img src="../img/app.png" class="help-icon">
-                        <p class="help-content">앱 정보</p>
-                    </div>
-                    <p id="app-content">3.19.1</p>
-                </div>
+            <img src="../img/notice-right.png" class="right" />
+          </div>
+        </a>
+        <a href="#">
+          <div class="help-box">
+            <div class="flex-box">
+              <img src="../img/service.png" class="help-icon" />
+              <p class="help-content">서비스 이용약관</p>
             </div>
+            <img src="../img/notice-right.png" class="right" />
+          </div>
+        </a>
+        <div class="help-box">
+          <div class="help-box">
+            <div class="flex-box">
+              <img src="../img/app.png" class="help-icon" />
+              <p class="help-content">앱 정보</p>
+            </div>
+            <p id="app-content">3.19.1</p>
+          </div>
         </div>
+      </div>
     </main>
 
     <footer>
-        <nav>
-          <ul id="nav-list">
-            <a href="../index.html">
-              <li class="nav-item">
-                <img src="../img/home.png" class="nav-img" />
-                <p>홈</p>
-              </li>
-            </a>
-            <a href="../html/travel.html">
-              <li class="nav-item">
-                <img src="../img/travel.png" class="nav-img" />
-                <p>여행</p>
-              </li>
-            </a>
-            <a href="../html/scan.html">
-              <li class="nav-item">
-                <img src="../img/scan.png" class="nav-img" />
-                <p>스캔</p>
-              </li>
-            </a>
-            <a href="../html/mypage.html">
-              <li class="nav-item">
-                <img src="../img/my-my.png" class="nav-img" />
-                <p id="page">마이페이지</p>
-              </li>
-            </a>
-          </ul>
-        </nav>
-      </footer>
-</body>
+      <nav>
+        <ul id="nav-list">
+          <a href="../index.html">
+            <li class="nav-item">
+              <img src="../img/home.png" class="nav-img" />
+              <p>홈</p>
+            </li>
+          </a>
+          <a href="../html/travel.html">
+            <li class="nav-item">
+              <img src="../img/travel.png" class="nav-img" />
+              <p>여행</p>
+            </li>
+          </a>
+          <a href="../html/scan.html">
+            <li class="nav-item">
+              <img src="../img/scan.png" class="nav-img" />
+              <p>스캔</p>
+            </li>
+          </a>
+          <a href="../html/mypage.html">
+            <li class="nav-item">
+              <img src="../img/my-my.png" class="nav-img" />
+              <p id="page">마이페이지</p>
+            </li>
+          </a>
+        </ul>
+      </nav>
+    </footer>
+  </body>
 </html>
