@@ -30,6 +30,7 @@ header {
 #x {
     z-index: 1;
     width: 24px;
+    cursor: pointer;
     margin-left: 26px;
 }
 
@@ -95,8 +96,8 @@ footer {
     display: flex;
     flex-shrink: 0;
     border-radius: 8px;
-    margin-bottom: 40px;
     align-items: center;
+    margin: 0 0 40px 5px;
     justify-content: center;
     background: var(--Primary-main, #ED4B62);
 }
