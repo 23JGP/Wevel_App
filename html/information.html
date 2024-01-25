@@ -1,46 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../css/all.css">
-    <link rel="stylesheet" href="../css/information.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../css/all.css" />
+    <link rel="stylesheet" href="../css/information.css" />
+  </head>
+  <body>
     <header>
-        <a href="../html/mypage.html"><img src="../img/left.png" id="left"></a>
-        <p id="title">내 정보</p>
+      <a href="../html/mypage.html"><img src="../img/left.png" id="left" /></a>
+      <p id="title">내 정보</p>
     </header>
 
     <main>
-        <div id="name-box">
-            <p class="box-title">닉네임</p>
-            <p id="name-content" class="box-content"></p>
-        </div>
+      <div id="name-box">
+        <p class="box-title">닉네임</p>
+        <p id="name-content" class="box-content"></p>
+      </div>
 
-        <div id="email-box">
-            <p class="box-title">대표 이메일</p>
-            <p id="email-content" class="box-content"></p>
-        </div>
+      <div id="email-box">
+        <p class="box-title">대표 이메일</p>
+        <p id="email-content" class="box-content"></p>
+      </div>
 
-        <div id="login-box">
-            <p class="box-title">연결된 계정</p>
-            <div id="user-flex">
-                <div id="user-login"></div>
-                <p id="user-email"></p>
-            </div>
+      <div id="login-box">
+        <p class="box-title">연결된 계정</p>
+        <div id="user-flex">
+          <div id="user-login"></div>
+          <p id="user-email"></p>
         </div>
+      </div>
     </main>
 
+    <script>
+      // 페이지가 로드될 때 실행될 함수
+      $(document).ready(function () {
+        // AJAX 요청을 수행
+        $.ajax({
+          url: "http://localhost:8080/api/user/1", // API 엔드포인트 주소
+          method: "GET",
+          dataType: "json",
+          success: function (data) {
+            $("#name-content").text(data.name);
+            $("email-content").text(data.email);
+            $("user-email").text(data.email);
+          },
+          error: function () {
+            // 에러 발생 시 실행되는 함수
+            console.error("데이터를 불러오는 중 에러가 발생했습니다.");
+          },
+        });
+      });
+    </script>
+
     <footer>
-        <nav>
-            <ul>
-                <li>로그아웃</li>
-                <li>|</li>
-                <li>회원탈퇴</li>
-            </ul>
-        </nav>
+      <nav>
+        <ul>
+          <li>로그아웃</li>
+          <li>|</li>
+          <li>회원탈퇴</li>
+        </ul>
+      </nav>
     </footer>
-</body>
+  </body>
 </html>
