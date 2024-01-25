@@ -32,6 +32,26 @@
         </div>
       </a>
 
+      <script>
+        // 페이지가 로드될 때 실행될 함수
+        $(document).ready(function () {
+          // AJAX 요청을 수행
+          $.ajax({
+            url: "http://localhost:8080/api/user/1", // API 엔드포인트 주소
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+              $("#user-id").text(data.name);
+              $("#user-email").text(data.email);
+            },
+            error: function () {
+              // 에러 발생 시 실행되는 함수
+              console.error("데이터를 불러오는 중 에러가 발생했습니다.");
+            },
+          });
+        });
+      </script>
+
       <div id="with-container">
         <p id="with-title">함께한 여행</p>
         <p id="with-cnt"></p>
