@@ -1,59 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../css/all.css">
-    <link rel="stylesheet" href="../css/recent.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../css/all.css" />
+    <link rel="stylesheet" href="../css/recent.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../js/dateFormat.js" defer></script>
+    <script src="../js/currencySymbol.js" defer></script>
+  </head>
+  <body>
     <header>
-        <a href="../index.html"><img src="../img/left.png" id="left"></a>
-        <p id="title">최근내역</p>
+      <a href="../index.html"><img src="../img/left.png" id="left" /></a>
+      <p id="title">오늘의 소비</p>
     </header>
 
     <main>
-        <div class="money-box">
-            <img src="../img/money-list.png" class="money-img">
-            <div>
-                <p class="money-title">돈키호테</p>
-                <p class="money-date">2024. 01. 16</p>
-            </div>
-            <p class="money-amount">3000 ¥</p>
+      <div id="moneyContainer"></div>
+      <!-- <div class="money-box"> 
+        <img src="../img/money-list.png" class="money-img" />
+        <div>
+          <p class="money-title">돈키호테</p>
+          <p class="money-date">2024. 01. 16</p>
         </div>
-        <div class="money-box">
-            <img src="../img/money-list.png" class="money-img">
-            <div>
-                <p class="money-title">편의점</p>
-                <p class="money-date">2024. 01. 16</p>
-            </div>
-            <p class="money-amount">1200 ¥</p>
+        <p class="money-amount">3000 ¥</p>
+      </div>
+      <div class="money-box">
+        <img src="../img/money-list.png" class="money-img" />
+        <div>
+          <p class="money-title">편의점</p>
+          <p class="money-date">2024. 01. 16</p>
         </div>
-        <div class="money-box">
-            <img src="../img/money-list.png" class="money-img">
-            <div>
-                <p class="money-title">슈퍼</p>
-                <p class="money-date">2024. 01. 16</p>
-            </div>
-            <p class="money-amount">2400 ¥</p>
+        <p class="money-amount">1200 ¥</p>
+      </div>
+      <div class="money-box">
+        <img src="../img/money-list.png" class="money-img" />
+        <div>
+          <p class="money-title">슈퍼</p>
+          <p class="money-date">2024. 01. 16</p>
         </div>
-        <div class="money-box">
-            <img src="../img/money-list.png" class="money-img">
-            <div>
-                <p class="money-title">택시비</p>
-                <p class="money-date">2024. 01. 16</p>
-            </div>
-            <p class="money-amount">600 ¥</p>
+        <p class="money-amount">2400 ¥</p>
+      </div>
+      <div class="money-box">
+        <img src="../img/money-list.png" class="money-img" />
+        <div>
+          <p class="money-title">택시비</p>
+          <p class="money-date">2024. 01. 16</p>
         </div>
-        <div class="money-box">
-            <img src="../img/money-list.png" class="money-img">
-            <div>
-                <p class="money-title">편의점</p>
-                <p class="money-date">2024. 01. 16</p>
-            </div>
-            <p class="money-amount">54 ¥</p>
+        <p class="money-amount">600 ¥</p>
+      </div>
+      <div class="money-box">
+        <img src="../img/money-list.png" class="money-img" />
+        <div>
+          <p class="money-title">편의점</p>
+          <p class="money-date">2024. 01. 16</p>
         </div>
+        <p class="money-amount">54 ¥</p>
+      </div> -->
     </main>
-</body>
+    <script>
+      // 사용자 ID에 해당하는 영수증 데이터 가져오기
+      var userId = 1; // 사용자 ID에 따라 변경하세요
+
+      // 오늘 날짜를 구하기
+      var today = new Date();
+      var formattedToday = formatDate(today);
+
+      let currencySymbol = "";
+      let tripName = "";
+      $.ajax({
+        url: "http://localhost:8080/api/trips/latest/1", // TODO : 여기에 사용자 아이디(id)를 동적으로 설정
+        type: "GET",
+        success: function (data) {
+          var country = data.country;
+          tripName = data.tripName;
+          currencySymbol = getCurrencySymbol(country);
+          console.log("화폐 기호:", currencySymbol, tripName);
+        },
+        error: function () {
+          console.error("Failed to fetch data from the server.");
+        },
+      });
+
+      // AJAX로 서버에서 데이터 가져오기
+      $.ajax({
+        url: `http://localhost:8080/api/receipts/user/${userId}`,
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+          // 오늘 소비한 데이터만 필터링
+          var todayData = data.filter(function (receipt) {
+            return formatDate(new Date(receipt.date)) === formattedToday;
+          });
+
+          createMoneyBoxes(todayData);
+        },
+        error: function (error) {
+          console.error("Error fetching receipts:", error);
+        },
+      });
+
+      // HTML에 동적으로 money-box 요소 추가하는 함수
+      function createMoneyBoxes(data) {
+        var moneyContainer = $("#moneyContainer");
+
+        data.forEach(function (receipt) {
+          var totalAmount = calculateTotalAmount(receipt.products);
+          var moneyBox = $("<div>").addClass("money-box");
+          var formattedStartDate = formatDate(receipt.date);
+
+          var img = $("<img>")
+            .attr("src", "../img/money-list.png")
+            .addClass("money-img");
+          var title = $("<p>").addClass("money-title").text(receipt.title);
+          var date = $("<p>").addClass("money-date").text(formattedStartDate);
+          var amount = $("<p>")
+            .addClass("money-amount")
+            .text(totalAmount + " " + currencySymbol);
+
+          moneyBox.append(img, title, date, amount);
+          moneyContainer.append(moneyBox);
+        });
+      }
+
+      // 영수증 총액 계산 함수
+      function calculateTotalAmount(products) {
+        return products.reduce(function (total, product) {
+          return total + product.price * product.quantity;
+        }, 0);
+      }
+
+      // 날짜 포맷팅 함수
+      function formatDate(date) {
+        var year = date.getFullYear();
+        var month = ("0" + (date.getMonth() + 1)).slice(-2);
+        var day = ("0" + date.getDate()).slice(-2);
+        return `${year}.${month}.${day}`;
+      }
+    </script>
+  </body>
 </html>
