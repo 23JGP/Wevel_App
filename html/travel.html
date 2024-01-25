@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/travel.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="../js/dateFormat.js"></script>
+    <script src="../js/moneyFormat.js" defer></script>
   </head>
   <body>
     <img src="../img/banner.png" id="banner" />
@@ -67,7 +68,7 @@
     </main>
     <script>
       function getTrips(orderBy) {
-        var userId = "1";
+        let userId = "1";
 
         $.ajax({
           url:
@@ -79,11 +80,12 @@
           success: function (data) {
             $("#menu-container").empty();
 
-            for (var i = 0; i < data.length; i++) {
-              var trip = data[i];
-              var countryImage = ImgCountry(trip.country);
+            for (let i = 0; i < data.length; i++) {
+              let trip = data[i];
+              let countryImage = ImgCountry(trip.country);
+              let totalBudget = formatNumberWithCommas(trip.totalBudget);
 
-              var html = '<div class="menu-div">';
+              let html = '<div class="menu-div">';
               html +=
                 '<div class="flag" style="background-image: url(' +
                 countryImage.flagImg +
@@ -95,7 +97,7 @@
               html += '<p class="menu-title">' + trip.tripName + "</p>";
               html +=
                 '<p class="menu-recent">여행예산 &nbsp;| &nbsp;<span>' +
-                trip.totalBudget +
+                totalBudget +
                 countryImage.currency +
                 "</span></p>";
               html +=
@@ -116,7 +118,7 @@
       }
 
       function ImgCountry(country) {
-        var countryImage = {
+        let countryImage = {
           backImg: "",
           flagImg: "",
           currency: "",
