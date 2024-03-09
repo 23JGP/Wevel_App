@@ -30,13 +30,16 @@
         <img src="../img/gallery.png" id="gallery" onclick="triggerFileInput()">
         <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="displaySelectedImage()">
       </div>      
-      <div id="scan-div">
-        <img src="../img/scan-box.png" id="scan-box" />
-        <canvas id="scanCanvas" style="display: none"></canvas>
-        <p id="box-title" onclick="scanImage()">스캔하기</p>
-      </div>
-      <!-- TODO : 파일 선택, 업로드 css 추가하기 -->
-      <!-- <button onclick="handleImageChange()">파일 업로드</button> -->
+      
+      <a href="./scan-receipt.html">
+        <div id="scan-div">
+          <img src="../img/scan-box.png" id="scan-box" />
+          <canvas id="scanCanvas" style="display: none"></canvas>
+          <p id="box-title" onclick="scanImage()">스캔하기</p>
+        </div>
+        <!-- TODO : 파일 선택, 업로드 css 추가하기 -->
+        <!-- <button onclick="handleImageChange()">파일 업로드</button> -->
+      </a>
     </footer>
 
     <div id="result"></div>
