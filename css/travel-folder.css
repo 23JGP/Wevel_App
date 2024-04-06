@@ -176,6 +176,7 @@ main {
     width: 140px;
     min-width: 140px;
     max-width: 140px;
+    text-align: center;
     border-radius: 10px;
     background: var(--naver-text, #FFF);
     border: 1px solid var(--Gray-02, #F0F2F6);
@@ -228,6 +229,7 @@ input[type='date']:valid::before {
     width: 100%;
     border: none;
     outline: none;
+    accent-color: #ED4B62;
 }
 
 footer {
