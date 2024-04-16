@@ -57,13 +57,13 @@ main {
 #name-input {
     width: 232px;
     font-size: 14px;
+    background: none;
     font-weight: 400;
     padding: 4px 6px;
     line-height: 22px;
     border-radius: 8px;
     justify-content: center;
     font-family: 'Pretendard';
-    background: var(--naver-text, #FFF);
     border: 1px solid var(--Gray-02, #F0F2F6);
 }
 
@@ -172,33 +172,6 @@ main {
     justify-content: space-between;
 }
 
-/* #date-container input {
-    width: 140px;
-    min-width: 140px;
-    max-width: 140px;
-    text-align: center;
-    border-radius: 10px;
-    background: var(--naver-text, #FFF);
-    border: 1px solid var(--Gray-02, #F0F2F6);
-}
-
-input[type='date']::before {
-    width: 100%;
-    font-size: 14px;
-    font-weight: 400;
-    text-align: center;
-    font-style: normal;
-    line-height: 22.4px;
-    font-family: 'Pretendard';
-    content: attr(data-placeholder);
-    color: var(--Gray-03, #C0C2C8);
-}
-  
-input[type='date']:focus::before,
-input[type='date']:valid::before {
-    display: none;
-} */
-
 .date {
     width: 140px;
     display: flex;
@@ -211,7 +184,6 @@ input[type='date']:valid::before {
     justify-content: center;
     font-family: 'Pretendard';
     color: var(--Gray-03, #C0C2C8);
-    background: var(--naver-text, #FFF);
     border: 1px solid var(--Gray-02, #F0F2F6);
 }
 
