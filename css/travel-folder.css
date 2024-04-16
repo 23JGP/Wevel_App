@@ -166,13 +166,13 @@ main {
 }
 
 #date-container {
-    margin-top: 16px;
     display: flex;
+    margin-top: 16px;
     align-items: center;
     justify-content: space-between;
 }
 
-#date-container input {
+/* #date-container input {
     width: 140px;
     min-width: 140px;
     max-width: 140px;
@@ -197,6 +197,22 @@ input[type='date']::before {
 input[type='date']:focus::before,
 input[type='date']:valid::before {
     display: none;
+} */
+
+.date {
+    width: 140px;
+    display: flex;
+    font-size: 14px;
+    column-gap: 8px;
+    text-align: center;
+    align-items: center;
+    line-height: 22.4px;
+    border-radius: 10px;
+    justify-content: center;
+    font-family: 'Pretendard';
+    color: var(--Gray-03, #C0C2C8);
+    background: var(--naver-text, #FFF);
+    border: 1px solid var(--Gray-02, #F0F2F6);
 }
 
 #travel-recent {
