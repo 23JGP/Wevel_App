@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/all.css" />
     <link rel="stylesheet" href="../css/travel-folder.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   </head>
   <body>
@@ -45,7 +46,7 @@
       <div id="travel-date">
         <p class="title">기간</p>
         <div id="date-container">
-          <input
+          <!-- <input
             type="date"
             data-placeholder="출발하는 날"
             required
@@ -55,7 +56,16 @@
             type="date"
             data-placeholder="돌아오는 날"
             required
-            aria-required="true" />
+            aria-required="true" /> -->
+            <div class="date">
+              <p>출발하는 날</p>
+              <i class="bi bi-calendar4"></i>
+            </div>
+            <p style="color: #C0C2C8">~</p>
+            <div class="date">
+              <p>돌아오는 날</p>
+              <i class="bi bi-calendar4"></i>
+            </div>
         </div>
       </div>
 
