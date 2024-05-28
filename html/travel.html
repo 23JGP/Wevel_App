@@ -18,7 +18,7 @@
     <header>
       <div id="logo-box">
         <img src="../img/logo.png" id="logo" />
-        <p id="logo-title">Wevle</p>
+        <p id="logo-title">Wevel</p>
       </div>
       <img src="../img/bell.png" id="bell" />
     </header>
@@ -86,7 +86,10 @@
               let countryImage = ImgCountry(trip.country);
               let totalBudget = formatNumberWithCommas(trip.totalBudget);
 
-              let html = '<div class="menu-div">';
+              let html =
+                '<div class="menu-div" onclick="navigateToDetail(' +
+                trip.tripId +
+                ')">';
               html +=
                 '<div class="flag" style="background-image: url(' +
                 countryImage.flagImg +
@@ -103,9 +106,9 @@
                 "</span></p>";
               html +=
                 '<p class="menu-date">여행기간 &nbsp;| &nbsp;<span>' +
-                formatDate(trip.startDate) + // 날짜 포맷팅 적용
+                formatDate(trip.startDate) +
                 " ~ " +
-                formatDate(trip.endDate) + // 날짜 포맷팅 적용
+                formatDate(trip.endDate) +
                 "</span></p>";
               html += "</div></div>";
 
@@ -116,6 +119,11 @@
             console.error("Error fetching trips:", error);
           },
         });
+      }
+
+      // TODO : 여행 상세 페이지 추가되면 페이지 연동하기
+      function navigateToDetail(tripId) {
+        window.location.href = "../html/trip-detail.html?tripId=" + tripId;
       }
 
       function ImgCountry(country) {
