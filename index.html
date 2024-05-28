@@ -241,95 +241,85 @@
         });
       }
 
-      // TODO : 메모 체크된것과 안된것 이미지 다르게 하기 + 체크 api 연동하기
       // TODO : 메모 없을 때의 값 추가하기
       function displayMemos(memos, menu, tripId) {
         const memoListDiv = $("#memo-list");
         memoListDiv.empty(); // 이전 메모 삭제
 
-        // 메모 배열의 길이를 이용하여 메모의 수 파악
         let memoCount = 0;
+        let memoType;
 
         if (menu === "all") {
           memoCount = memos.givenMemos.length + memos.receivedMemos.length;
-          // 전체 메모 출력
-          memos.givenMemos.forEach((memo) => {
-            const formattedDate = formatDate(memo.date);
-            const memoBoxDiv = createMemoBox(
-              "give",
-              memo.amountGiven,
-              formattedDate
-            );
-            memoListDiv.append(memoBoxDiv);
-          });
-
-          memos.receivedMemos.forEach((memo) => {
-            const formattedDate = formatDate(memo.date);
-            const memoBoxDiv = createMemoBox(
-              "receive",
-              memo.amountReceived,
-              formattedDate
-            );
-            memoListDiv.append(memoBoxDiv);
-          });
+          displayMemoType(memos.givenMemos, "give");
+          displayMemoType(memos.receivedMemos, "receive");
         } else if (menu === "give" || menu === "receive") {
           memoCount = memos.length;
-          memos.forEach((memo) => {
+          displayMemoType(memos, menu);
+        }
+
+        $("#memo-cnt").text(memoCount);
+
+        function displayMemoType(memoArray, type) {
+          memoType = type === "give" ? "줘야하는 돈" : "받아야하는 돈";
+          memoArray.forEach((memo) => {
             const formattedDate = formatDate(memo.date);
-            console.log(menu);
-            const memoBoxDiv = createMemoBox(
-              menu,
-              menu === "give" ? memo.amountGiven : memo.amountReceived,
-              formattedDate
-            );
+            const memoBoxDiv = createMemoBox(type, memo, formattedDate);
             memoListDiv.append(memoBoxDiv);
           });
         }
-
-        // 메모 수를 #memo-cnt에 동적으로 업데이트
-        $("#memo-cnt").text(memoCount);
       }
 
-      function createMemoBox(type, amount, date) {
-        console.log(type);
+      function createMemoBox(type, memo, formattedDate) {
         const memoBoxDiv = $("<div>").addClass("memo-box");
         const contentDiv = $("<div>");
-        let id = "";
-        let money = "";
-        if (type === "give") {
-          id = "give";
-          money = "줘야하는 돈";
-        } else if (type === "receive") {
-          id = "receive";
-          money = "받아야하는 돈";
-        }
+        const id = type === "give" ? "give" : "receive";
+        const money = type === "give" ? "줘야하는 돈" : "받아야하는 돈";
+        const completed = type === "give" ? memo.gcompleted : memo.rcompleted;
+        console.log(completed);
+        console.log(memo);
+        const checkImagePath = completed
+          ? "./img/check.png"
+          : "./img/check-not.png";
 
         const checkDiv = $(`
-                      <div class="check-box">
-                          <img src="./img/check-not.png" class="check" />
-                      </div>
-                   `);
-        contentDiv.html(`
-                      <p class="memo" id="${
-                        type === "give" ? "give" : "receive"
-                      }">${money}</p>
-                      <p class="memo-content">${amount}</p>
-                      <p class="memo-date">${date}</p>
-                  `);
+        <div class="check-box">
+            <img src="${checkImagePath}" class="check" />
+        </div>
+    `);
 
-        // check 이미지에 클릭 이벤트 리스너 추가
+        contentDiv.html(`
+        <p class="memo" id="${id}">${money}</p>
+        <p class="memo-content">${
+          memo[type === "give" ? "amountGiven" : "amountReceived"]
+        }</p>
+        <p class="memo-date">${formattedDate}</p>
+    `);
+
         checkDiv.find(".check").on("click", function () {
           const currentSrc = $(this).attr("src");
-          const checkImagePath = "./img/check.png";
-          const checkNotImagePath = "./img/check-not.png";
+          const newSrc =
+            currentSrc === "./img/check.png"
+              ? "./img/check-not.png"
+              : "./img/check.png";
+          $(this).attr("src", newSrc);
 
-          if (currentSrc === checkNotImagePath)
-            $(this).attr("src", checkImagePath);
-          else $(this).attr("src", checkNotImagePath);
+          const checkApiUrl = `http://localhost:8085/api/memo/check/${type}/${memo.memoId}`;
+          $.ajax({
+            url: checkApiUrl,
+            type: "PATCH",
+            success: function (response) {
+              console.log("Memo checked successfully:", response);
+            },
+            error: function (error) {
+              console.error("Error checking memo:", error);
+            },
+          });
         });
 
         memoBoxDiv.append(contentDiv);
         memoBoxDiv.append(checkDiv);
+        memoBoxDiv.data("memo-id", memo.memoId); // 메모 ID 저장
         return memoBoxDiv;
       }
     </script>
