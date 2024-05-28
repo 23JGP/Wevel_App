@@ -14,6 +14,7 @@
     <img src="../img/banner.png" id="banner" />
     <img src="../img/banner-bubble2.png" id="bubble" />
 
+    <!-- header -->
     <header>
       <div id="logo-box">
         <img src="../img/logo.png" id="logo" />
@@ -22,6 +23,7 @@
       <img src="../img/bell.png" id="bell" />
     </header>
 
+    <!-- main -->
     <main>
       <nav>
         <ul id="menu-list">
@@ -66,16 +68,15 @@
         <div id="plus">+</div>
       </a>
     </main>
+
+    <!-- API 연동 -->
     <script>
       function getTrips(orderBy) {
-        let userId = "1";
+        const userId = localStorage.getItem("userId");
+        const apiUrl = localStorage.getItem("apiUrl");
 
         $.ajax({
-          url:
-            "http://localhost:8080/api/trips/trip-info/" +
-            userId +
-            "?orderBy=" +
-            orderBy,
+          url: apiUrl + "/api/trips/info/" + userId + "?orderBy=" + orderBy,
           type: "GET",
           success: function (data) {
             $("#menu-container").empty();
@@ -145,14 +146,12 @@
             countryImage.flagImg = "../img/flag-thailand.png";
             countryImage.currency = " ฿";
             break;
-          // 다른 국가에 대한 경우를 추가할 수 있음
           default:
             // 기본 이미지 설정
             countryImage.backImg = "default-image.png";
             countryImage.flagImg = "default-flag.png";
             countryImage.currency = "";
         }
-
         return countryImage;
       }
       $(document).ready(function () {
@@ -160,6 +159,7 @@
       });
     </script>
 
+    <!-- footer -->
     <footer>
       <nav>
         <ul id="nav-list">
