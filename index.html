@@ -16,18 +16,20 @@
     <img src="./img/banner.png" id="banner" />
     <img src="./img/banner-bubble.png" id="bubble" />
 
+    <!-- header -->
     <header>
       <div id="logo-box">
         <img src="./img/logo.png" id="logo" />
-        <p id="logo-title">Wevle</p>
+        <p id="logo-title">Wevel</p>
       </div>
       <img src="./img/bell.png" id="bell" />
     </header>
 
+    <!-- main -->
     <main>
       <p id="recent-title">최근 여행</p>
 
-      <a href="./html/recent.html">
+      <a id="recent-link" href="./html/recent.html">
         <section id="recent-container">
           <div>
             <p id="title"></p>
@@ -44,7 +46,7 @@
 
       <section id="budget-container">
         <div id="budget">
-          <img src="./img/japen-trip.png" id="trip-img" />
+          <img src="./img/default-trip.png" id="trip-img" />
           <p id="trip-title"></p>
           <p id="budget-cash">
             예산금액 <span id="cash"></span><span class="currency"></span>
@@ -66,15 +68,21 @@
         </div>
       </section>
 
+      <!-- 여행 정보 API 연동 -->
       <script>
-        // 서버로부터 데이터를 받아오는 함수
+        const userId = localStorage.getItem("userId");
+        const apiUrl = localStorage.getItem("apiUrl");
+
         function fetchData() {
           $.ajax({
-            url: "http://localhost:8080/api/trips/latest/1", // TODO : 여기에 사용자 아이디(id)를 동적으로 설정
+            url: `${apiUrl}/api/trips/latest/${userId}`,
             type: "GET",
             success: function (data) {
-              // 성공적으로 데이터를 받아왔을 때 실행되는 코드
-              fillData(data);
+              if (data) {
+                fillData(data);
+              } else {
+                blankData();
+              }
             },
             error: function () {
               // 에러가 발생했을 때 실행되는 코드
@@ -83,7 +91,27 @@
           });
         }
 
+        // TODO : null이면 여행 정보를 입력해달라고 메시지 띄우기
         let tripName = "";
+        function blankData() {
+          $("#title").html("아직 여행이<br>등록되지 않았어요!");
+          $("#title").css({
+            "font-style": "normal",
+            "text-align": "left",
+            "font-size": "20px",
+          });
+          $("#spend-money").text("");
+          $("#trip-title").text("없음");
+          $("#money").text("");
+          $("#trip-date").text("");
+          $("#date").text("");
+          $("#cash").text("0 원");
+          $("#remain-amount").text("0 원");
+          $("#percentage").text("0%");
+          $("#progress").css("width", "0%");
+          $("#recent-link").attr("href", "#"); //
+        }
+
         // 받아온 데이터를 HTML 엘리먼트에 채워넣는 함수
         function fillData(data) {
           var formattedStartDate = formatDate(data.startDate);
@@ -101,22 +129,27 @@
           $("#trip-title").text(data.tripName);
 
           // 사용금액 업데이트
-          $("#money").text(spentAmount);
+          $("#money").text(spentAmount + currencySymbol);
 
           // 여행기간 업데이트
           $("#date").text(formattedStartDate + " ~ " + formattedEndDate);
 
           // 예산금액 업데이트
-          $("#cash").text(totalBudget);
+          $("#cash").text(totalBudget + currencySymbol);
 
           // 남은금액 업데이트
           $("#remain-amount").text(remainingAmount + currencySymbol);
-          $(".currency").text(currencySymbol);
 
           // 사용 비율 및 프로그레스 업데이트
           var percentage = (data.spentAmount / data.totalBudget) * 100;
           $("#percentage").text(percentage.toFixed(2) + "%");
           $("#progress").css("width", percentage + "%");
+
+          // 링크에 tripId 추가
+          $("#recent-link").attr(
+            "href",
+            "./html/recent.html?tripId=" + data.tripId
+          );
         }
 
         // 페이지 로드 시 데이터 가져오기
@@ -124,6 +157,7 @@
           fetchData();
         });
       </script>
+
       <section id="memo-container">
         <p id="memo-title">메모 <span id="memo-cnt"></span></p>
         <div id="memo-menu">
@@ -271,6 +305,7 @@
       });
     </script>
 
+    <!-- footer -->
     <footer>
       <nav>
         <ul id="nav-list">
