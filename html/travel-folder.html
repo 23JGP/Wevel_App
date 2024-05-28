@@ -3,18 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>여행 폴더</title>
     <link rel="stylesheet" href="../css/all.css" />
     <link rel="stylesheet" href="../css/travel-folder.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   </head>
   <body>
+    <!-- header -->
     <header>
       <a href="../html/travel.html"><img src="../img/left.png" id="left" /></a>
       <p id="title">여행폴더</p>
     </header>
 
+    <!-- main -->
     <main>
       <div id="travel-name">
         <p class="title">여행 이름</p>
@@ -43,18 +48,19 @@
         </div>
       </div>
 
+      <!-- TODO : 캘린더 날짜 선택 후 잘 나오는지 콘솔로 확인 -->
       <div id="travel-date">
         <p class="title">기간</p>
         <div id="date-container">
-            <div class="date">
-              <p>출발하는 날</p>
-              <i class="bi bi-calendar4"></i>
-            </div>
-            <p style="color: #C0C2C8">~</p>
-            <div class="date">
-              <p>돌아오는 날</p>
-              <i class="bi bi-calendar4"></i>
-            </div>
+          <div class="date">
+            <p>출발하는 날</p>
+            <i class="bi bi-calendar4"></i>
+          </div>
+          <p style="color: #c0c2c8">~</p>
+          <div class="date">
+            <p>돌아오는 날</p>
+            <i class="bi bi-calendar4"></i>
+          </div>
         </div>
       </div>
 
@@ -70,17 +76,22 @@
               max="1000000"
               value="0"
               step="1"
-              oninput="updateMoneyValue(this.value)" />
+              oninput="updateMoneyValue(this.value)"
+            />
           </div>
         </div>
       </div>
     </main>
 
+    <!-- footer -->
     <footer>
       <button onclick="saveTrip()">저장하기</button>
     </footer>
 
+    <!-- js 연동 -->
     <script src="../js/travel-folder.js"></script>
+
+    <!-- API 연동 -->
     <script>
       let selectedCountry;
 
@@ -89,31 +100,33 @@
         console.log(selectedCountry); // 또는 다른 동작 수행
       }
       function saveTrip() {
+        const userId = localStorage.getItem("userId");
+        const apiUrl = localStorage.getItem("apiUrl");
         var tripName = $("#name-input").val();
 
+        // TODO : 날짜 선택후 가져오기
         var startDate = $("input[type=date]:first").val();
         var endDate = $("input[type=date]:last").val();
 
-        // 서버에서 요구하는 날짜 형식으로 가공 (필요에 따라 수정)
         startDate = formatDate(startDate);
         endDate = formatDate(endDate);
 
         var totalBudget = $("#recent-money").text().replace(/,/g, ""); //, 빼기
 
         var requestData = {
+          userId: userId,
           tripName: tripName,
           country: selectedCountry,
           startDate: startDate,
-          endDate: endDate,
+          endDate: startDate,
           totalBudget: totalBudget,
         };
 
         // 콘솔 로그 추가
         console.log("requestData:", requestData);
 
-        // Send Ajax request
         $.ajax({
-          url: "http://localhost:8080/api/trips/create",
+          url: `${apiUrl}/api/trips`,
           type: "POST",
           contentType: "application/json",
           data: JSON.stringify(requestData),
