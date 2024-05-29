@@ -165,7 +165,7 @@
             imagePath = "./img/nation-thailand.png";
             break;
           case "베트남":
-            imagePath = "./img/nation-thailand.png";
+            imagePath = "./img/nation-vietnam.png";
             break;
           case "미국":
             imagePath = "./img/nation-usa.png";
@@ -233,7 +233,16 @@
           type: "GET",
           dataType: "json",
           success: function (data) {
-            displayMemos(data, menu);
+            if (
+              data &&
+              (data.length > 0 ||
+                (data.givenMemos && data.givenMemos.length > 0) ||
+                (data.receivedMemos && data.receivedMemos.length > 0))
+            ) {
+              displayMemos(data, menu);
+            } else {
+              displayNoMemosMessage();
+            }
           },
           error: function (error) {
             console.error("Error:", error);
@@ -241,7 +250,24 @@
         });
       }
 
-      // TODO : 메모 없을 때의 값 추가하기
+      function displayNoMemosMessage() {
+        const memoContainerDiv = $("#memo-container");
+        const noMemosDiv = $("<div class='no-memos'>");
+
+        const noMemosImage = $("<img>")
+          .attr("src", "./img/no-memos.png")
+          .attr("alt", "No memos");
+
+        const noMemosText = $("<p class='no-memo-text'>").text(
+          "아직 메모가 없습니다"
+        );
+
+        noMemosDiv.append(noMemosImage);
+        noMemosDiv.append(noMemosText);
+
+        memoContainerDiv.append(noMemosDiv);
+      }
+
       function displayMemos(memos, menu, tripId) {
         const memoListDiv = $("#memo-list");
         memoListDiv.empty(); // 이전 메모 삭제
@@ -283,18 +309,18 @@
           : "./img/check-not.png";
 
         const checkDiv = $(`
-        <div class="check-box">
-            <img src="${checkImagePath}" class="check" />
-        </div>
-    `);
+          <div class="check-box">
+              <img src="${checkImagePath}" class="check" />
+          </div>
+      `);
 
         contentDiv.html(`
-        <p class="memo" id="${id}">${money}</p>
-        <p class="memo-content">${
-          memo[type === "give" ? "amountGiven" : "amountReceived"]
-        }</p>
-        <p class="memo-date">${formattedDate}</p>
-    `);
+          <p class="memo" id="${id}">${money}</p>
+          <p class="memo-content">${
+            memo[type === "give" ? "amountGiven" : "amountReceived"]
+          }</p>
+          <p class="memo-date">${formattedDate}</p>
+      `);
 
         checkDiv.find(".check").on("click", function () {
           const currentSrc = $(this).attr("src");
