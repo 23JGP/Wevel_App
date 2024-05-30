@@ -25,61 +25,45 @@
             <div id="input-box">
                 <input type="text" id="receipt-title" placeholder="영수증 이름">
                 <div id="line"></div>
-                <input
-                    type="date"
-                    data-placeholder="날짜를 선택해 주세요"
-                    required
-                    aria-required="true"
-                    id="receipt-date" />
+                <input type="date" id="receipt-date">
             </div>
 
             <div id="list-box">
-                <table id="list">
-                    <tr>
-                        <td>상품명</td>
-                        <td>수량</td>
-                        <td>금액</td>
-                    </tr>
-                    <tr>
-                        <td>나가라강의 천연수</td>
-                        <td>1</td>
-                        <td>68</td>
-                    </tr>
-                    <tr>
-                        <td>테마키 주먹밥</td>
-                        <td>1</td>
-                        <td>98</td>
-                    </tr>
-                    <tr>
-                        <td>딸기초콜릿</td>
-                        <td>1</td>
-                        <td>228</td>
-                    </tr>
-                    <tr>
-                        <td>코이케야 돈카코스아보카</td>
-                        <td>1</td>
-                        <td>88</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">소비세</td>
-                        <td>45</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" id="sum-title">합계</td>
-                        <td id="sum">527¥</td>
-                    </tr>
-                </table>
+                <div id="list-header">
+                    <p>상품명</p>
+                    <p>수량</p>
+                    <p>금액</p>
+                </div>
+
+                <div id="table-line"></div>
+
+                <div id="list-body">
+
+                </div>
+
+                <div id="list-footer">
+                    <div class="table-line"></div>
+                    <div id="list-tax">
+                        <p>소비세</p>
+                        <p></p>
+                    </div>
+                    <div class="table-line"></div>
+                    <div id="list-sum">
+                        <p>합계</p>
+                        <p></p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div id="give-container">
             <p class="container-title">줘야하는 돈</p>
-            <input type="textarea" placeholder="누구에게 얼마를 주어야하는지 입력해 주세요" id="give-box">
+            <textarea placeholder="누구에게 얼마를 주어야하는지 입력해 주세요" id="give-box"></textarea>
         </div>
 
         <div id="receive-container">
             <p class="container-title">받아야하는 돈</p>
-            <input type="textarea" placeholder="누구에게 얼마를 받아야하는지 입력해 주세요" id="receive-box">
+            <textarea placeholder="누구에게 얼마를 받아야하는지 입력해 주세요" id="receive-box"></textarea>
         </div>
     </main>
 
