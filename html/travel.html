@@ -14,14 +14,16 @@
     <img src="../img/banner.png" id="banner" />
     <img src="../img/banner-bubble2.png" id="bubble" />
 
+    <!-- header -->
     <header>
       <div id="logo-box">
         <img src="../img/logo.png" id="logo" />
-        <p id="logo-title">Wevle</p>
+        <p id="logo-title">Wevel</p>
       </div>
       <img src="../img/bell.png" id="bell" />
     </header>
 
+    <!-- main -->
     <main>
       <nav>
         <ul id="menu-list">
@@ -66,16 +68,15 @@
         <div id="plus">+</div>
       </a>
     </main>
+
+    <!-- API 연동 -->
     <script>
       function getTrips(orderBy) {
-        let userId = "1";
+        const userId = localStorage.getItem("userId");
+        const apiUrl = localStorage.getItem("apiUrl");
 
         $.ajax({
-          url:
-            "http://localhost:8080/api/trips/trip-info/" +
-            userId +
-            "?orderBy=" +
-            orderBy,
+          url: apiUrl + "/api/trips/info/" + userId + "?orderBy=" + orderBy,
           type: "GET",
           success: function (data) {
             $("#menu-container").empty();
@@ -85,7 +86,10 @@
               let countryImage = ImgCountry(trip.country);
               let totalBudget = formatNumberWithCommas(trip.totalBudget);
 
-              let html = '<div class="menu-div">';
+              let html =
+                '<div class="menu-div" onclick="navigateToDetail(' +
+                trip.tripId +
+                ')">';
               html +=
                 '<div class="flag" style="background-image: url(' +
                 countryImage.flagImg +
@@ -102,9 +106,9 @@
                 "</span></p>";
               html +=
                 '<p class="menu-date">여행기간 &nbsp;| &nbsp;<span>' +
-                formatDate(trip.startDate) + // 날짜 포맷팅 적용
+                formatDate(trip.startDate) +
                 " ~ " +
-                formatDate(trip.endDate) + // 날짜 포맷팅 적용
+                formatDate(trip.endDate) +
                 "</span></p>";
               html += "</div></div>";
 
@@ -115,6 +119,11 @@
             console.error("Error fetching trips:", error);
           },
         });
+      }
+
+      // TODO : 여행 상세 페이지 추가되면 페이지 연동하기
+      function navigateToDetail(tripId) {
+        window.location.href = "../html/trip-detail.html?tripId=" + tripId;
       }
 
       function ImgCountry(country) {
@@ -145,14 +154,12 @@
             countryImage.flagImg = "../img/flag-thailand.png";
             countryImage.currency = " ฿";
             break;
-          // 다른 국가에 대한 경우를 추가할 수 있음
           default:
             // 기본 이미지 설정
             countryImage.backImg = "default-image.png";
             countryImage.flagImg = "default-flag.png";
             countryImage.currency = "";
         }
-
         return countryImage;
       }
       $(document).ready(function () {
@@ -160,6 +167,7 @@
       });
     </script>
 
+    <!-- footer -->
     <footer>
       <nav>
         <ul id="nav-list">

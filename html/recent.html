@@ -60,8 +60,11 @@
       </div> -->
     </main>
     <script>
-      // 사용자 ID에 해당하는 영수증 데이터 가져오기
-      var userId = 1; // 사용자 ID에 따라 변경하세요
+      const urlParams = new URLSearchParams(window.location.search);
+
+      const tripId = urlParams.get("tripId");
+      const userId = localStorage.getItem("userId");
+      const apiUrl = localStorage.getItem("apiUrl");
 
       // 오늘 날짜를 구하기
       var today = new Date();
@@ -70,7 +73,7 @@
       let currencySymbol = "";
       let tripName = "";
       $.ajax({
-        url: "http://localhost:8080/api/trips/latest/1", // TODO : 여기에 사용자 아이디(id)를 동적으로 설정
+        url: `${apiUrl}/api/trips/${tripId}`,
         type: "GET",
         success: function (data) {
           var country = data.country;
@@ -85,7 +88,7 @@
 
       // AJAX로 서버에서 데이터 가져오기
       $.ajax({
-        url: `http://localhost:8080/api/receipts/user/${userId}`,
+        url: `${apiUrl}/api/receipts/user/${userId}/trip/${tripId}`,
         method: "GET",
         dataType: "json",
         success: function (data) {
@@ -101,6 +104,7 @@
         },
       });
 
+      // TODO : 영수증 페이지 생기면 영수증 id를 이용해서 넘어가게 수정하기
       // HTML에 동적으로 money-box 요소 추가하는 함수
       function createMoneyBoxes(data) {
         var moneyContainer = $("#moneyContainer");
@@ -113,13 +117,20 @@
           var img = $("<img>")
             .attr("src", "../img/money-list.png")
             .addClass("money-img");
+
           var title = $("<p>").addClass("money-title").text(receipt.title);
           var date = $("<p>").addClass("money-date").text(formattedStartDate);
+
+          var moneyInfo = $("<div>").addClass("money-info");
+          moneyInfo.append(title);
+          moneyInfo.append(date);
+
           var amount = $("<p>")
             .addClass("money-amount")
             .text(totalAmount + " " + currencySymbol);
 
-          moneyBox.append(img, title, date, amount);
+          // img, moneyInfo, amount를 moneyBox에 추가
+          moneyBox.append(img, moneyInfo, amount);
           moneyContainer.append(moneyBox);
         });
       }

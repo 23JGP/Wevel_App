@@ -1,101 +1,118 @@
 body {
-    margin: 0;
-    width: 360px;
-    height: 100vh;
-    display: flex;
-    align-content: center;
-    justify-content: center;
+  margin: 0;
+  width: 360px;
+  height: 100vh;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
 header {
-    width: 100%;
-    height: 56px;
-    display: flex;
-    position: absolute;
-    align-items: center;
+  width: 100%;
+  height: 56px;
+  display: flex;
+  position: absolute;
+  align-items: center;
 }
 
 #left {
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
-    margin-left: 13px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-left: 13px;
 }
 
 #title {
-    font-size: 20px;
-    font-weight: 500;
-    margin-left: 8px;
-    font-style: normal;
-    line-height: 28px;
-    font-family: 'NanumSquareRound';
-    color: var(--kakao-logo, #000);
+  font-size: 20px;
+  font-weight: 500;
+  margin-left: 8px;
+  font-style: normal;
+  line-height: 28px;
+  font-family: "NanumSquareRound";
+  color: var(--kakao-logo, #000);
 }
 
 main {
-    width: 100%;
-    display: flex;
-    margin-top: 56px;
-    flex-direction: column;
+  width: 100%;
+  display: flex;
+  margin-top: 56px;
+  flex-direction: column;
 }
 
 main > div {
-    width: 320px;
-    height: 73px;
-    display: flex;
-    margin: 0 auto;
-    flex-shrink: 0;
-    flex-direction: column;
-    justify-content: center;
+  width: 320px;
+  height: 73px;
+  display: flex;
+  margin: 0 auto;
+  flex-shrink: 0;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .box-title {
-    font-size: 10px;
-    font-weight: 400;
-    line-height: 16px;
-    font-style: normal;
-    font-family: 'Pretendard';
-    color: var(--Gray-03, #C0C2C8);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 16px;
+  margin-bottom: 5px;
+  font-style: normal;
+  font-family: "Pretendard";
+  color: var(--Gray-03, #c0c2c8);
 }
 
 #user-flex {
-    display: flex;
+  display: flex;
 }
 
 #user-login {
-    width: 14px;
-    height: 14px;
-    flex-shrink: 0;
-    margin-top: 5px;
-    border-radius: 14px;
-    /* background: url(<path-to-image>), lightgray 50% / cover no-repeat; */
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-top: 5px;
+  border-radius: 14px;
+  /* background: url(<path-to-image>), lightgray 50% / cover no-repeat; */
+}
+
+.box-content {
+  font-size: 14px;
+  font-family: "Pretendard";
+}
+
+#name-box,
+#email-box,
+#login-box {
+  margin-bottom: 10px;
+}
+
+#user-flex {
+  display: flex;
+  align-items: center;
 }
 
 #user-email {
-    font-size: 10px;
-    font-weight: 400;
-    line-height: 16px;
-    font-style: normal;
-    margin: 2.5px 0 0 4px;
-    font-family: 'Pretendard';
-    color: var(--Gray-05, #2C2C2C);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 16px;
+  font-style: normal;
+  margin: 2.5px 0 0 4px;
+  font-family: "Pretendard";
+  color: var(--Gray-05, #2c2c2c);
 }
 
 footer {
-    width: 100%;
-    bottom: 40px;
-    font-size: 14px;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 22.4px;
-    position: absolute;
-    font-family: 'Pretendard';
-    color: var(--Gray-03, #C0C2C8);
+  width: 100%;
+  bottom: 40px;
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 22.4px;
+  position: absolute;
+  font-family: "Pretendard";
+  color: var(--Gray-03, #c0c2c8);
 }
 
 ul {
-    display: flex;
-    column-gap: 10px;
-    list-style-type: none;
-    justify-content: center;
+  display: flex;
+  column-gap: 10px;
+  list-style-type: none;
+  justify-content: center;
 }

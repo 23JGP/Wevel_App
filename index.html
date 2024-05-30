@@ -16,18 +16,20 @@
     <img src="./img/banner.png" id="banner" />
     <img src="./img/banner-bubble.png" id="bubble" />
 
+    <!-- header -->
     <header>
       <div id="logo-box">
         <img src="./img/logo.png" id="logo" />
-        <p id="logo-title">Wevle</p>
+        <p id="logo-title">Wevel</p>
       </div>
       <img src="./img/bell.png" id="bell" />
     </header>
 
+    <!-- main -->
     <main>
       <p id="recent-title">최근 여행</p>
 
-      <a href="./html/recent.html">
+      <a id="recent-link" href="./html/recent.html">
         <section id="recent-container">
           <div>
             <p id="title"></p>
@@ -44,7 +46,7 @@
 
       <section id="budget-container">
         <div id="budget">
-          <img src="./img/japen-trip.png" id="trip-img" />
+          <img src="./img/default-trip.png" id="trip-img" />
           <p id="trip-title"></p>
           <p id="budget-cash">
             예산금액 <span id="cash"></span><span class="currency"></span>
@@ -66,70 +68,16 @@
         </div>
       </section>
 
-      <script>
-        // 서버로부터 데이터를 받아오는 함수
-        function fetchData() {
-          $.ajax({
-            url: "http://localhost:8080/api/trips/latest/1", // TODO : 여기에 사용자 아이디(id)를 동적으로 설정
-            type: "GET",
-            success: function (data) {
-              // 성공적으로 데이터를 받아왔을 때 실행되는 코드
-              fillData(data);
-            },
-            error: function () {
-              // 에러가 발생했을 때 실행되는 코드
-              console.error("Failed to fetch data from the server.");
-            },
-          });
-        }
-
-        let tripName = "";
-        // 받아온 데이터를 HTML 엘리먼트에 채워넣는 함수
-        function fillData(data) {
-          var formattedStartDate = formatDate(data.startDate);
-          var formattedEndDate = formatDate(data.endDate);
-          var country = data.country;
-          var currencySymbol = getCurrencySymbol(country);
-          var spentAmount = formatNumberWithCommas(data.spentAmount);
-          let totalBudget = formatNumberWithCommas(data.totalBudget);
-          let remainingAmount = formatNumberWithCommas(data.remainingAmount);
-          tripName = data.tripName;
-          console.log("화폐 기호:", currencySymbol);
-
-          // 나라 이름 업데이트
-          $("#title").text(data.tripName);
-          $("#trip-title").text(data.tripName);
-
-          // 사용금액 업데이트
-          $("#money").text(spentAmount);
-
-          // 여행기간 업데이트
-          $("#date").text(formattedStartDate + " ~ " + formattedEndDate);
-
-          // 예산금액 업데이트
-          $("#cash").text(totalBudget);
-
-          // 남은금액 업데이트
-          $("#remain-amount").text(remainingAmount + currencySymbol);
-          $(".currency").text(currencySymbol);
-
-          // 사용 비율 및 프로그레스 업데이트
-          var percentage = (data.spentAmount / data.totalBudget) * 100;
-          $("#percentage").text(percentage.toFixed(2) + "%");
-          $("#progress").css("width", percentage + "%");
-        }
-
-        // 페이지 로드 시 데이터 가져오기
-        $(document).ready(function () {
-          fetchData();
-        });
-      </script>
       <section id="memo-container">
         <p id="memo-title">메모 <span id="memo-cnt"></span></p>
         <div id="memo-menu">
-          <p onclick="loadMemos('all')">전체</p>
-          <p onclick="loadMemos('give')">줘야하는 돈</p>
-          <p onclick="loadMemos('receive')">받아야하는 돈</p>
+          <p onclick="latestTripId('all')">전체</p>
+          <p onclick="latestTripId('give')">줘야하는 돈</p>
+          <p onclick="latestTripId('receive')">받아야하는 돈</p>
+        </div>
+        <div class="no-memos">
+          <img src="./img/no-memos.png" alt="No memos" />
+          <p class="no-memo-text">아직 메모가 없습니다</p>
         </div>
         <div id="memo-list"></div>
         <!-- <div class="memo-box">
@@ -156,16 +104,125 @@
     </main>
 
     <script>
-      function loadMemos(menu) {
-        const userId = 1; // 사용자 ID
-        // const tripName = "일본 글로벌 인턴쉽"; // 여행 이름 TODO : 여행이름 수정하기
+      const userId = localStorage.getItem("userId");
+      const apiUrl = localStorage.getItem("apiUrl");
 
+      // 여행 정보 API 연동
+      function fetchData() {
         $.ajax({
-          url: `http://localhost:8080/api/memo/${menu}/${userId}/${tripName}`,
+          url: `${apiUrl}/api/trips/latest/${userId}`,
+          type: "GET",
+          success: function (data) {
+            if (data) {
+              fillData(data);
+              tripId = data.tripId;
+              loadMemos("all", data.tripId); // Trip ID를 설정한 후에 메모를 불러옴
+            } else {
+              blankData();
+            }
+          },
+          error: function () {
+            // 에러가 발생했을 때 실행되는 코드
+            console.error("Failed to fetch data from the server.");
+          },
+        });
+      }
+
+      let tripName = "";
+      function blankData() {
+        $("#title").html("아직 여행이<br>등록되지 않았어요!");
+        $("#title").css({
+          "font-style": "normal",
+          "text-align": "left",
+          "font-size": "20px",
+        });
+        $("#spend-money").text("");
+        $("#trip-title").text("없음");
+        $("#money").text("");
+        $("#trip-date").text("");
+        $("#date").text("");
+        $("#cash").text("0 원");
+        $("#remain-amount").text("0 원");
+        $("#percentage").text("0%");
+        $("#progress").css("width", "0%");
+        $("#recent-link").attr("href", "#");
+      }
+
+      // 받아온 데이터를 HTML 엘리먼트에 채워넣는 함수
+      function fillData(data) {
+        var formattedStartDate = formatDate(data.startDate);
+        var formattedEndDate = formatDate(data.endDate);
+        var country = data.country;
+        var currencySymbol = getCurrencySymbol(country);
+        var spentAmount = formatNumberWithCommas(data.spentAmount);
+        let totalBudget = formatNumberWithCommas(data.totalBudget);
+        let remainingAmount = formatNumberWithCommas(data.remainingAmount);
+        let tripName = data.tripName;
+        console.log("화폐 기호:", currencySymbol);
+
+        let imagePath = "";
+        switch (country) {
+          case "일본":
+            imagePath = "./img/nation-japen.png";
+            break;
+          case "태국":
+            imagePath = "./img/nation-thailand.png";
+            break;
+          case "베트남":
+            imagePath = "./img/nation-vietnam.png";
+            break;
+          case "미국":
+            imagePath = "./img/nation-usa.png";
+            break;
+          default:
+            // 기본 이미지 경로 설정 (해당 국가에 대한 이미지가 없는 경우)
+            imagePath = "./img/default-trip.png";
+            break;
+        }
+
+        // 나라 이름 업데이트
+        $("#title").text(data.tripName);
+        $("#trip-title").text(data.tripName);
+
+        // 사용금액 업데이트
+        $("#money").text(spentAmount + currencySymbol);
+
+        // 여행기간 업데이트
+        $("#date").text(formattedStartDate + " ~ " + formattedEndDate);
+
+        // 예산금액 업데이트
+        $("#cash").text(totalBudget + currencySymbol);
+
+        // 남은금액 업데이트
+        $("#remain-amount").text(remainingAmount + currencySymbol);
+
+        // 사용 비율 및 프로그레스 업데이트
+        var percentage = (data.spentAmount / data.totalBudget) * 100;
+        $("#percentage").text(percentage.toFixed(2) + "%");
+        $("#progress").css("width", percentage + "%");
+
+        // 이미지 경로를 설정한 후에 이미지 엘리먼트에 적용
+        $("#trip-img").attr("src", imagePath);
+
+        // 링크에 tripId 추가
+        $("#recent-link").attr(
+          "href",
+          "./html/recent.html?tripId=" + data.tripId
+        );
+      }
+
+      // 페이지 로드 시 데이터 가져오기
+      $(document).ready(function () {
+        fetchData();
+      });
+
+      function latestTripId(menu) {
+        $.ajax({
+          url: `${apiUrl}/api/trips/latest/${userId}`,
           type: "GET",
           dataType: "json",
           success: function (data) {
-            displayMemos(data, menu);
+            loadMemos(menu, data.tripId);
           },
           error: function (error) {
             console.error("Error:", error);
@@ -173,104 +230,121 @@
         });
       }
 
-      // TODO : 체크박스 체크되면 삭제하게 만들기
-      // TODO : default가 전체 태그로 되어있게 만들기
-      function displayMemos(memos, menu) {
+      // 메모 API 연동
+      function loadMemos(menu, tripId) {
+        $.ajax({
+          url: `${apiUrl}/api/memo/${menu}/${userId}/${tripId}`,
+          type: "GET",
+          dataType: "json",
+          success: function (data) {
+            if (
+              data &&
+              (data.length > 0 ||
+                (data.givenMemos && data.givenMemos.length > 0) ||
+                (data.receivedMemos && data.receivedMemos.length > 0))
+            ) {
+              displayMemos(data, menu);
+            } else {
+              displayNoMemosMessage();
+            }
+          },
+          error: function (error) {
+            console.error("Error:", error);
+          },
+        });
+      }
+
+      function removeNoMemos() {
+        var noMemosElement = document.querySelector(".no-memos");
+        if (noMemosElement) {
+          noMemosElement.remove();
+        }
+      }
+
+      function displayMemos(memos, menu, tripId) {
         const memoListDiv = $("#memo-list");
+        removeNoMemos();
         memoListDiv.empty(); // 이전 메모 삭제
 
-        // 메모 배열의 길이를 이용하여 메모의 수 파악
         let memoCount = 0;
+        let memoType;
 
         if (menu === "all") {
           memoCount = memos.givenMemos.length + memos.receivedMemos.length;
-          // 전체 메모 출력
-          memos.givenMemos.forEach((memo) => {
-            const formattedDate = formatDate(memo.date);
-            const memoBoxDiv = createMemoBox(
-              "give",
-              memo.amountGiven,
-              formattedDate
-            );
-            memoListDiv.append(memoBoxDiv);
-          });
-
-          memos.receivedMemos.forEach((memo) => {
-            const formattedDate = formatDate(memo.date);
-            const memoBoxDiv = createMemoBox(
-              "receive",
-              memo.amountReceived,
-              formattedDate
-            );
-            memoListDiv.append(memoBoxDiv);
-          });
+          displayMemoType(memos.givenMemos, "give");
+          displayMemoType(memos.receivedMemos, "receive");
         } else if (menu === "give" || menu === "receive") {
           memoCount = memos.length;
-          memos.forEach((memo) => {
+          displayMemoType(memos, menu);
+        }
+
+        $("#memo-cnt").text(memoCount);
+
+        function displayMemoType(memoArray, type) {
+          memoType = type === "give" ? "줘야하는 돈" : "받아야하는 돈";
+          memoArray.forEach((memo) => {
             const formattedDate = formatDate(memo.date);
-            console.log(menu);
-            const memoBoxDiv = createMemoBox(
-              menu,
-              menu === "give" ? memo.amountGiven : memo.amountReceived,
-              formattedDate
-            );
+            const memoBoxDiv = createMemoBox(type, memo, formattedDate);
             memoListDiv.append(memoBoxDiv);
           });
         }
-
-        // 메모 수를 #memo-cnt에 동적으로 업데이트
-        $("#memo-cnt").text(memoCount);
       }
 
-      function createMemoBox(type, amount, date) {
-        console.log(type);
+      function createMemoBox(type, memo, formattedDate) {
         const memoBoxDiv = $("<div>").addClass("memo-box");
         const contentDiv = $("<div>");
-        let id = "";
-        let money = "";
-        if (type === "give") {
-          id = "give";
-          money = "줘야하는 돈";
-        } else if (type === "receive") {
-          id = "receive";
-          money = "받아야하는 돈";
-        }
+        const id = type === "give" ? "give" : "receive";
+        const money = type === "give" ? "줘야하는 돈" : "받아야하는 돈";
+        const completed = type === "give" ? memo.gcompleted : memo.rcompleted;
+        console.log(completed);
+        console.log(memo);
+        const checkImagePath = completed
+          ? "./img/check.png"
+          : "./img/check-not.png";
 
         const checkDiv = $(`
           <div class="check-box">
-              <img src="./img/check-not.png" class="check" />
+              <img src="${checkImagePath}" class="check" />
           </div>
-       `);
-        contentDiv.html(`
-          <p class="memo" id="${
-            type === "give" ? "give" : "receive"
-          }">${money}</p>
-          <p class="memo-content">${amount}</p>
-          <p class="memo-date">${date}</p>
       `);
 
-        // check 이미지에 클릭 이벤트 리스너 추가
+        contentDiv.html(`
+          <p class="memo" id="${id}">${money}</p>
+          <p class="memo-content">${
+            memo[type === "give" ? "amountGiven" : "amountReceived"]
+          }</p>
+          <p class="memo-date">${formattedDate}</p>
+      `);
+
         checkDiv.find(".check").on("click", function () {
           const currentSrc = $(this).attr("src");
-          const checkImagePath = "./img/check.png";
-          const checkNotImagePath = "./img/check-not.png";
+          const newSrc =
+            currentSrc === "./img/check.png"
+              ? "./img/check-not.png"
+              : "./img/check.png";
+          $(this).attr("src", newSrc);
 
-          if (currentSrc === checkNotImagePath)
-            $(this).attr("src", checkImagePath);
-          else $(this).attr("src", checkNotImagePath);
+          const checkApiUrl = `http://localhost:8085/api/memo/check/${type}/${memo.memoId}`;
+          $.ajax({
+            url: checkApiUrl,
+            type: "PATCH",
+            success: function (response) {
+              console.log("Memo checked successfully:", response);
+            },
+            error: function (error) {
+              console.error("Error checking memo:", error);
+            },
+          });
         });
 
         memoBoxDiv.append(contentDiv);
         memoBoxDiv.append(checkDiv);
+        memoBoxDiv.data("memo-id", memo.memoId); // 메모 ID 저장
         return memoBoxDiv;
       }
-
-      // 페이지 로드 시 데이터 가져오기
-      $(document).ready(function () {
-        loadMemos("all");
-      });
     </script>
 
+    <!-- footer -->
     <footer>
       <nav>
         <ul id="nav-list">

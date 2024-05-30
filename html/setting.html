@@ -1,77 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../css/all.css">
-    <link rel="stylesheet" href="../css/setting.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../css/all.css" />
+    <link rel="stylesheet" href="../css/setting.css" />
+    <!-- jQuery 라이브러리 추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  </head>
+  <body>
+    <!-- header -->
     <header>
-        <a href="../html/mypage.html"><img src="../img/left.png" id="left"></a>
-        <p id="title">설정</p>
+      <a href="../html/mypage.html"><img src="../img/left.png" id="left" /></a>
+      <p id="title">설정</p>
     </header>
 
+    <!-- main -->
     <main>
-        <p>푸쉬 알림</p>
-        
-        <div id="recent-container">
-            <div id="text-box">
-                <p class="box-title">예산초과 알림</p>
-                <p class="box-content">여행소비가 예산을 초과하면 알림을 받습니다</p>
-            </div>
-            <div id="toggle-box">
-                <input type="checkbox" id="toggle1" hidden> 
-                <label for="toggle1" class="toggleSwitch">
-                    <span class="toggleButton"></span>
-                </label>
-            </div>
-        </div>
+      <p>푸쉬 알림</p>
 
-        <div id="spend-container">
-            <div id="text-box">
-                <p class="box-title">오늘의 소비 알림</p>
-                <p class="box-content">하루 소비 목록을 확인할 알림을 받습니다</p>
-            </div>
-            <div id="toggle-box">
-                <input type="checkbox" id="toggle2" hidden> 
-                <label for="toggle2" class="toggleSwitch">
-                    <span class="toggleButton"></span>
-                </label>
-            </div>
+      <div id="recent-container">
+        <div id="text-box">
+          <p class="box-title">예산초과 알림</p>
+          <p class="box-content">여행소비가 예산을 초과하면 알림을 받습니다</p>
         </div>
+        <div id="toggle-box">
+          <input type="checkbox" id="toggle1" hidden />
+          <label for="toggle1" class="toggleSwitch">
+            <span class="toggleButton"></span>
+          </label>
+        </div>
+      </div>
+
+      <div id="spend-container">
+        <div id="text-box">
+          <p class="box-title">오늘의 소비 알림</p>
+          <p class="box-content">하루 소비 목록을 확인할 알림을 받습니다</p>
+        </div>
+        <div id="toggle-box">
+          <input type="checkbox" id="toggle2" hidden />
+          <label for="toggle2" class="toggleSwitch">
+            <span class="toggleButton"></span>
+          </label>
+        </div>
+      </div>
     </main>
 
+    <script>
+      $(document).ready(function () {
+        alarmData(); // 페이지가 로드될 때 초기 데이터 가져오기
+
+        // 예산 초과 알림 토글 변경 이벤트
+        $("#toggle1").change(function () {
+          var isChecked = $(this).prop("checked");
+          updateAlarm("budget", isChecked);
+        });
+
+        // 오늘의 소비 알림 토글 변경 이벤트
+        $("#toggle2").change(function () {
+          var isChecked = $(this).prop("checked");
+          updateAlarm("spend", isChecked);
+        });
+      });
+
+      const userId = localStorage.getItem("userId");
+      const apiUrl = localStorage.getItem("apiUrl");
+
+      // 초기 데이터 가져오기
+      function alarmData() {
+        $.ajax({
+          url: `${apiUrl}/api/alarm/${userId}`,
+          type: "GET",
+          success: function (data) {
+            fillData(data);
+          },
+          error: function () {
+            console.error("Failed to get data from the server.");
+          },
+        });
+      }
+
+      // 토글 변경에 따른 API 호출 및 데이터 업데이트
+      function updateAlarm(type, isChecked) {
+        $.ajax({
+          url: `${apiUrl}/api/alarm/${type}/${userId}`,
+          type: "PATCH", // PATCH 메서드 사용
+          contentType: "application/json",
+          data: JSON.stringify({ enabled: isChecked }),
+          success: function () {
+            console.log(`Alarm ${type} updated successfully.`);
+          },
+          error: function () {
+            console.error(`Failed to update ${type} alarm.`);
+          },
+        });
+      }
+
+      // 데이터 채우기
+      function fillData(data) {
+        if (data.overBudgetAlarm) {
+          $("#toggle1").prop("checked", true);
+        } else {
+          $("#toggle1").prop("checked", false);
+        }
+
+        if (data.spendAlarm) {
+          $("#toggle2").prop("checked", true);
+        } else {
+          $("#toggle2").prop("checked", false);
+        }
+      }
+    </script>
+
+    <!-- footer -->
     <footer>
-        <nav>
-          <ul id="nav-list">
-            <a href="../index.html">
-              <li class="nav-item">
-                <img src="../img/home.png" class="nav-img" />
-                <p>홈</p>
-              </li>
-            </a>
-            <a href="../html/travel.html">
-              <li class="nav-item">
-                <img src="../img/travel.png" class="nav-img" />
-                <p>여행</p>
-              </li>
-            </a>
-            <a href="../html/scan.html">
-              <li class="nav-item">
-                <img src="../img/scan.png" class="nav-img" />
-                <p>스캔</p>
-              </li>
-            </a>
-            <a href="../html/mypage.html">
-              <li class="nav-item">
-                <img src="../img/my-my.png" class="nav-img" />
-                <p id="page">마이페이지</p>
-              </li>
-            </a>
-          </ul>
-        </nav>
-      </footer>
-</body>
+      <nav>
+        <ul id="nav-list">
+          <a href="../index.html">
+            <li class="nav-item">
+              <img src="../img/home.png" class="nav-img" />
+              <p>홈</p>
+            </li>
+          </a>
+          <a href="../html/travel.html">
+            <li class="nav-item">
+              <img src="../img/travel.png" class="nav-img" />
+              <p>여행</p>
+            </li>
+          </a>
+          <a href="../html/scan.html">
+            <li class="nav-item">
+              <img src="../img/scan.png" class="nav-img" />
+              <p>스캔</p>
+            </li>
+          </a>
+          <a href="../html/mypage.html">
+            <li class="nav-item">
+              <img src="../img/my-my.png" class="nav-img" />
+              <p id="page">마이페이지</p>
+            </li>
+          </a>
+        </ul>
+      </nav>
+    </footer>
+  </body>
 </html>

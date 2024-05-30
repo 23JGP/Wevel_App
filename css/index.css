@@ -1,448 +1,483 @@
 body {
-    margin: 0;
-    width: 360px;
-    height: 100vh;
-    display: flex;
-    position: relative;
-    align-content: center;
-    justify-content: center;
+  margin: 0;
+  width: 360px;
+  height: 100vh;
+  display: flex;
+  position: relative;
+  align-content: center;
+  justify-content: center;
 }
 
 #banner {
-    width: 360px;
-    height: 353px;
-    flex-shrink: 0;
+  width: 360px;
+  height: 353px;
+  flex-shrink: 0;
 }
 
 #bubble {
-    width: 360px;
-    margin-top: 66px;
-    position: absolute;
+  width: 360px;
+  margin-top: 66px;
+  position: absolute;
 }
 
 header {
-    top: 0;
-    z-index: 1;
-    width: 360px;
-    height: 56px;
-    display: flex;
-    position: absolute;
-    align-items: center;
-    justify-content: space-between;
+  top: 0;
+  z-index: 1;
+  width: 360px;
+  height: 56px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #logo-box {
-    display: flex;
-    padding-left: 20px;
-    align-items: center;
-    justify-content: flex-start;
+  display: flex;
+  padding-left: 20px;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 #logo {
-    width: 39px;
-    height: 20px;
+  width: 39px;
+  height: 20px;
 }
 
 #logo-title {
-    font-size: 20px;
-    font-weight: 800;
-    line-height: 32px;
-    font-family: 'NanumSquareRound';
-    color: var(--naver-text, #FFF);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 32px;
+  font-family: "NanumSquareRound";
+  color: var(--naver-text, #fff);
 }
 
 #bell {
-    width: 24px;
-    padding-right: 20px;
+  width: 24px;
+  padding-right: 20px;
 }
 
 main {
-    left: 0px;
-    width: 360px;
-    overflow-y: auto;
-    position: absolute;
-    padding-bottom: 72px; 
+  left: 0px;
+  width: 360px;
+  overflow-y: auto;
+  position: absolute;
+  padding-bottom: 72px;
 }
 
 section {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 #recent-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-left: 20px;
-    line-height: 32px;
-    padding-top: 76px;
-    font-style: normal;
-    font-family: 'NanumSquareRound';
-    color: var(--naver-text, #FFF);
+  font-size: 20px;
+  font-weight: 700;
+  margin-left: 20px;
+  line-height: 32px;
+  padding-top: 76px;
+  font-style: normal;
+  font-family: "NanumSquareRound";
+  color: var(--naver-text, #fff);
 }
 
 #recent-container {
-    width: 320px;
-    height: 178px;
-    display: flex;
-    flex-shrink: 0;
-    margin-top: 16px;
-    align-items: center;
-    border-radius: 12px;
-    border: 1px solid #FFF;
-    backdrop-filter: blur(5px); 
-    justify-content: space-between; 
-    box-shadow: 4px 5px 20px 0px rgba(255, 66, 100, 0.40), 0px 4px 15px 0px rgba(0, 0, 0, 0.03);
-    background: radial-gradient(69.1% 69.1% at 50% 50%, rgba(255, 255, 255, 0.00) 81.5%, rgba(255, 255, 255, 0.20) 100%), linear-gradient(111deg, rgba(255, 255, 255, 0.60) 5.69%, rgba(255, 255, 255, 0.18) 81.88%);
+  width: 320px;
+  height: 178px;
+  display: flex;
+  flex-shrink: 0;
+  margin-top: 16px;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid #fff;
+  backdrop-filter: blur(5px);
+  justify-content: space-between;
+  box-shadow: 4px 5px 20px 0px rgba(255, 66, 100, 0.4),
+    0px 4px 15px 0px rgba(0, 0, 0, 0.03);
+  background: radial-gradient(
+      69.1% 69.1% at 50% 50%,
+      rgba(255, 255, 255, 0) 81.5%,
+      rgba(255, 255, 255, 0.2) 100%
+    ),
+    linear-gradient(
+      111deg,
+      rgba(255, 255, 255, 0.6) 5.69%,
+      rgba(255, 255, 255, 0.18) 81.88%
+    );
 }
 
 #recent-container p {
-    padding-left: 24px;
+  padding-left: 24px;
 }
 
 #title {
-    font-size: 24px;
-    margin-top: 24px;
-    font-weight: 800;
-    line-height: 24px;
-    font-style: normal;
-    font-family: 'NanumSquareRound';
-    color: var(--naver-text, #FFF);
+  font-size: 24px;
+  margin-top: 24px;
+  font-weight: 800;
+  line-height: 24px;
+  font-style: normal;
+  font-family: "NanumSquareRound";
+  color: var(--naver-text, #fff);
 }
 
 #spend-money {
-    font-size: 20px;
-    margin-top: 24px;
-    font-weight: 500;
-    font-style: normal;
-    line-height: 22.4px;
-    font-family: 'NanumSquareRound';
-    color: var(--naver-text, #FFF);
+  font-size: 20px;
+  margin-top: 24px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 22.4px;
+  font-family: "NanumSquareRound";
+  color: var(--naver-text, #fff);
 }
 
 #money {
-    font-size: 24px;
-    font-weight: 700;
-    font-style: normal;
-    line-height: 22.4px;
-    font-family: 'NanumSquareRound';
-    color: var(--naver-text, #FFF);
+  font-size: 24px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 22.4px;
+  font-family: "NanumSquareRound";
+  color: var(--naver-text, #fff);
 }
 
 #unit {
-    font-size: 20px;
-    font-weight: 700;
-    font-style: normal;
-    line-height: 22.4px;
-    font-family: 'NanumSquareRound';
-    color: var(--naver-text, #FFF);
+  font-size: 20px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 22.4px;
+  font-family: "NanumSquareRound";
+  color: var(--naver-text, #fff);
 }
 
 #trip-date {
-    font-size: 14px;
-    margin-top: 16px;
-    font-weight: 500;
-    font-style: normal; 
-    line-height: 22.4px;
-    font-family: 'NanumSquareRound';
-    color: var(--naver-text, #FFF);
+  font-size: 14px;
+  margin-top: 16px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 22.4px;
+  font-family: "NanumSquareRound";
+  color: var(--naver-text, #fff);
 }
 
 #date {
-    font-size: 12px;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 19.2px;
-    font-family: 'NanumSquareRound';
-    color: rgba(255, 255, 255, 0.60);
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 19.2px;
+  font-family: "NanumSquareRound";
+  color: rgba(255, 255, 255, 0.6);
 }
 
 #right {
-    width: 12.5px;
-    height: 20px;
-    flex-shrink: 0;
-    margin-right: 20px;
+  width: 12.5px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-right: 20px;
 }
 
 #budget-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    text-align: center;
-    width: 320px;
-    height: 148px;
-    flex-shrink: 0;
-    margin-top: 72px;
-    border-radius: 12px;
-    border: 1px solid var(--Gray-02, #F0F2F6);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: center;
+  width: 320px;
+  height: 148px;
+  flex-shrink: 0;
+  margin-top: 72px;
+  border-radius: 12px;
+  border: 1px solid var(--Gray-02, #f0f2f6);
 }
 
 #budget,
 #remain {
-    display: flex;
-    text-align: left;
-    align-items: center;
+  display: flex;
+  text-align: left;
+  align-items: center;
 }
 
 #trip-img {
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    margin-left: 16px;
-    border-radius: 40px;
-    border: 1px solid var(--Gray-02, #F0F2F6);
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  margin-left: 16px;
+  border-radius: 40px;
+  border: 1px solid var(--Gray-02, #f0f2f6);
 }
 
 #trip-title {
-    font-size: 14px;
-    font-weight: 500;
-    color: #2C2C2C;
-    margin-left: 12px;
-    font-style: normal;
-    line-height: 22.4px;
-    font-family: 'NanumSquareRound';
+  font-size: 14px;
+  font-weight: 500;
+  color: #2c2c2c;
+  margin-left: 12px;
+  font-style: normal;
+  line-height: 22.4px;
+  font-family: "NanumSquareRound";
 }
 
 #budget-cash {
-    font-size: 12px;
-    font-weight: 400;
-    margin-left: 58px;
-    font-style: normal;
-    line-height: 19.2px;
-    font-family: 'NanumSquareRound';
-    color: var(--Gray-04, #707174);
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 50px;
+  font-style: normal;
+  line-height: 19.2px;
+  font-family: "NanumSquareRound";
+  color: var(--Gray-04, #707174);
 }
 
 #cash {
-    font-size: 20px;
-    font-weight: 600;
-    margin-left: 8px;
-    font-style: normal;
-    line-height: 22.4px;
-    font-family: 'NanumSquareRound';
-    color: var(--Primary-main, #ED4B62);
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 4px;
+  font-style: normal;
+  line-height: 22.4px;
+  font-family: "NanumSquareRound";
+  color: var(--Primary-main, #ed4b62);
 }
 
 #budget-line {
-    height: 1px;
-    width: 288px;
-    margin: 0 auto;
-    flex-shrink: 0;
-    background: var(--Gray-02, #F0F2F6);
+  height: 1px;
+  width: 288px;
+  margin: 0 auto;
+  flex-shrink: 0;
+  background: var(--Gray-02, #f0f2f6);
 }
 
 #remain-box1 {
-    margin-left: 16px;
+  margin-left: 16px;
 }
 
 #remain-money {
-    font-size: 12px;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 19.2px;
-    font-family: 'NanumSquareRound';
-    color: var(--Gray-04, #707174); 
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 19.2px;
+  font-family: "NanumSquareRound";
+  color: var(--Gray-04, #707174);
 }
 
 #remain-amount {
-    font-size: 14px;
-    font-weight: 600;
-    font-style: normal;
-    line-height: 22.4px;
-    font-family: 'NanumSquareRound';
-    color: var(--Gray-05, #2C2C2C);
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 22.4px;
+  font-family: "NanumSquareRound";
+  color: var(--Gray-05, #2c2c2c);
 }
 
 #percentage {
-    font-size: 14px;
-    font-weight: 600;
-    font-style: normal; 
-    line-height: 22.4px;
-    font-family: 'NanumSquareRound';
-    color: var(--Gray-04, #707174);
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 22.4px;
+  font-family: "NanumSquareRound";
+  color: var(--Gray-04, #707174);
 }
 
 #use {
-    font-size: 12px;
-    font-weight: 400;
-    margin-left: 62px;
-    font-style: normal;
-    line-height: 19.2px;
-    font-family: 'NanumSquareRound';
-    color: var(--Gray-04, #707174);
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 62px;
+  font-style: normal;
+  line-height: 19.2px;
+  font-family: "NanumSquareRound";
+  color: var(--Gray-04, #707174);
 }
 
 #progress-bar {
-    width: 168px;
-    height: 12px;
-    margin-top: 8px;
-    border-radius: 5px;
-    margin: 8px 0 0 62px;
-    background-color: #FFF6F8;
+  width: 168px;
+  height: 12px;
+  margin-top: 8px;
+  border-radius: 5px;
+  margin: 8px 0 0 62px;
+  background-color: #fff6f8;
 }
 
 #progress {
-    height: 100%;
-    border-radius: 5px;
-    width: var(--percentage);
-    background-color: #ED4B62;
+  height: 100%;
+  border-radius: 5px;
+  width: var(--percentage);
+  background-color: #ed4b62;
 }
 
 #memo-title {
-    font-size: 16px;
-    margin-top: 40px;
-    font-weight: 700;
-    line-height: 14px;
-    font-style: normal;
-    font-family: 'NanumSquareRound';
-    color: var(--Gray-05, #2C2C2C);
+  font-size: 16px;
+  margin-top: 40px;
+  font-weight: 700;
+  line-height: 14px;
+  font-style: normal;
+  font-family: "NanumSquareRound";
+  color: var(--Gray-05, #2c2c2c);
 }
 
 #memo-cnt {
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 14px;
-    font-style: normal;
-    font-family: 'NanumSquareRound';
-    color: var(--Primary-main, #ED4B62);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 14px;
+  font-style: normal;
+  font-family: "NanumSquareRound";
+  color: var(--Primary-main, #ed4b62);
 }
 
 #memo-menu {
-    gap: 4px;
-    align-items: center;
-    display: inline-flex;
-    justify-content: center;
+  gap: 4px;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
 }
 
 #memo-menu p {
-    padding: 0 4px;
-    font-size: 12px;
-    margin-top: 16px;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 19.2px;
-    border-radius: 30px;
-    font-family: 'NanumSquareRound';
-    color: var(--Gray-03, #C0C2C8);
-    background: var(--Gray-01, #FFF);
-    border: 1px solid var(--Gray-02, #F0F2F6);
+  padding: 0 4px;
+  font-size: 12px;
+  margin-top: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 19.2px;
+  border-radius: 30px;
+  font-family: "NanumSquareRound";
+  color: var(--Gray-03, #c0c2c8);
+  background: var(--Gray-01, #fff);
+  border: 1px solid var(--Gray-02, #f0f2f6);
 }
 
 #memo-menu p:hover {
-    border-radius: 30px;
-    background: #F0F2F6;
-    color: var(--Gray-03, #C0C2C8);
-    border: 1px solid var(--Gray-03, #C0C2C8);
+  border-radius: 30px;
+  background: #f0f2f6;
+  color: var(--Gray-03, #c0c2c8);
+  border: 1px solid var(--Gray-03, #c0c2c8);
 }
 
 .memo-box {
-    width: 320px;
-    height: 87px;
-    display: flex;
-    flex-shrink: 0;
-    margin-top: 12px;
-    align-items: center;
-    border-radius: 12px;
-    justify-content: space-between;
-    background: var(--Gray-01, #FFF);
-    border: 1px solid var(--Gray-02, #F0F2F6);
+  width: 320px;
+  height: 87px;
+  display: flex;
+  flex-shrink: 0;
+  margin-top: 12px;
+  align-items: center;
+  border-radius: 12px;
+  justify-content: space-between;
+  background: var(--Gray-01, #fff);
+  border: 1px solid var(--Gray-02, #f0f2f6);
 }
 
 .memo-box:last-child {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .memo {
-    font-size: 10px;
-    font-weight: 400;
-    padding: 2px 8px;
-    margin-left: 12px;
-    line-height: 16px;
-    font-style: normal;
-    border-radius: 30px;
-    border-radius: 30px;
-    display: inline-flex;
-    font-family: 'NanumSquareRound';
+  font-size: 10px;
+  font-weight: 400;
+  padding: 2px 8px;
+  margin-left: 12px;
+  line-height: 16px;
+  font-style: normal;
+  border-radius: 30px;
+  border-radius: 30px;
+  display: inline-flex;
+  font-family: "NanumSquareRound";
 }
 
 #give {
-    color: #F6C06F;
-    background: #FFF7DD;
+  color: #f6c06f;
+  background: #fff7dd;
 }
 
 #receive {
-    color: var(--Primary-main, #ED4B62);
-    background: var(--Primary-disabled, #FFF6F8);
+  color: var(--Primary-main, #ed4b62);
+  background: var(--Primary-disabled, #fff6f8);
 }
 
 .memo-content {
-    font-size: 14px;
-    margin-top: 6px;
-    font-weight: 400;
-    font-style: normal;
-    margin-left: 12px;
-    line-height: 22.4px;
-    font-family: 'NanumSquareRound';
-    color: var(--Gray-05, #2C2C2C);
+  font-size: 14px;
+  margin-top: 6px;
+  font-weight: 400;
+  font-style: normal;
+  margin-left: 12px;
+  line-height: 22.4px;
+  font-family: "NanumSquareRound";
+  color: var(--Gray-05, #2c2c2c);
 }
 
 .memo-date {
-    font-size: 10px;
-    font-weight: 400;
-    margin-left: 12px;
-    line-height: 16px;
-    font-style: normal;
-    font-family: 'NanumSquareRound';
-    color: var(--Gray-03, #C0C2C8);
+  font-size: 10px;
+  font-weight: 400;
+  margin-left: 12px;
+  line-height: 16px;
+  font-style: normal;
+  font-family: "NanumSquareRound";
+  color: var(--Gray-03, #c0c2c8);
 }
 
 .check {
-    gap: 2px;
-    width: 24px;
-    padding-right: 12px;   
-    align-items: center;
-    display: inline-flex;
-    flex-direction: column;
+  gap: 2px;
+  width: 24px;
+  padding-right: 12px;
+  align-items: center;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.no-memos {
+  padding: 0;
+  margin-top: 25px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.no-memos img {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 16px;
+}
+
+.no-memos p {
+  font-family: "NanumSquareRound";
+  color: var(--Gray-03, #c0c2c8);
+  font-size: 14px;
+  margin: 0;
 }
 
 footer {
-    bottom: 0;
-    width: 360px;
-    height: 72px;
-    flex-shrink: 0;
-    position: fixed;
-    background-color: #FFF;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.10));
+  bottom: 0;
+  width: 360px;
+  height: 72px;
+  flex-shrink: 0;
+  position: fixed;
+  background-color: #fff;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.1));
 }
 
 #nav-list {
-    display: flex;
-    align-items: center;
-    list-style-type: none;
-    justify-content: space-around;
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  justify-content: space-around;
 }
 
 .nav-item {
-    display: flex;
-    margin-top: 16px;
-    column-gap: 70px;
-    text-align: center;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  margin-top: 16px;
+  column-gap: 70px;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .nav-item p {
-    font-size: 10px;
-    margin-top: 4px;
-    color: #C0C0C0;
-    font-family: 'NanumSquareRound';
+  font-size: 10px;
+  margin-top: 4px;
+  color: #c0c0c0;
+  font-family: "NanumSquareRound";
 }
 
 #page {
-    color: #ED4B62;
+  color: #ed4b62;
 }
 
 .nav-img {
-    width: 24px;
+  width: 24px;
 }
