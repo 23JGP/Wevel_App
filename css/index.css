@@ -224,7 +224,7 @@ section {
 #cash {
   font-size: 20px;
   font-weight: 600;
-  margin-left: 8px;
+  margin-left: 4px;
   font-style: normal;
   line-height: 22.4px;
   font-family: "NanumSquareRound";
@@ -415,7 +415,7 @@ section {
 
 .no-memos {
   padding: 0;
-  margin-top: 40px;
+  margin-top: 25px;
   margin-right: 20px;
   display: flex;
   flex-direction: column;

@@ -1,166 +1,167 @@
 body {
-    margin: 0;
-    width: 360px;
-    height: 100vh;
-    display: flex;
-    align-content: center;
-    justify-content: center;
+  margin: 0;
+  width: 360px;
+  height: 100vh;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
 header {
-    width: 100%;
-    height: 56px;
-    display: flex;
-    position: absolute;
-    align-items: center;
+  width: 100%;
+  height: 56px;
+  display: flex;
+  position: absolute;
+  align-items: center;
 }
 
 #left {
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
-    margin-left: 13px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-left: 13px;
 }
 
 #title {
-    font-size: 20px;
-    font-weight: 500;
-    margin-left: 8px;
-    line-height: 28px;
-    font-style: normal;
-    font-family: 'NanumSquareRound';
-    color: var(--kakao-logo, #000);
+  font-size: 20px;
+  font-weight: 500;
+  margin-left: 8px;
+  line-height: 28px;
+  font-style: normal;
+  font-family: "NanumSquareRound";
+  color: var(--kakao-logo, #000);
 }
 
 main {
-    width: 100%;
-    margin: 76px 20px 0 20px;
+  width: 100%;
+  margin: 76px 20px 0 20px;
 }
 
 main > p {
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 14px;
-    font-style: normal;
-    margin-bottom: 16px;
-    font-family: 'NanumSquareRound';
-    color: var(--Gray-05, #2C2C2C);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 14px;
+  font-style: normal;
+  margin-bottom: 16px;
+  font-family: "NanumSquareRound";
+  color: var(--Gray-05, #2c2c2c);
 }
 
 #recent-container,
 #spend-container {
-    height: 73px;
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: space-between;
+  height: 73px;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .box-title {
-    font-size: 14px;
-    font-weight: 400;
-    font-style: normal;
-    line-height: normal;
-    font-family: 'Pretendard';
-    color: var(--Gray-05, #2C2C2C);
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+  font-family: "Pretendard";
+  color: var(--Gray-05, #2c2c2c);
 }
 
 .box-content {
-    font-size: 12px;
-    margin-top: 4px;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 19.2px;
-    font-family: 'Pretendard';
-    color: var(--Gray-03, #C0C2C8);
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 19.2px;
+  font-family: "Pretendard";
+  color: var(--Gray-03, #c0c2c8);
 }
 
 .toggleSwitch {
-    width: 50px;
-    height: 12px;
-    display: block;
-    position: relative;
-    border-radius: 30px;
-    background: var(--Gray-02, #F0F2F6);
-    filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.10));
+  width: 50px;
+  height: 12px;
+  display: block;
+  position: relative;
+  border-radius: 30px;
+  background: var(--Gray-02, #f0f2f6);
+  filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.1));
 }
 
 .toggleSwitch .toggleButton {
-    top: 50%;
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    background: #FFF;
-    border-radius: 30px;
-    transform: translateY(-50%);
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  background: #fff;
+  border-radius: 30px;
+  transform: translateY(-50%);
 }
 
 #toggle1:checked ~ .toggleSwitch {
-    background: #F03D3D;
+  background: #f79fab;
 }
 
 #toggle1:checked ~ .toggleSwitch .toggleButton {
-    left: 26px;
-    background: #ED4B62;
+  left: 26px;
+  background: #ed4b62;
 }
 
 #toggle2:checked ~ .toggleSwitch {
-    background: #F03D3D;
+  background: #f79fab;
 }
 
 #toggle2:checked ~ .toggleSwitch .toggleButton {
-    left: 26px;
-    background: #ED4B62;
+  left: 26px;
+  background: #ed4b62;
 }
 
-.toggleSwitch, .toggleButton {
-    transition: all 0.2s ease-in;
+.toggleSwitch,
+.toggleButton {
+  transition: all 0.2s ease-in;
 }
 
 #toggle:checked ~ .toggleSwitch {
-    background: #F79FAB;
+  background: #f79fab;
 }
 
 footer {
-    bottom: 0;
-    width: 360px;
-    height: 72px;
-    flex-shrink: 0;
-    position: fixed;
-    background-color: #FFF;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.10));
+  bottom: 0;
+  width: 360px;
+  height: 72px;
+  flex-shrink: 0;
+  position: fixed;
+  background-color: #fff;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.1));
 }
 
 #nav-list {
-    display: flex;
-    align-items: center;
-    list-style-type: none;
-    justify-content: space-around;
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  justify-content: space-around;
 }
 
 .nav-item {
-    display: flex;
-    margin-top: 16px;
-    column-gap: 70px;
-    text-align: center;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  margin-top: 16px;
+  column-gap: 70px;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .nav-item p {
-    font-size: 10px;
-    margin-top: 4px;
-    color: #C0C0C0;
-    font-family: 'NanumSquareRound';
+  font-size: 10px;
+  margin-top: 4px;
+  color: #c0c0c0;
+  font-family: "NanumSquareRound";
 }
 
 #page {
-    color: #ED4B62;
+  color: #ed4b62;
 }
 
 .nav-img {
-    width: 24px;
+  width: 24px;
 }

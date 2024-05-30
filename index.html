@@ -75,6 +75,10 @@
           <p onclick="latestTripId('give')">줘야하는 돈</p>
           <p onclick="latestTripId('receive')">받아야하는 돈</p>
         </div>
+        <div class="no-memos">
+          <img src="./img/no-memos.png" alt="No memos" />
+          <p class="no-memo-text">아직 메모가 없습니다</p>
+        </div>
         <div id="memo-list"></div>
         <!-- <div class="memo-box">
           <div>
@@ -250,26 +254,16 @@
         });
       }
 
-      function displayNoMemosMessage() {
-        const memoContainerDiv = $("#memo-container");
-        const noMemosDiv = $("<div class='no-memos'>");
-
-        const noMemosImage = $("<img>")
-          .attr("src", "./img/no-memos.png")
-          .attr("alt", "No memos");
-
-        const noMemosText = $("<p class='no-memo-text'>").text(
-          "아직 메모가 없습니다"
-        );
-
-        noMemosDiv.append(noMemosImage);
-        noMemosDiv.append(noMemosText);
-
-        memoContainerDiv.append(noMemosDiv);
+      function removeNoMemos() {
+        var noMemosElement = document.querySelector(".no-memos");
+        if (noMemosElement) {
+          noMemosElement.remove();
+        }
       }
 
       function displayMemos(memos, menu, tripId) {
         const memoListDiv = $("#memo-list");
+        removeNoMemos();
         memoListDiv.empty(); // 이전 메모 삭제
 
         let memoCount = 0;
