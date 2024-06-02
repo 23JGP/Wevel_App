@@ -23,16 +23,18 @@
     <main>
         <div id="receipt-container">
             <div id="input-box">
-                <input type="text" id="receipt-title" placeholder="영수증 이름">
+                <input type="text" id="receipt-title" placeholder="영수증 이름" maxlength="12" autocomplete="off">
                 <div id="line"></div>
                 <input type="date" id="receipt-date">
             </div>
 
             <div id="list-box">
                 <div id="list-header">
-                    <p class="list-name">상품명</p>
-                    <p class="list-cnt">수량</p>
-                    <p class="list-cnt">금액</p>
+                    <p>상품명</p>
+                    <div>
+                        <p>수량</p>
+                        <p>금액</p>
+                    </div>
                 </div>
 
                 <div id="table-line"></div>
