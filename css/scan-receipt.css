@@ -124,7 +124,6 @@ main {
 #list-header {
     width: 288px;
     display: flex;
-    padding: 0 12px;
     font-size: 12px;
     color: var(--Gray-04, #707174);
 }
@@ -150,9 +149,8 @@ main {
 
 .list {
     width: 288px;
-    height: 31px;
+    height: 35px;
     display: flex;
-    padding: 0 12px;
     font-size: 12px;
     align-items: center;
 }
