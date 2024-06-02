@@ -53,9 +53,11 @@ main {
 }
 
 #receipt-container {
-    min-height: 303px;
+    height: calc(303px + 140px);
+    /* min-height: 303px; */
     margin: 20px 0 40px 0;
     background-color: #FFF;
+    font-family: 'Pretendard';
     filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.16));
 }
 
@@ -115,10 +117,10 @@ main {
 }
 
 #list-header {
-    width: 288px;
+    width: 264px;
     display: flex;
+    padding: 0 12px;
     font-size: 12px;
-    justify-content: space-between;
     color: var(--Gray-04, #707174);
 }
 
@@ -140,8 +142,28 @@ main {
     border: 1px dashed #C0C2C8;
 }
 
+.list {
+    width: 264px;
+    height: 31px;
+    display: flex;
+    padding: 0 12px;
+    font-size: 12px;
+    align-items: center;
+}
+
+.list-name {
+    width: 164px;
+}
+
+.list-cnt,
+.list-price {
+    width: 62px;
+    text-align: right;
+}
+
+
 #list-tax {
-    width: 100%;
+    width: 288px;
     display: flex;
     font-size: 14px;
     justify-content: space-between;
@@ -183,6 +205,7 @@ main {
 #receive-box {
     width: 308px;
     height: 55px;
+    resize: none;
     outline: none;
     flex-shrink: 0;
     font-size: 14px;
