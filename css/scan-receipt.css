@@ -156,6 +156,11 @@ main {
     justify-content: space-between;
 }
 
+#sum {
+    font-size: 20px;
+    color: #ED4B62;
+}
+
 #give-container
 #receive-container {
     height: 87px;
