@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var shareText = document.getElementById('share-box');
     var saveText = document.getElementById('save-box');
     var sum = document.getElementById('sum');
+    var tax = document.getElementById('tax');
     var prices = document.getElementsByClassName('list-price');
     var titleText = document.getElementById('logo-title');
     var listItems = document.querySelectorAll('.list');
@@ -80,10 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 합계 구하기
     function calculateSum() {
         var total = 0;
+        tax = parseFloat(tax.textContent);
         for (var i = 0; i < prices.length; i++) {
             total += parseFloat(prices[i].textContent);
         }
-        sum.textContent = total;
+        sum.textContent = total + tax;
     }
     calculateSum();
 });
