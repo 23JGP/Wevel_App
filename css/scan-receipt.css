@@ -1,12 +1,18 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
+    margin: 0;
     width: 100%;
+    overflow-x: hidden;
     background-color: #F4F6F7;
 }
 
 header {
     top: 0;
     z-index: 1;
-    width: 360px;
+    width: 100%;
     height: 56px;
     display: flex;
     align-items: center;
@@ -53,11 +59,10 @@ main {
 }
 
 #receipt-container {
-    height: calc(303px + 140px);
-    /* min-height: 303px; */
     margin: 20px 0 40px 0;
     background-color: #FFF;
     font-family: 'Pretendard';
+    height: calc(303px + 140px);
     filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.16));
 }
 
@@ -117,7 +122,7 @@ main {
 }
 
 #list-header {
-    width: 264px;
+    width: 288px;
     display: flex;
     padding: 0 12px;
     font-size: 12px;
@@ -126,13 +131,14 @@ main {
 
 #table-line {
     height: 1px;
-    width: 288px;
+    width: 100%;
+    max-width: 288px;
     margin: 10px 0 16px 0;
     background-color: var(--Gray-03, #C0C2C8);
 }
 
 #list-footer {
-    width: 288px;
+    width: 100%;
     height: 104px;
 }
 
@@ -143,7 +149,7 @@ main {
 }
 
 .list {
-    width: 264px;
+    width: 288px;
     height: 31px;
     display: flex;
     padding: 0 12px;
@@ -161,9 +167,8 @@ main {
     text-align: right;
 }
 
-
 #list-tax {
-    width: 288px;
+    width: 100%;
     display: flex;
     font-size: 14px;
     justify-content: space-between;
@@ -187,7 +192,7 @@ main {
 #receive-container {
     height: 87px;
     display: flex;
-    position: absolute;
+    position: relative;
     flex-direction: column;
 }
 
@@ -203,7 +208,7 @@ main {
 
 #give-box,
 #receive-box {
-    width: 308px;
+    width: 100%;
     height: 55px;
     resize: none;
     outline: none;
