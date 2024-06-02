@@ -125,7 +125,13 @@ main {
     width: 288px;
     display: flex;
     font-size: 12px;
+    justify-content: space-between;
     color: var(--Gray-04, #707174);
+}
+
+#list-header div {
+    display: flex;
+    column-gap: 40px;
 }
 
 #table-line {

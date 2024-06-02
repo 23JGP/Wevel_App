@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var prices = document.getElementsByClassName('list-price');
     var titleText = document.getElementById('logo-title');
     var listItems = document.querySelectorAll('.list');
+    var listHeaderDiv = document.querySelector('#list-header div');
 
     // list 삭제
     function addDeleteButtons() {
@@ -44,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.style.borderRadius = '8px';
                 item.style.border = '1px solid #F0F2F6';
             });
+            listHeaderDiv.style.columnGap = '65px';
             addDeleteButtons();
         } else {
             correctionText.textContent = '수정';
@@ -53,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.style.borderRadius = '0';
                 item.style.padding = '0';
             });
+            listHeaderDiv.style.columnGap = '40px';
             removeDeleteButtons();
         }
     });
