@@ -114,6 +114,10 @@ document.addEventListener('DOMContentLoaded', function() {
         var newItem = document.createElement('div');
         newItem.classList.add('list');
 
+        newItem.style.padding = '12px';
+        newItem.style.borderRadius = '8px';
+        newItem.style.border = '1px solid #F0F2F6';
+
         var itemNameInput = document.createElement('input');
         itemNameInput.type = 'text';
         itemNameInput.value = '상품명을 입력하세요';
@@ -154,9 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
         listBody.insertBefore(newItem, listAddButton);
 
         listItems = document.querySelectorAll('.list');
-        if (correctionText.textContent === '완료') {
-            addDeleteButtons();
-        }
 
         calculateSum();
     });
