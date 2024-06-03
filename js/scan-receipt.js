@@ -158,9 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
         listBody.insertBefore(newItem, listAddButton);
 
         listItems = document.querySelectorAll('.list');
-        if (correctionText.textContent === '완료') {
-            addDeleteButtons();
-        }
 
         calculateSum();
     });
