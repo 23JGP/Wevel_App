@@ -153,6 +153,12 @@ main {
     border: 1px dashed #C0C2C8;
 }
 
+#list-body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+}
+
 .list {
     width: 288px;
     height: 35px;
@@ -169,6 +175,28 @@ main {
 .list-price {
     width: 62px;
     text-align: right;
+}
+
+.list input {
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-size: 12px;
+    font-family: 'Pretendard';
+}
+
+.list input:nth-child(1) {
+    width: 164px;
+}
+
+.list input:nth-child(2) {
+    width: 43px;
+    text-align: center;
+}
+
+.list input:nth-child(3) {
+    text-align: right;
+    width: calc(100% - 152px - 43px);
 }
 
 #list-tax {
@@ -197,7 +225,7 @@ main {
     height: 32px;
     display: none;
     padding: 5px 0;
-    margin-top: 16px;
+    margin-top: 14px;
     color: #F0F2F6;
     text-align: center;
     border-radius: 4px;

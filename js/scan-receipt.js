@@ -146,7 +146,6 @@ document.addEventListener('DOMContentLoaded', function() {
         deleteButton.style.width = '10px';
         deleteButton.style.height = '10px';
         deleteButton.style.cursor = 'pointer';
-        deleteButton.style.marginLeft = '12px';
         deleteButton.classList.add('delete-button');
         newItem.appendChild(deleteButton);
 
