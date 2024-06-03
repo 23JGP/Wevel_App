@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             deleteButton.addEventListener('click', function() {
                 item.remove();
+                listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) - 35) + 'px';
                 calculateSum();
             });
 
@@ -156,10 +157,11 @@ document.addEventListener('DOMContentLoaded', function() {
         deleteButton.addEventListener('click', function() {
             newItem.remove();
             calculateSum();
+            listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) - 35) + 'px';
         });
 
         listBody.insertBefore(newItem, listAddButton);
-
+        listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) + 35) + 'px';
         listItems = document.querySelectorAll('.list');
 
         calculateSum();
