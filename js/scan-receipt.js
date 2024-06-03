@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var listAddButton = document.querySelector('.list-add');
     var listBody = document.getElementById('list-body');
     var listItems = document.querySelectorAll('.list');
+    var listContainer = document.getElementById('receipt-container');
 
     // 삭제 이미지
     function addDeleteButtons() {
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.style.border = '1px solid #F0F2F6';
             });
             listHeaderDiv.style.columnGap = '65px';
+            listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) + 56) + 'px';
             listAddButton.style.display = 'block';
             addDeleteButtons();
         } else {
@@ -76,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.style.padding = '0';
             });
             listHeaderDiv.style.columnGap = '40px';
+            listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) - 56) + 'px';
             listAddButton.style.display = 'none';
             removeDeleteButtons();
             calculateSum(); 
