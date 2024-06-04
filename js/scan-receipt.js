@@ -90,6 +90,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (shareText.textContent === '나누기') {
             shareText.textContent = '취소';
             saveText.textContent = '다음';
+            shareText.style.backgroundColor = '#F0F2F6';
+            shareText.style.color = '#707174';
+
+            setTimeout(function() {
+                shareText.style.backgroundColor = '';
+                shareText.style.color = '';
+            }, 1000);
+
         } else {
             shareText.textContent = '나누기';
             saveText.textContent = '저장하기';
