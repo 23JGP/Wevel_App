@@ -104,6 +104,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 shareText.style.color = '';
             }, 500);
 
+            var shareBox = document.createElement('div');
+            shareBox.style.color = '#FFF';
+            shareBox.style.width = '320px';
+            shareBox.style.height = '39px';
+            shareBox.style.display = 'flex';
+            shareBox.style.fontSize = '14px';
+            shareBox.style.borderRadius = '8px';
+            shareBox.style.alignItems = 'center';
+            shareBox.style.padding = '8px 0 8px 14px';
+            shareBox.style.backgroundColor = '#464D57';
+            shareBox.textContent = '같이 산 물건을 선택해주세요';
+            listContainer.appendChild(shareBox);
+
         } else {
             shareText.textContent = '나누기';
             saveText.textContent = '저장하기';
