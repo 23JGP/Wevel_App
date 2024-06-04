@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
             listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) + 56) + 'px';
             listAddButton.style.display = 'block';
             addDeleteButtons();
+            shareText.classList.remove('disabled');
         } else {
             correctionText.textContent = '수정';
             titleText.textContent = '영수증';
@@ -83,13 +84,39 @@ document.addEventListener('DOMContentLoaded', function() {
             listAddButton.style.display = 'none';
             removeDeleteButtons();
             calculateSum(); 
+            shareText.classList.add('disabled');
         }
     });
 
     shareText.addEventListener('click', function() {
+        if (correctionText.textContent !== '완료') {
+            return;
+        }
+
         if (shareText.textContent === '나누기') {
             shareText.textContent = '취소';
             saveText.textContent = '다음';
+            shareText.style.backgroundColor = '#F0F2F6';
+            shareText.style.color = '#707174';
+
+            setTimeout(function() {
+                shareText.style.backgroundColor = '';
+                shareText.style.color = '';
+            }, 500);
+
+            var shareBox = document.createElement('div');
+            shareBox.style.color = '#FFF';
+            shareBox.style.width = '320px';
+            shareBox.style.height = '39px';
+            shareBox.style.display = 'flex';
+            shareBox.style.fontSize = '14px';
+            shareBox.style.borderRadius = '8px';
+            shareBox.style.alignItems = 'center';
+            shareBox.style.padding = '8px 0 8px 14px';
+            shareBox.style.backgroundColor = '#464D57';
+            shareBox.textContent = '같이 산 물건을 선택해주세요';
+            listContainer.appendChild(shareBox);
+
         } else {
             shareText.textContent = '나누기';
             saveText.textContent = '저장하기';
