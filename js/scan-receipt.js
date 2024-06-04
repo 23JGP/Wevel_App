@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
             listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) + 56) + 'px';
             listAddButton.style.display = 'block';
             addDeleteButtons();
+            shareText.classList.remove('disabled');
         } else {
             correctionText.textContent = '수정';
             titleText.textContent = '영수증';
@@ -83,10 +84,15 @@ document.addEventListener('DOMContentLoaded', function() {
             listAddButton.style.display = 'none';
             removeDeleteButtons();
             calculateSum(); 
+            shareText.classList.add('disabled');
         }
     });
 
     shareText.addEventListener('click', function() {
+        if (correctionText.textContent !== '완료') {
+            return;
+        }
+
         if (shareText.textContent === '나누기') {
             shareText.textContent = '취소';
             saveText.textContent = '다음';
@@ -96,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 shareText.style.backgroundColor = '';
                 shareText.style.color = '';
-            }, 1000);
+            }, 500);
 
         } else {
             shareText.textContent = '나누기';
