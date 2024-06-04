@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
             shareBox.style.height = '39px';
             shareBox.style.display = 'flex';
             shareBox.style.fontSize = '14px';
+            shareBox.style.marginTop = '35px';
             shareBox.style.borderRadius = '8px';
             shareBox.style.alignItems = 'center';
             shareBox.style.padding = '8px 0 8px 14px';
