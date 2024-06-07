@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var listBody = document.getElementById('list-body');
     var listItems = document.querySelectorAll('.list');
     var listContainer = document.getElementById('receipt-container');
+    var selectedItem = null;  // Track the currently selected item
 
-    // 삭제 이미지
     function addDeleteButtons() {
         listItems.forEach(function(item) {
             var deleteButton = document.createElement('img');
@@ -56,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // footer toggle 
     correctionText.addEventListener('click', function() {
         if (correctionText.textContent === '수정') {
             correctionText.textContent = '완료';
@@ -96,12 +95,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (shareText.textContent === '나누기') {
             shareText.textContent = '취소';
             saveText.textContent = '다음';
-            shareText.style.backgroundColor = '#F0F2F6';
             shareText.style.color = '#707174';
+            shareText.style.backgroundColor = '#F0F2F6';
 
             setTimeout(function() {
-                shareText.style.backgroundColor = '';
                 shareText.style.color = '';
+                shareText.style.backgroundColor = '';
             }, 500);
 
             var shareBox = document.createElement('div');
@@ -118,9 +117,28 @@ document.addEventListener('DOMContentLoaded', function() {
             shareBox.textContent = '같이 산 물건을 선택해주세요';
             listContainer.appendChild(shareBox);
 
+            var listInputs = document.querySelectorAll('.list input');
+            listInputs.forEach(function(input) {
+                input.disabled = true;
+            });
+
+            listItems.forEach(function(item) {
+                item.addEventListener('click', toggleBorder);
+            });
+
         } else {
             shareText.textContent = '나누기';
             saveText.textContent = '저장하기';
+            var listInputs = document.querySelectorAll('.list input');
+            listInputs.forEach(function(input) {
+                input.disabled = false;
+            });
+
+            listItems.forEach(function(item) {
+                item.removeEventListener('click', toggleBorder);
+                item.style.background = '#FFF';
+                item.style.border = '1px solid #F0F2F6';
+            });
         }
     });
 
@@ -130,7 +148,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // 합계 구하기
+    function toggleBorder(event) {
+        var item = event.currentTarget;
+        if (selectedItem) {
+            selectedItem.style.border = '1px solid #F0F2F6';
+            selectedItem.style.backgroundColor = '#FFF';
+        }
+        if (selectedItem !== item) {
+            item.style.backgroundColor = '#FFF6F8';
+            item.style.border = '1px solid #FFBEC7';
+            selectedItem = item;
+            saveText.textContent = '선택';
+        } else {
+            selectedItem = null;
+        }
+    }
+
     function calculateSum() {
         var total = 0;
         var taxValue = parseFloat(tax.textContent);
@@ -141,7 +174,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     calculateSum();
 
-    // .list 추가
     listAddButton.addEventListener('click', function() {
         var newItem = document.createElement('div');
         newItem.classList.add('list');
@@ -195,7 +227,6 @@ document.addEventListener('DOMContentLoaded', function() {
         calculateSum();
     });
 
-    // .list 삭제
     function removeDeleteButtons() {
         var deleteButtons = document.querySelectorAll('.delete-button');
         deleteButtons.forEach(function(button) {
