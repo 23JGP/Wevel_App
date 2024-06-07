@@ -158,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
             item.style.backgroundColor = '#FFF6F8';
             item.style.border = '1px solid #FFBEC7';
             selectedItem = item;
+            saveText.textContent = '선택';
         } else {
             selectedItem = null;
         }
