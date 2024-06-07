@@ -96,12 +96,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (shareText.textContent === '나누기') {
             shareText.textContent = '취소';
             saveText.textContent = '다음';
-            shareText.style.backgroundColor = '#F0F2F6';
             shareText.style.color = '#707174';
+            shareText.style.backgroundColor = '#F0F2F6';
 
             setTimeout(function() {
-                shareText.style.backgroundColor = '';
                 shareText.style.color = '';
+                shareText.style.backgroundColor = '';
             }, 500);
 
             var shareBox = document.createElement('div');
@@ -118,9 +118,17 @@ document.addEventListener('DOMContentLoaded', function() {
             shareBox.textContent = '같이 산 물건을 선택해주세요';
             listContainer.appendChild(shareBox);
 
+            var listInputs = document.querySelectorAll('.list input');
+            listInputs.forEach(function(input) {
+                input.disabled = true;
+            });
+
         } else {
             shareText.textContent = '나누기';
             saveText.textContent = '저장하기';
+            listInputs.forEach(function(input) {
+                input.disabled = false;
+            });
         }
     });
 
