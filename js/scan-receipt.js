@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var listItems = document.querySelectorAll('.list');
     var listContainer = document.getElementById('receipt-container');
 
-    // 삭제 이미지
     function addDeleteButtons() {
         listItems.forEach(function(item) {
             var deleteButton = document.createElement('img');
@@ -56,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // footer toggle 
     correctionText.addEventListener('click', function() {
         if (correctionText.textContent === '수정') {
             correctionText.textContent = '완료';
@@ -123,11 +121,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 input.disabled = true;
             });
 
+            listItems.forEach(function(item) {
+                item.addEventListener('click', toggleBorder);
+            });
+
         } else {
             shareText.textContent = '나누기';
             saveText.textContent = '저장하기';
+            var listInputs = document.querySelectorAll('.list input');
             listInputs.forEach(function(input) {
                 input.disabled = false;
+            });
+
+            listItems.forEach(function(item) {
+                item.removeEventListener('click', toggleBorder);
+                item.style.background = '#FFF6F8';
+                item.style.border = '1px solid #FFFBEC7';
             });
         }
     });
@@ -138,7 +147,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // 합계 구하기
+    function toggleBorder(event) {
+        var item = event.currentTarget;
+        if (item.style.borderColor === 'red') {
+            item.style.border = '1px solid #F0F2F6';
+        } else {
+            item.style.backgroundColor = '#FFF6F8'
+            item.style.border = '1px solid #FFBEC7';
+        }
+    }
+
     function calculateSum() {
         var total = 0;
         var taxValue = parseFloat(tax.textContent);
@@ -149,7 +167,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     calculateSum();
 
-    // .list 추가
     listAddButton.addEventListener('click', function() {
         var newItem = document.createElement('div');
         newItem.classList.add('list');
@@ -203,7 +220,6 @@ document.addEventListener('DOMContentLoaded', function() {
         calculateSum();
     });
 
-    // .list 삭제
     function removeDeleteButtons() {
         var deleteButtons = document.querySelectorAll('.delete-button');
         deleteButtons.forEach(function(button) {
