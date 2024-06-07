@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var listBody = document.getElementById('list-body');
     var listItems = document.querySelectorAll('.list');
     var listContainer = document.getElementById('receipt-container');
+    var selectedItem = null;  // Track the currently selected item
 
     function addDeleteButtons() {
         listItems.forEach(function(item) {
@@ -135,8 +136,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             listItems.forEach(function(item) {
                 item.removeEventListener('click', toggleBorder);
-                item.style.background = '#FFF6F8';
-                item.style.border = '1px solid #FFFBEC7';
+                item.style.background = '#FFF';
+                item.style.border = '1px solid #F0F2F6';
             });
         }
     });
@@ -149,11 +150,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function toggleBorder(event) {
         var item = event.currentTarget;
-        if (item.style.borderColor === 'red') {
-            item.style.border = '1px solid #F0F2F6';
-        } else {
-            item.style.backgroundColor = '#FFF6F8'
+        if (selectedItem) {
+            selectedItem.style.border = '1px solid #F0F2F6';
+            selectedItem.style.backgroundColor = '#FFF';
+        }
+        if (selectedItem !== item) {
+            item.style.backgroundColor = '#FFF6F8';
             item.style.border = '1px solid #FFBEC7';
+            selectedItem = item;
+        } else {
+            selectedItem = null;
         }
     }
 
