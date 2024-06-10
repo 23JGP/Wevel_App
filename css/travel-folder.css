@@ -175,8 +175,8 @@ main {
 .date {
     width: 140px;
     display: flex;
+    outline: none;
     font-size: 14px;
-    column-gap: 8px;
     text-align: center;
     align-items: center;
     line-height: 22.4px;
