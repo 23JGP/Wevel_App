@@ -153,50 +153,55 @@ document.addEventListener('DOMContentLoaded', function() {
             var shareAmount = prompt('몇 명과 나누시겠습니까?');
             if (shareAmount !== null && shareAmount > 0) {
                 shareAmount = Math.round(parseFloat(shareAmount));
-
+    
                 var itemCntInput = selectedItem.querySelector('.list-cnt-input');
                 var itemPriceInput = selectedItem.querySelector('.list-price-input');
-
+    
                 var originalCnt = parseFloat(itemCntInput.value);
                 var originalPrice = parseFloat(itemPriceInput.value);
-
-                var oldCntStriked = document.createElement('span');
-                oldCntStriked.style.textDecoration = 'line-through';
-                oldCntStriked.textContent = itemCntInput.value;
-
-                var oldPriceStriked = document.createElement('span');
-                oldPriceStriked.style.textDecoration = 'line-through';
-                oldPriceStriked.textContent = itemPriceInput.value;
-
-                var newCnt = document.createElement('div');
-                newCnt.textContent = originalCnt + "/" + shareAmount;
-                newCnt.style.color = '#ED4B62';
-                newCnt.style.fontSize = '10px';
-
-                var newPrice = document.createElement('div');
-                newPrice.textContent = Math.round(originalPrice / shareAmount);
-                newPrice.style.color = '#ED4B62';
-                newPrice.style.fontSize = '10px';
-
-                itemCntInput.replaceWith(oldCntStriked);
-                oldCntStriked.parentNode.appendChild(newCnt);
-
-                itemPriceInput.replaceWith(oldPriceStriked);
-                oldPriceStriked.parentNode.appendChild(newPrice);
-
+    
+                var oldCntContainer = document.createElement('div');
+                oldCntContainer.textContent = itemCntInput.value;
+                oldCntContainer.classList.add('list-cnt');
+    
+                var oldPriceContainer = document.createElement('div');
+                oldPriceContainer.textContent = itemPriceInput.value;
+                oldPriceContainer.classList.add('list-price');
+    
+                var newCntContainer = document.createElement('div');
+                newCntContainer.classList.add('list-cnt');
+                newCntContainer.textContent = originalCnt + "/" + shareAmount;
+                newCntContainer.style.color = '#ED4B62';
+                newCntContainer.style.fontSize = '10px';
+    
+                var newPriceContainer = document.createElement('div');
+                newPriceContainer.classList.add('list-price');
+                newPriceContainer.textContent = Math.round(originalPrice / shareAmount);
+                newPriceContainer.style.color = '#ED4B62';
+                newPriceContainer.style.fontSize = '10px';
+    
+                itemCntInput.replaceWith(oldCntContainer);
+                itemPriceInput.replaceWith(oldPriceContainer);
+    
+                oldCntContainer.appendChild(document.createElement('br'));
+                oldCntContainer.appendChild(newCntContainer);
+    
+                oldPriceContainer.appendChild(document.createElement('br'));
+                oldPriceContainer.appendChild(newPriceContainer);
+    
                 selectedItem.style.border = '1px solid #F0F2F6';
                 selectedItem.style.backgroundColor = '#FFF';
                 selectedItem = null;
-                
+    
                 saveText.textContent = '다음';
                 if (shareBox) {
                     shareBox.style.display = 'none';
                 }
-
+    
                 calculateSum();
             }
         }
-    });
+    });    
 
     function toggleBorder(event) {
         var item = event.currentTarget;
