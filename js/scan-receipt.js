@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var listBody = document.getElementById('list-body');
     var listItems = document.querySelectorAll('.list');
     var listContainer = document.getElementById('receipt-container');
-    var selectedItem = null;  // Track the currently selected item
+    var selectedItem = null;
+    var shareBox = null;
 
     function addDeleteButtons() {
         listItems.forEach(function(item) {
@@ -103,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 shareText.style.backgroundColor = '';
             }, 500);
 
-            var shareBox = document.createElement('div');
+            shareBox = document.createElement('div');
             shareBox.style.color = '#FFF';
             shareBox.style.width = '320px';
             shareBox.style.height = '39px';
@@ -120,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var listInputs = document.querySelectorAll('.list input');
             listInputs.forEach(function(input) {
                 input.disabled = true;
+                input.style.background = 'none';
             });
 
             listItems.forEach(function(item) {
@@ -139,12 +141,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.style.background = '#FFF';
                 item.style.border = '1px solid #F0F2F6';
             });
+
+            if (shareBox) {
+                shareBox.style.display = 'none';
+            }
         }
     });
 
     saveText.addEventListener('click', function() {
-        if (saveText.textContent === '다음') {
-            saveText.textContent = '선택';
+        if (saveText.textContent === '선택' && selectedItem) {
+            var shareAmount = prompt('몇 명과 나누시겠습니까?');
+            // console.log(shareAmount);
+
+            selectedItem.style.border = '1px solid #F0F2F6';
+            selectedItem.style.backgroundColor = '#FFF';
+            selectedItem = null;
+            
+            saveText.textContent = '다음';
+            if (shareBox) {
+                shareBox.style.display = 'none';
+            }
         }
     });
 
@@ -161,6 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
             saveText.textContent = '선택';
         } else {
             selectedItem = null;
+            saveText.textContent = '저장하기';
         }
     }
 
