@@ -151,15 +151,49 @@ document.addEventListener('DOMContentLoaded', function() {
     saveText.addEventListener('click', function() {
         if (saveText.textContent === '선택' && selectedItem) {
             var shareAmount = prompt('몇 명과 나누시겠습니까?');
-            // console.log(shareAmount);
+            if (shareAmount !== null && shareAmount > 0) {
+                shareAmount = Math.round(parseFloat(shareAmount));
 
-            selectedItem.style.border = '1px solid #F0F2F6';
-            selectedItem.style.backgroundColor = '#FFF';
-            selectedItem = null;
-            
-            saveText.textContent = '다음';
-            if (shareBox) {
-                shareBox.style.display = 'none';
+                var itemCntInput = selectedItem.querySelector('.list-cnt-input');
+                var itemPriceInput = selectedItem.querySelector('.list-price-input');
+
+                var originalCnt = parseFloat(itemCntInput.value);
+                var originalPrice = parseFloat(itemPriceInput.value);
+
+                var oldCntStriked = document.createElement('span');
+                oldCntStriked.style.textDecoration = 'line-through';
+                oldCntStriked.textContent = itemCntInput.value;
+
+                var oldPriceStriked = document.createElement('span');
+                oldPriceStriked.style.textDecoration = 'line-through';
+                oldPriceStriked.textContent = itemPriceInput.value;
+
+                var newCnt = document.createElement('div');
+                newCnt.textContent = originalCnt + "/" + shareAmount;
+                newCnt.style.color = '#ED4B62';
+                newCnt.style.fontSize = '10px';
+
+                var newPrice = document.createElement('div');
+                newPrice.textContent = Math.round(originalPrice / shareAmount);
+                newPrice.style.color = '#ED4B62';
+                newPrice.style.fontSize = '10px';
+
+                itemCntInput.replaceWith(oldCntStriked);
+                oldCntStriked.parentNode.appendChild(newCnt);
+
+                itemPriceInput.replaceWith(oldPriceStriked);
+                oldPriceStriked.parentNode.appendChild(newPrice);
+
+                selectedItem.style.border = '1px solid #F0F2F6';
+                selectedItem.style.backgroundColor = '#FFF';
+                selectedItem = null;
+                
+                saveText.textContent = '다음';
+                if (shareBox) {
+                    shareBox.style.display = 'none';
+                }
+
+                calculateSum();
             }
         }
     });
