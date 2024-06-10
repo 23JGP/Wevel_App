@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var listBody = document.getElementById('list-body');
     var listItems = document.querySelectorAll('.list');
     var listContainer = document.getElementById('receipt-container');
-    var selectedItem = null;  // Track the currently selected item
+    var selectedItem = null;
+    var shareBox = null;
 
     function addDeleteButtons() {
         listItems.forEach(function(item) {
@@ -103,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 shareText.style.backgroundColor = '';
             }, 500);
 
-            var shareBox = document.createElement('div');
+            shareBox = document.createElement('div');
             shareBox.style.color = '#FFF';
             shareBox.style.width = '320px';
             shareBox.style.height = '39px';
@@ -120,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var listInputs = document.querySelectorAll('.list input');
             listInputs.forEach(function(input) {
                 input.disabled = true;
+                input.style.background = 'none';
             });
 
             listItems.forEach(function(item) {
@@ -139,12 +141,60 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.style.background = '#FFF';
                 item.style.border = '1px solid #F0F2F6';
             });
+
+            if (shareBox) {
+                shareBox.style.display = 'none';
+            }
         }
     });
 
     saveText.addEventListener('click', function() {
-        if (saveText.textContent === '다음') {
-            saveText.textContent = '선택';
+        if (saveText.textContent === '선택' && selectedItem) {
+            var shareAmount = prompt('몇 명과 나누시겠습니까?');
+            if (shareAmount !== null && shareAmount > 0) {
+                shareAmount = Math.round(parseFloat(shareAmount));
+
+                var itemCntInput = selectedItem.querySelector('.list-cnt-input');
+                var itemPriceInput = selectedItem.querySelector('.list-price-input');
+
+                var originalCnt = parseFloat(itemCntInput.value);
+                var originalPrice = parseFloat(itemPriceInput.value);
+
+                var oldCntStriked = document.createElement('span');
+                oldCntStriked.style.textDecoration = 'line-through';
+                oldCntStriked.textContent = itemCntInput.value;
+
+                var oldPriceStriked = document.createElement('span');
+                oldPriceStriked.style.textDecoration = 'line-through';
+                oldPriceStriked.textContent = itemPriceInput.value;
+
+                var newCnt = document.createElement('div');
+                newCnt.textContent = originalCnt + "/" + shareAmount;
+                newCnt.style.color = '#ED4B62';
+                newCnt.style.fontSize = '10px';
+
+                var newPrice = document.createElement('div');
+                newPrice.textContent = Math.round(originalPrice / shareAmount);
+                newPrice.style.color = '#ED4B62';
+                newPrice.style.fontSize = '10px';
+
+                itemCntInput.replaceWith(oldCntStriked);
+                oldCntStriked.parentNode.appendChild(newCnt);
+
+                itemPriceInput.replaceWith(oldPriceStriked);
+                oldPriceStriked.parentNode.appendChild(newPrice);
+
+                selectedItem.style.border = '1px solid #F0F2F6';
+                selectedItem.style.backgroundColor = '#FFF';
+                selectedItem = null;
+                
+                saveText.textContent = '다음';
+                if (shareBox) {
+                    shareBox.style.display = 'none';
+                }
+
+                calculateSum();
+            }
         }
     });
 
@@ -161,6 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
             saveText.textContent = '선택';
         } else {
             selectedItem = null;
+            saveText.textContent = '저장하기';
         }
     }
 
