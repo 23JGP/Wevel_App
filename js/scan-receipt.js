@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
             deleteButton.addEventListener('click', function() {
                 item.remove();
                 listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) - 35) + 'px';
-                calculateSum();
             });
 
             var itemName = item.querySelector('.list-name');
@@ -66,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.style.borderRadius = '8px';
                 item.style.border = '1px solid #F0F2F6';
             });
-            listHeaderDiv.style.columnGap = '70px';
             listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) + 56) + 'px';
             listAddButton.style.display = 'block';
             addDeleteButtons();
@@ -82,11 +80,10 @@ document.addEventListener('DOMContentLoaded', function() {
             listHeaderDiv.style.columnGap = '70px';
             listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) - 56) + 'px';
             listAddButton.style.display = 'none';
-            removeDeleteButtons();
-            calculateSum(); 
+            removeDeleteButtons(); 
             shareText.classList.add('disabled');
         }
-    });
+    });    
 
     shareText.addEventListener('click', function() {
         if (correctionText.textContent !== '완료') {
@@ -147,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-
+    
     saveText.addEventListener('click', function() {
         if (saveText.textContent === '선택' && selectedItem) {
             var shareAmount = prompt('몇 명과 나누시겠습니까?');
@@ -160,33 +157,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 var originalCnt = parseFloat(itemCntInput.value);
                 var originalPrice = parseFloat(itemPriceInput.value);
     
-                var oldCntContainer = document.createElement('div');
+                var oldCntContainer = document.createElement('p');
+                oldCntContainer.style.textDecoration = 'line-through';
                 oldCntContainer.textContent = itemCntInput.value;
                 oldCntContainer.classList.add('list-cnt');
     
-                var oldPriceContainer = document.createElement('div');
+                var oldPriceContainer = document.createElement('p');
+                oldPriceContainer.style.textDecoration = 'line-through';
                 oldPriceContainer.textContent = itemPriceInput.value;
                 oldPriceContainer.classList.add('list-price');
     
-                var newCntContainer = document.createElement('div');
-                newCntContainer.textContent = originalCnt + "/" + shareAmount;
-                newCntContainer.style.color = '#ED4B62';
-                newCntContainer.style.fontSize = '10px';
+                var newCnt = document.createElement('p');
+                newCnt.textContent = originalCnt + "/" + shareAmount;
+                newCnt.style.color = '#ED4B62';
+                newCnt.style.fontSize = '10px';
+                newCnt.style.textAlign = 'center';
     
-                var newPriceContainer = document.createElement('div');
-                newPriceContainer.textContent = Math.round(originalPrice / shareAmount);
-                newPriceContainer.style.color = '#ED4B62';
-                newPriceContainer.style.fontSize = '10px';
+                var newPrice = document.createElement('p');
+                newPrice.textContent = Math.round(originalPrice / shareAmount);
+                newPrice.style.color = '#ED4B62';
+                newPrice.style.fontSize = '10px';
+                newPrice.style.textAlign = 'right';
+    
+                var newValuesWrapper = document.createElement('div');
+                newValuesWrapper.appendChild(newCnt);
+                newValuesWrapper.appendChild(newPrice);
+                newValuesWrapper.classList.add('list-child');
+                newValuesWrapper.style.display = 'flex';
     
                 itemCntInput.replaceWith(oldCntContainer);
                 itemPriceInput.replaceWith(oldPriceContainer);
     
-                oldCntContainer.appendChild(document.createElement('br'));
-                oldCntContainer.appendChild(newCntContainer);
-    
-                oldPriceContainer.appendChild(document.createElement('br'));
-                oldPriceContainer.appendChild(newPriceContainer);
-    
+                selectedItem.appendChild(newValuesWrapper);
                 selectedItem.style.border = '1px solid #F0F2F6';
                 selectedItem.style.backgroundColor = '#FFF';
                 selectedItem = null;
@@ -195,8 +197,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (shareBox) {
                     shareBox.style.display = 'none';
                 }
-    
-                calculateSum();
             }
         }
     });    
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedItem = null;
             saveText.textContent = '저장하기';
         }
-    }
+    }     
 
     function calculateSum() {
         var total = 0;
@@ -231,33 +231,33 @@ document.addEventListener('DOMContentLoaded', function() {
     listAddButton.addEventListener('click', function() {
         var newItem = document.createElement('div');
         newItem.classList.add('list');
-
+    
         newItem.style.padding = '12px';
         newItem.style.borderRadius = '8px';
         newItem.style.border = '1px solid #F0F2F6';
-
+    
         var itemNameInput = document.createElement('input');
         itemNameInput.type = 'text';
         itemNameInput.value = '상품명을 입력하세요';
         itemNameInput.style.outline = 'none';
         itemNameInput.classList.add('list-name-input');
-
+    
         var itemCntInput = document.createElement('input');
         itemCntInput.type = 'number';
         itemCntInput.value = '0';
         itemCntInput.style.outline = 'none';
         itemCntInput.classList.add('list-cnt-input');
-
+    
         var itemPriceInput = document.createElement('input');
         itemPriceInput.type = 'number';
         itemPriceInput.value = '0';
         itemPriceInput.style.outline = 'none';
         itemPriceInput.classList.add('list-price-input');
-
+    
         newItem.appendChild(itemNameInput);
         newItem.appendChild(itemCntInput);
         newItem.appendChild(itemPriceInput);
-
+    
         var deleteButton = document.createElement('img');
         deleteButton.src = '../../img/delete.png';
         deleteButton.alt = '삭제';
@@ -267,19 +267,32 @@ document.addEventListener('DOMContentLoaded', function() {
         deleteButton.style.marginLeft = '12px';
         deleteButton.classList.add('delete-button');
         newItem.appendChild(deleteButton);
-
+    
         deleteButton.addEventListener('click', function() {
             newItem.remove();
-            calculateSum();
             listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) - 35) + 'px';
         });
-
+    
         listBody.insertBefore(newItem, listAddButton);
         listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) + 35) + 'px';
         listItems = document.querySelectorAll('.list');
-
-        calculateSum();
-    });
+    
+        var itemName = newItem.querySelector('.list-name-input');
+        var itemCnt = newItem.querySelector('.list-cnt-input');
+        var itemPrice = newItem.querySelector('.list-price-input');
+    
+        itemName.addEventListener('input', function() {
+            newItem.style.textDecoration = 'none';
+        });
+    
+        itemCnt.addEventListener('input', function() {
+            newItem.style.textDecoration = 'none';
+        });
+    
+        itemPrice.addEventListener('input', function() {
+            newItem.style.textDecoration = 'none';
+        });
+    });    
 
     function removeDeleteButtons() {
         var deleteButtons = document.querySelectorAll('.delete-button');

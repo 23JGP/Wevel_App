@@ -167,6 +167,16 @@ main {
     align-items: center;
 }
 
+.list-child {
+    width: 288px;
+    height: 35px;
+    font-size: 12px;
+    margin-top: 24px;
+    position: absolute;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 .list-name {
     width: 162px;
 }
