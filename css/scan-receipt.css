@@ -131,7 +131,7 @@ main {
 
 #list-header div {
     display: flex;
-    column-gap: 40px;
+    column-gap: 70px;
 }
 
 #table-line {
@@ -168,12 +168,16 @@ main {
 }
 
 .list-name {
-    width: 164px;
+    width: 162px;
 }
 
-.list-cnt,
+.list-cnt {
+    width: 63px;
+    text-align: center;
+}
+
 .list-price {
-    width: 62px;
+    width: 63px;
     text-align: right;
 }
 
@@ -190,13 +194,13 @@ main {
 }
 
 .list input:nth-child(2) {
-    width: 43px;
     text-align: center;
+    width: calc(100% - 162px);
 }
 
 .list input:nth-child(3) {
     text-align: right;
-    width: calc(100% - 152px - 43px);
+    width: calc(100% - 162px);
 }
 
 #list-tax {
