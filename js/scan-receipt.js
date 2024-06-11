@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.style.borderRadius = '8px';
                 item.style.border = '1px solid #F0F2F6';
             });
-            listHeaderDiv.style.columnGap = '65px';
+            listHeaderDiv.style.columnGap = '70px';
             listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) + 56) + 'px';
             listAddButton.style.display = 'block';
             addDeleteButtons();
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.style.borderRadius = '0';
                 item.style.padding = '0';
             });
-            listHeaderDiv.style.columnGap = '40px';
+            listHeaderDiv.style.columnGap = '70px';
             listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) - 56) + 'px';
             listAddButton.style.display = 'none';
             removeDeleteButtons();
@@ -169,13 +169,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 oldPriceContainer.classList.add('list-price');
     
                 var newCntContainer = document.createElement('div');
-                newCntContainer.classList.add('list-cnt');
                 newCntContainer.textContent = originalCnt + "/" + shareAmount;
                 newCntContainer.style.color = '#ED4B62';
                 newCntContainer.style.fontSize = '10px';
     
                 var newPriceContainer = document.createElement('div');
-                newPriceContainer.classList.add('list-price');
                 newPriceContainer.textContent = Math.round(originalPrice / shareAmount);
                 newPriceContainer.style.color = '#ED4B62';
                 newPriceContainer.style.fontSize = '10px';
