@@ -52,9 +52,9 @@
       <div id="travel-date">
         <p class="title">기간</p>
         <div id="date-container">
-          <input type="date" class="date">
+          <input type="date" class="date" />
           ~
-          <input type="date" class="date">
+          <input type="date" class="date" />
         </div>
       </div>
 
@@ -98,9 +98,9 @@
         const apiUrl = localStorage.getItem("apiUrl");
         var tripName = $("#name-input").val();
 
-        // TODO : 날짜 선택후 가져오기
-        var startDate = $("input[type=date]:first").val();
-        var endDate = $("input[type=date]:last").val();
+        const dateInputs = document.querySelectorAll(".date");
+        var startDate = dateInputs[0].value; // 첫 번째 입력 필드의 값 가져오기
+        var endDate = dateInputs[1].value; // 두 번째 입력 필드의 값 가져오기
 
         startDate = formatDate(startDate);
         endDate = formatDate(endDate);
@@ -112,7 +112,7 @@
           tripName: tripName,
           country: selectedCountry,
           startDate: startDate,
-          endDate: startDate,
+          endDate: endDate,
           totalBudget: totalBudget,
         };
 
