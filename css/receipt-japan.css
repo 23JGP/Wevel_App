@@ -1,0 +1,248 @@
+body {
+    margin: 0;
+    width: 360px;
+    height: 100vh;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+  
+header {
+    width: 100%;
+    height: 56px;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+}
+  
+#left {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    margin-left: 13px;
+}
+  
+#title {
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 8px;
+    font-style: normal;
+    line-height: 28px;
+    font-family: "NanumSquareRound";
+    color: var(--kakao-logo, #000);
+}
+
+header div:nth-child(2) {
+    display: flex;
+    column-gap: 26px;
+} 
+
+#search {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+#setting {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    margin-top: 56px;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Pretendard';
+}
+
+#info-container {
+    row-gap: 32px;
+    display: flex;
+    margin-top: 50px;
+    flex-direction: column;
+    width: calc(100% - 40px);
+    font-family: 'Pretendard';
+    justify-content: space-between;
+}
+
+#trip-info {
+    row-gap: 12px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#trip-info img {
+    width: 62px;
+    height: 40px;
+}
+
+#trip-info p {
+    font-size: 12px;
+    color: #C0C2C8;
+}
+
+#money-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#money-flex {
+    display: flex;
+    column-gap: 5px;
+    align-items: end;
+}
+
+#money-flex p {
+    font-size: 16px;
+    color: #707174; 
+}
+
+#money-flex p:first-child {
+    color: #2C2C2C;
+    font-size: 22.4px;
+    font-weight: bold; 
+}
+
+#money-bar {
+    width: 100%;
+    margin: 16px 0 6px 0;
+    border-radius: 100px;
+    background-color: #ED4B62;
+}
+
+#save-money {
+    display: flex;
+    font-size: 12px;
+    column-gap: 3px;
+    color: #C0C2C8;
+    margin-left: auto;
+    align-items: center;
+}
+
+hr {
+    margin: 20px 0;
+    width: calc(100% - 40px);
+    border: 1px solid #F0F2F6;
+}
+
+#receipt-container {
+    row-gap: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#sort-box {
+    row-gap: 16px;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 40px);
+}
+
+#sort-content {
+    display: flex;
+    font-size: 16px;
+    column-gap: 5px;
+    color: #2C2C2C;
+    font-weight: bold;
+    font-family: 'NanumSquareRound';
+}
+
+#sort-content p:nth-child(2) {
+    color: #ED4B62;
+}
+
+#sort-list {
+    display: flex;
+    column-gap: 4px;
+    align-items: center;
+}
+    
+#sort-list p {
+    display: flex;
+    height: 24px;
+    font-size: 12px;
+    color: #C0C2C8;
+    text-align: center;
+    align-items: center;
+    border-radius: 30px;
+    justify-content: center;
+    font-family: 'Pretendard';
+    border: 1px solid #F0F2F6;
+}
+
+#sort-list p:hover {
+    background: #f0f2f6;
+    border-color: #c0c2c8;
+}
+
+#sort-list p:first-child,
+#sort-list p:nth-child(2) {
+    width: 45px;
+}
+
+#sort-list p:nth-child(3),
+#sort-list p:nth-child(4) {
+    width: 59px;
+}
+
+.money-box {
+    width: 360px;
+    height: 64px;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+}
+  
+.money-img {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    margin: 0 10px 0 20px;
+}
+  
+.money-info {
+    display: flex;
+    margin-left: 10px; 
+    flex-direction: column;
+}
+  
+.money-title {
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 22.4px;
+    color: var(--Gray-05, #2c2c2c);
+}
+  
+.money-date {
+    font-size: 10px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 16px;
+    color: var(--Gray-03, #c0c2c8);
+}
+  
+.money-amount {
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: auto;
+    font-style: normal;
+    margin-right: 20px;
+    line-height: 22.4px;
+    color: var(--Gray-05, #2c2c2c);
+}
