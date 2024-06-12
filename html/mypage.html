@@ -26,7 +26,7 @@
           <div>
             <p id="user-id"></p>
             <div id="user-flex">
-              <div id="user-login"></div>
+              <img id="user-login" />
               <p id="user-email"></p>
             </div>
           </div>
@@ -62,7 +62,6 @@
         const userId = localStorage.getItem("userId");
         const apiUrl = localStorage.getItem("apiUrl");
 
-        // TODO : 로그인한 소셜에 관한 이미지 추가하기
         // 유저 관련 API 연동
         $(document).ready(function () {
           // AJAX 요청을 수행
@@ -73,6 +72,25 @@
             success: function (data) {
               $("#user-id").text(data.name);
               $("#user-email").text(data.email);
+
+              // 소셜 플랫폼에 따른 이미지 추가
+              let socialImgSrc;
+              switch (data.social) {
+                case "kakao":
+                  socialImgSrc = "../img/kakao.png"; // 카카오 이미지 경로
+                  break;
+                case "google":
+                  socialImgSrc = "../img/google.png"; // 구글 이미지 경로
+                  break;
+                case "naver":
+                  socialImgSrc = "../img/naver.png"; // 네이버 이미지 경로
+                  break;
+                default:
+                  socialImgSrc = ""; // 기본값 (이미지가 없는 경우)
+              }
+              if (socialImgSrc) {
+                $("#user-login").attr("src", socialImgSrc);
+              }
             },
             error: function () {
               // 에러 발생 시 실행되는 함수

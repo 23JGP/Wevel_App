@@ -29,7 +29,7 @@
       <div id="login-box">
         <p class="box-title">연결된 계정</p>
         <div id="user-flex">
-          <div id="user-login"></div>
+          <img id="user-login" />
           <p id="user-email"></p>
         </div>
       </div>
@@ -50,6 +50,25 @@
             $("#name-content").text(data.name);
             $("#email-content").text(data.email);
             $("#user-email").text(data.email);
+
+            // 소셜 플랫폼에 따른 이미지 추가
+            let socialImgSrc;
+            switch (data.social) {
+              case "kakao":
+                socialImgSrc = "../img/kakao.png"; // 카카오 이미지 경로
+                break;
+              case "google":
+                socialImgSrc = "../img/google.png"; // 구글 이미지 경로
+                break;
+              case "naver":
+                socialImgSrc = "../img/naver.png"; // 네이버 이미지 경로
+                break;
+              default:
+                socialImgSrc = ""; // 기본값 (이미지가 없는 경우)
+            }
+            if (socialImgSrc) {
+              $("#user-login").attr("src", socialImgSrc);
+            }
           },
           error: function () {
             // 에러 발생 시 실행되는 함수
