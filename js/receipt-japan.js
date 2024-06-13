@@ -12,6 +12,17 @@ document.getElementById('setting').addEventListener('click', function() {
     }
 });
 
+const popupBox = document.getElementById('popup');
+document.getElementById('folder-delete').addEventListener('click', function() {
+    popupBox.style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+});
+
+document.getElementById('popup-cancle').addEventListener('click', function() {
+    popupBox.style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+});
+
 document.getElementById('delete-receipt').addEventListener('click', function() {
     document.getElementById('title').textContent = '영수증 삭제';
     document.getElementById('left').src = '../img/x-black.png';
