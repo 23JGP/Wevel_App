@@ -295,6 +295,7 @@ hr {
 #popup-title {
     color: #2C2C2C;
     margin-top: 20px;
+    font-weight: bold;
 }
 
 #popup-content {
