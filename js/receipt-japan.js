@@ -12,14 +12,18 @@ document.getElementById('setting').addEventListener('click', function() {
     }
 });
 
+document.getElementById('folder-correction').addEventListener('click', function() {
+    window.location.href = '../html/travel-folder.html';
+});
+
 const popupBox = document.getElementById('popup');
 document.getElementById('folder-delete').addEventListener('click', function() {
-    popupBox.style.display = 'block';
+    document.getElementById('popup').style.display = 'flex';
     document.getElementById('overlay').style.display = 'block';
 });
 
 document.getElementById('popup-cancle').addEventListener('click', function() {
-    popupBox.style.display = 'none';
+    document.getElementById('popup').style.display = 'none';
     document.getElementById('overlay').style.display = 'none';
 });
 
