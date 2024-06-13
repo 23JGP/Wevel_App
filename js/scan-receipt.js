@@ -50,6 +50,18 @@ document.addEventListener('DOMContentLoaded', function() {
             itemPriceInput.value = itemPrice.textContent;
             itemPriceInput.classList.add('list-price-input');
 
+            var taxInput = document.createElement('input');
+            taxInput.type = 'number';
+            taxInput.value = tax.textContent;
+            taxInput.classList.add('tax-input');
+            taxInput.style.outline = 'none';
+            taxInput.style.textAlign = 'right';
+            taxInput.style.borderRadius = '4px';
+            taxInput.style.paddingRight = '8px';
+            taxInput.style.fontFamily = 'Pretendard';
+            taxInput.style.border = '1px solid rgb(240, 242, 246)';
+            tax.replaceWith(taxInput);
+
             itemName.replaceWith(itemNameInput);
             itemCnt.replaceWith(itemCntInput);
             itemPrice.replaceWith(itemPriceInput);
@@ -69,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
             listAddButton.style.display = 'block';
             addDeleteButtons();
             shareText.classList.remove('disabled');
+
         } else {
             correctionText.textContent = '수정';
             titleText.textContent = '영수증';
