@@ -10,12 +10,17 @@
   <body>
     <header>
       <div>
-          <a href="../index.html"><img src="../img/left.png" id="left" /></a>
+          <a href="../index.html" id="left-link"><img src="../img/left.png" id="left" /></a>
           <p id="title">일본</p>
       </div>
       <div>
           <img src="../img/search.png" id="search"/>
-        <img src="../img/setting.png" id="setting"/>
+          <img src="../img/setting.png" id="setting"/>
+          <div id="setting-menu">
+          <p id="folder-correction">폴더수정</p>
+          <p id="folder-delete">폴더 삭제</p>
+          <p id="delete-receipt">영수증 삭제</p>
+        </div>
       </div>
     </header>
 
@@ -113,5 +118,18 @@
       </div>
 
     </main>
+
+    <div id="overlay"></div>
+
+    <div id="popup" style="display: none;">
+      <p id="popup-title">정말 삭제하시겠습니까?</p>
+      <p id="popup-content">한번 삭제하신 정보는 복구할 수 없습니다.<br>정말 삭제하시겠습니까?</p>
+      <div>
+        <p id="popup-cancle">취소</p>
+        <p id="popup-delete">삭제</p>
+      </div>
+    </div>
+
+    <script src="../js/receipt-japan.js"></script>
   </body>
 </html>
