@@ -31,15 +31,46 @@ document.getElementById('delete-receipt').addEventListener('click', function() {
     document.getElementById('title').textContent = '영수증 삭제';
     document.getElementById('left').src = '../img/x-black.png';
     document.getElementById('setting-menu').style.display = 'none';
+
+    const moneyBoxes = document.querySelectorAll('.money-box');
+    let selectedBox = null;
+
+    moneyBoxes.forEach(box => {
+        box.style.width = '320px';
+        box.style.cursor = 'pointer';
+        box.style.borderRadius = '10px';
+        box.style.border = '1px solid #F0F2F6';
+
+        box.addEventListener('click', function() {
+            selectedBox = box;
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'flex';
+        });
+    });
+
+    document.getElementById('popup-delete').addEventListener('click', function() {
+        if (selectedBox) {
+            selectedBox.remove();
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    });
 });
 
 document.getElementById('left').addEventListener('click', function(event) {
     if (document.getElementById('left').src.includes('x-black.png')) {
-      event.preventDefault();
-      document.getElementById('title').textContent = originalTitle;
-      document.getElementById('left').src = originalLeftSrc;
+        event.preventDefault();
+        document.getElementById('title').textContent = originalTitle;
+        document.getElementById('left').src = originalLeftSrc;
+
+        if (originalTitle === '일본') {
+            const moneyBoxes = document.querySelectorAll('.money-box');
+            moneyBoxes.forEach(box => {
+                box.removeAttribute('style');
+            });
+        }
     } else if (document.getElementById('left').src.includes('left.png')) {
-      window.location.href = '../index.html';
+        window.location.href = '../index.html';
     }
 });
 
