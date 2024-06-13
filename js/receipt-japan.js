@@ -83,3 +83,14 @@ menuItems.forEach(item => {
       document.getElementById('setting-menu').style.display = 'none';
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const spendMoney = document.getElementById('spend-money').innerText;
+  const totalMoney = document.getElementById('money').innerText;
+  
+  const spendPercentage = (parseInt(spendMoney) / parseInt(totalMoney)) * 100;
+  const remainMoney = parseInt(totalMoney) - parseInt(spendMoney);
+  
+  const spendBar = document.getElementById('spend-bar');
+  spendBar.style.width = spendPercentage + '%';
+});
