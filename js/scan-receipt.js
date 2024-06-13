@@ -147,52 +147,56 @@ document.addEventListener('DOMContentLoaded', function() {
     
     saveText.addEventListener('click', function() {
         if (saveText.textContent === '선택' && selectedItem) {
-            var shareAmount = prompt('몇 명과 나누시겠습니까?');
-            if (shareAmount !== null && shareAmount > 0) {
-                shareAmount = Math.round(parseFloat(shareAmount));
-    
+            let shareAmount = null;
+            do {
+                shareAmount = prompt('몇 명과 나누시겠습니까?');
+            } while (shareAmount === null || shareAmount.trim() === '' || parseInt(shareAmount) === 0);
+
+            if (shareAmount !== null && parseInt(shareAmount) > 0) {
+                shareAmount = parseInt(shareAmount);
+
                 var itemCntInput = selectedItem.querySelector('.list-cnt-input');
                 var itemPriceInput = selectedItem.querySelector('.list-price-input');
-    
+
                 var originalCnt = parseFloat(itemCntInput.value);
                 var originalPrice = parseFloat(itemPriceInput.value);
-    
+
                 var oldCntContainer = document.createElement('p');
                 oldCntContainer.style.textDecoration = 'line-through';
                 oldCntContainer.textContent = itemCntInput.value;
                 oldCntContainer.classList.add('list-cnt');
-    
+
                 var oldPriceContainer = document.createElement('p');
                 oldPriceContainer.style.textDecoration = 'line-through';
                 oldPriceContainer.textContent = itemPriceInput.value;
                 oldPriceContainer.classList.add('list-price');
-    
+
                 var newCnt = document.createElement('p');
                 newCnt.textContent = originalCnt + "/" + shareAmount;
                 newCnt.style.color = '#ED4B62';
                 newCnt.style.fontSize = '10px';
                 newCnt.style.textAlign = 'center';
-    
+
                 var newPrice = document.createElement('p');
                 newPrice.textContent = Math.round(originalPrice / shareAmount);
                 newPrice.style.color = '#ED4B62';
                 newPrice.style.fontSize = '10px';
                 newPrice.style.textAlign = 'right';
-    
+
                 var newValuesWrapper = document.createElement('div');
                 newValuesWrapper.appendChild(newCnt);
                 newValuesWrapper.appendChild(newPrice);
                 newValuesWrapper.classList.add('list-child');
                 newValuesWrapper.style.display = 'flex';
-    
+
                 itemCntInput.replaceWith(oldCntContainer);
                 itemPriceInput.replaceWith(oldPriceContainer);
-    
+
                 selectedItem.appendChild(newValuesWrapper);
                 selectedItem.style.border = '1px solid #F0F2F6';
                 selectedItem.style.backgroundColor = '#FFF';
                 selectedItem = null;
-    
+
                 saveText.textContent = '다음';
                 if (shareBox) {
                     shareBox.style.display = 'none';
