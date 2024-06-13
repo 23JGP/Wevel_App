@@ -45,6 +45,9 @@ document.getElementById('delete-receipt').addEventListener('click', function() {
             selectedBox = box;
             document.getElementById('overlay').style.display = 'block';
             document.getElementById('popup').style.display = 'flex';
+
+            const moneyTitle = box.querySelector('.money-title').textContent;
+            document.getElementById('popup-title').textContent = `${moneyTitle} 영수증 삭제`;
         });
     });
 
