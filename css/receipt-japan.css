@@ -56,6 +56,32 @@ header div:nth-child(2) {
     margin-right: 20px;
 }
 
+#setting-menu {
+    top: 50px;
+    right: 10px; 
+    width: 145px;
+    height: 120px;
+    display: none;
+    position: absolute;
+    border-radius: 8px;
+    background-color: white;
+    border: 1px solid #DDDFE6;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+#setting-menu p {
+    height: 40px;
+    display: flex;
+    color: #707174;
+    padding-left: 12px;
+    align-items: center;
+    font-family: 'Pretendard';
+}
+
+#setting-menu p:hover {
+    background-color: #F6F8FB;
+}
+
 main {
     width: 100%;
     display: flex;
