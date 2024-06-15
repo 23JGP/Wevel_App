@@ -38,7 +38,7 @@
             <p id="spend-money">30,000</p>
             <p>/</p>
             <p id="money">100,000</p>
-            <p>$</p>
+            <!-- <p>$</p> -->
           </div>
 
           <div id="money-bar">
@@ -48,7 +48,7 @@
           <div id="save-money">
             <p>남은 금액</p>
             <p id="remain-money">70,000</p>
-            <p>$</p>
+            <!-- <p>$</p> -->
           </div>
         </div>
       </div>
@@ -126,7 +126,7 @@
 
         // tripId 파라미터 값 가져오기
         const tripId = urlParams.get("tripId");
-
+        let currency = "";
         // API 호출
         fetch(`http://localhost:8085/api/trips/${tripId}`)
           .then((response) => response.json())
@@ -162,7 +162,9 @@
 
             // 소비한 금액 바
             const spendBarElement = document.getElementById("spend-bar");
-            spendBarElement.style.width = `${spentPercentage}%`;
+            if (spentPercentage <= 100)
+              spendBarElement.style.width = `${spentPercentage}%`;
+            else spendBarElement.style.width = `100%`;
 
             // 국가 이미지 요소에 반영
             const flagImageElement = document.getElementById("flag-image");
@@ -178,19 +180,103 @@
               data.endDate
             );
 
+            currency = getCurrencySymbol(data.country);
             const spendMoneyElement = document.getElementById("spend-money");
             spendMoneyElement.textContent = data.spentAmount.toLocaleString();
 
             const moneyElement = document.getElementById("money");
-            moneyElement.textContent = data.totalBudget.toLocaleString();
+            moneyElement.textContent = `${data.totalBudget.toLocaleString()} ${currency}`;
 
             const remainMoneyElement = document.getElementById("remain-money");
-            remainMoneyElement.textContent =
-              data.remainingAmount.toLocaleString();
+            remainMoneyElement.textContent = `${data.remainingAmount.toLocaleString()} ${currency}`;
           })
           .catch((error) => {
             console.error("API Error:", error);
           });
+
+        const apiUrl = "http://localhost:8085/api/receipts";
+
+        // API를 호출하여 영수증 목록을 가져오는 함수
+        function fetchReceipts(tripId, tag = "") {
+          let url = `${apiUrl}/${tripId}`;
+          if (tag) {
+            url += `?tag=${tag}`;
+          }
+
+          fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+              displayReceipts(data); // 받은 데이터를 이용해 영수증 목록 표시
+              updateReceiptCount(data.length); // 총 영수증 개수 업데이트
+            })
+            .catch((error) => console.error("Error fetching receipts:", error));
+        }
+
+        // 영수증 목록을 표시하는 함수
+        function displayReceipts(receipts) {
+          const receiptBox = document.getElementById("receipt-box");
+          receiptBox.innerHTML = ""; // 기존 내용 초기화
+
+          receipts.forEach((receipt) => {
+            const moneyBox = document.createElement("div");
+            moneyBox.className = "money-box";
+
+            const img = document.createElement("img");
+            img.src = "../img/money-list.png";
+            img.className = "money-img";
+            moneyBox.appendChild(img);
+
+            const div = document.createElement("div");
+            const title = document.createElement("p");
+            title.className = "money-title";
+            title.textContent = receipt.title;
+            const date = document.createElement("p");
+            date.className = "money-date";
+            date.textContent = receipt.date;
+            div.appendChild(title);
+            div.appendChild(date);
+            moneyBox.appendChild(div);
+
+            const amount = document.createElement("p");
+            amount.className = "money-amount";
+            amount.textContent = `${receipt.total} ${currency}`;
+            moneyBox.appendChild(amount);
+
+            receiptBox.appendChild(moneyBox);
+          });
+        }
+
+        // 총 영수증 개수를 업데이트하는 함수
+        function updateReceiptCount(count) {
+          const receiptCntElement = document.getElementById("receipt-cnt");
+          receiptCntElement.textContent = count;
+        }
+
+        fetchReceipts(tripId);
+
+        // 필터 버튼 클릭 이벤트 처리
+        const filterButtons = document.querySelectorAll("#sort-list p");
+        filterButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const filter = button.textContent.trim();
+            let tag = "";
+            switch (filter) {
+              case "오늘":
+                tag = "today";
+                break;
+              case "이번 주":
+                tag = "this_week";
+                break;
+              case "이번 달":
+                tag = "this_month";
+                break;
+              default:
+                tag = "";
+                break;
+            }
+            fetchReceipts(tripId, tag);
+          });
+        });
 
         // 날짜 형식 변환 함수
         function formatDate(startDate, endDate) {
