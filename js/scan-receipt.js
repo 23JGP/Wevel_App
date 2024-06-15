@@ -57,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
             taxInput.style.outline = 'none';
             taxInput.style.textAlign = 'right';
             taxInput.style.borderRadius = '4px';
-            taxInput.style.paddingRight = '8px';
             taxInput.style.fontFamily = 'Pretendard';
             taxInput.style.border = '1px solid rgb(240, 242, 246)';
             tax.replaceWith(taxInput);
@@ -81,20 +80,28 @@ document.addEventListener('DOMContentLoaded', function() {
             listAddButton.style.display = 'block';
             addDeleteButtons();
             shareText.classList.remove('disabled');
+            document.querySelector('.tax-input').disabled = false;
+            document.querySelector('.tax-input').style.borderRadius = '4px';
+            document.querySelector('.tax-input').style.paddingRight = '8px';
+            document.querySelector('.tax-input').style.border = '1px solid #F0F2F6';
 
         } else {
             correctionText.textContent = '수정';
             titleText.textContent = '영수증';
             listItems.forEach(function(item) {
                 item.style.border = 'none';
-                item.style.borderRadius = '0';
                 item.style.padding = '0';
+                item.style.borderRadius = '0';
             });
             listHeaderDiv.style.columnGap = '70px';
             listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) - 56) + 'px';
             listAddButton.style.display = 'none';
             removeDeleteButtons(); 
             shareText.classList.add('disabled');
+            document.querySelector('.tax-input').disabled = true;
+            document.querySelector('.tax-input').style.border = 'none';
+            document.querySelector('.tax-input').style.paddingRight = '0';
+            document.querySelector('.tax-input').style.background = 'none';
         }
     });    
 
