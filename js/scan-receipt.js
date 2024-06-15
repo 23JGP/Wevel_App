@@ -160,15 +160,28 @@ document.addEventListener('DOMContentLoaded', function() {
     
     saveText.addEventListener('click', function() {
         if (saveText.textContent === '선택' && selectedItem) {
+            var overlay = document.createElement('div');
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.zIndex = '999';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.opacity = '0.1';
+            overlay.style.position = 'fixed';
+            overlay.style.backgroundColor = '#000';
+            document.body.appendChild(overlay);
+
             var shareDiv = document.createElement('div');
-            shareDiv.style.position = 'fixed';
             shareDiv.style.left = '50%';
-            shareDiv.style.top = '50%';
-            shareDiv.style.transform = 'translate(-50%, -50%)';
+            shareDiv.style.bottom = '0';
+            shareDiv.style.width = '360px';
+            shareDiv.style.zIndex = '1000';
+            shareDiv.style.height = '348px';
             shareDiv.style.padding = '20px';
+            shareDiv.style.position = 'fixed';
             shareDiv.style.background = '#FFF';
             shareDiv.style.border = '1px solid #ccc';
-            shareDiv.style.zIndex = '1000';
+            shareDiv.style.transform = 'translateX(-50%)';
 
             var shareInput = document.createElement('input');
             shareInput.type = 'number';
@@ -229,6 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         shareBox.style.display = 'none';
                     }
                     document.body.removeChild(shareDiv);
+                    document.body.removeChild(overlay); 
                 }
             };
 
