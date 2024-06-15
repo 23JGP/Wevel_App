@@ -15,7 +15,9 @@
   <body>
     <!-- header -->
     <header>
-      <a href="../html/travel.html"><img src="../img/left.png" id="left" /></a>
+      <a href="#" onclick="history.back();"
+        ><img src="../img/left.png" id="left"
+      /></a>
       <p id="title">여행폴더</p>
     </header>
 
@@ -31,7 +33,7 @@
         <div id="nation-container">
           <div class="nation-box" onclick="selectCountry('미국')">
             <div id="usa-img" class="nation-img"></div>
-            <p class="nation-title" i>미국</p>
+            <p class="nation-title">미국</p>
           </div>
           <div class="nation-box" onclick="selectCountry('베트남')">
             <div id="vietnam-img" class="nation-img"></div>
@@ -48,13 +50,12 @@
         </div>
       </div>
 
-      <!-- TODO : 캘린더 날짜 선택 후 잘 나오는지 콘솔로 확인 -->
       <div id="travel-date">
         <p class="title">기간</p>
         <div id="date-container">
-          <input type="date" class="date" />
+          <input type="date" class="date" id="start-date" />
           ~
-          <input type="date" class="date" />
+          <input type="date" class="date" id="end-date" />
         </div>
       </div>
 
@@ -79,7 +80,7 @@
 
     <!-- footer -->
     <footer>
-      <button onclick="saveTrip()">저장하기</button>
+      <button id="save-button">저장하기</button>
     </footer>
 
     <!-- js 연동 -->
@@ -87,25 +88,125 @@
 
     <!-- API 연동 -->
     <script>
+      let tripId = getUrlParam("tripId");
       let selectedCountry;
 
+      // 페이지 로드 시 처리
+      $(document).ready(function () {
+        if (tripId) {
+          // tripId가 존재하면 기존 여행 폴더 정보를 가져옴
+          getTripInfo(tripId);
+        } else {
+          // tripId가 없으면 새로운 여행 폴더를 생성하는 UI 설정
+          $("#save-button").text("새로운 여행 폴더 생성");
+        }
+      });
+
+      // 여행 국가 선택 시 처리
       function selectCountry(country) {
         selectedCountry = country;
-        console.log(selectedCountry); // 또는 다른 동작 수행
+        const nationBoxes = document.querySelectorAll(".nation-box");
+        nationBoxes.forEach((box) => {
+          if (box.querySelector(".nation-title").textContent === country) {
+            box.classList.add("selected");
+          } else {
+            box.classList.remove("selected");
+          }
+        });
       }
-      function saveTrip() {
+
+      // 저장하기 버튼 클릭 시 처리
+      $("#save-button").click(function () {
+        if (tripId) {
+          // tripId가 있으면 여행 폴더 수정 (PATCH API 호출)
+          updateTrip(tripId);
+        } else {
+          // tripId가 없으면 새로운 여행 폴더 생성 (POST API 호출)
+          createTrip();
+        }
+      });
+
+      // 여행 폴더 정보 가져오기 (GET API)
+      function getTripInfo(tripId) {
+        const apiUrl = localStorage.getItem("apiUrl");
+        $.ajax({
+          url: `${apiUrl}/api/trips/${tripId}`,
+          type: "GET",
+          success: function (response) {
+            console.log("Trip info:", response);
+            displayTripInfo(response);
+          },
+          error: function (error) {
+            console.error("Error fetching trip info:", error);
+          },
+        });
+      }
+
+      // 여행 폴더 정보 표시하기
+      function displayTripInfo(tripInfo) {
+        $("#name-input").val(tripInfo.tripName);
+        selectCountry(tripInfo.country);
+        $("#start-date").val(tripInfo.startDate.split("T")[0]);
+        $("#end-date").val(tripInfo.endDate.split("T")[0]);
+        $("#recent-money").text(tripInfo.totalBudget.toLocaleString());
+        $("#save-button").text("여행 폴더 수정");
+        $("#money-range").val(tripInfo.totalBudget);
+
+        // 국가 선택 처리
+        const nationBoxes = document.querySelectorAll(".nation-box");
+        nationBoxes.forEach((box) => {
+          const nationTitle = box.querySelector(".nation-title").textContent;
+          const nationImg = box.querySelector(".nation-img");
+          if (nationTitle === tripInfo.country) {
+            nationImg.classList.add("active");
+          } else {
+            nationImg.classList.remove("active");
+          }
+        });
+      }
+
+      // 여행 폴더 수정하기 (PATCH API)
+      function updateTrip(tripId) {
+        const apiUrl = localStorage.getItem("apiUrl");
+        var tripName = $("#name-input").val();
+        var startDate = formatDate($("#start-date").val());
+        var endDate = formatDate($("#end-date").val());
+        var totalBudget = parseInt($("#recent-money").text().replace(/,/g, ""));
+
+        var requestData = {
+          tripName: tripName,
+          country: selectedCountry,
+          startDate: startDate,
+          endDate: endDate,
+          totalBudget: totalBudget,
+        };
+
+        // 콘솔 로그 추가
+        console.log("Updating trip with data:", requestData);
+
+        $.ajax({
+          url: `${apiUrl}/api/trips/${tripId}`,
+          type: "PATCH",
+          contentType: "application/json",
+          data: JSON.stringify(requestData),
+          success: function (response) {
+            console.log("Trip updated successfully:", response);
+            window.location.href = "./travel.html";
+          },
+          error: function (error) {
+            console.error("Error updating trip:", error);
+          },
+        });
+      }
+
+      // 새로운 여행 폴더 생성하기 (POST API)
+      function createTrip() {
         const userId = localStorage.getItem("userId");
         const apiUrl = localStorage.getItem("apiUrl");
         var tripName = $("#name-input").val();
-
-        const dateInputs = document.querySelectorAll(".date");
-        var startDate = dateInputs[0].value; // 첫 번째 입력 필드의 값 가져오기
-        var endDate = dateInputs[1].value; // 두 번째 입력 필드의 값 가져오기
-
-        startDate = formatDate(startDate);
-        endDate = formatDate(endDate);
-
-        var totalBudget = $("#recent-money").text().replace(/,/g, ""); //, 빼기
+        var startDate = formatDate($("#start-date").val());
+        var endDate = formatDate($("#end-date").val());
+        var totalBudget = parseInt($("#recent-money").text().replace(/,/g, ""));
 
         var requestData = {
           userId: userId,
@@ -117,7 +218,7 @@
         };
 
         // 콘솔 로그 추가
-        console.log("requestData:", requestData);
+        console.log("Creating trip with data:", requestData);
 
         $.ajax({
           url: `${apiUrl}/api/trips`,
@@ -125,11 +226,11 @@
           contentType: "application/json",
           data: JSON.stringify(requestData),
           success: function (response) {
-            console.log("Trip saved successfully:");
+            console.log("Trip created successfully:", response);
             window.location.href = "./travel.html";
           },
           error: function (error) {
-            console.error("Error saving trip:");
+            console.error("Error creating trip:", error);
           },
         });
       }
@@ -139,6 +240,18 @@
         var dateObject = new Date(dateString);
         var formattedDate = dateObject.toISOString().split("T")[0];
         return formattedDate;
+      }
+
+      // URL에서 tripId 파라미터 가져오기
+      function getUrlParam(paramName) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.has(paramName) ? urlParams.get(paramName) : null;
+      }
+
+      // 예산 입력 필드 업데이트하기
+      function updateMoneyValue(value) {
+        document.getElementById("recent-money").textContent =
+          parseInt(value).toLocaleString();
       }
     </script>
   </body>

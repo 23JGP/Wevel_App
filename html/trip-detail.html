@@ -10,7 +10,7 @@
   <body>
     <header>
       <div>
-        <a href="../index.html" id="left-link"
+        <a href="#" onclick="history.back();"
           ><img src="../img/left.png" id="left"
         /></a>
         <p id="title">일본</p>
@@ -123,7 +123,11 @@
       document.addEventListener("DOMContentLoaded", function () {
         // URLSearchParams를 사용하여 URL에서 파라미터 추출
         const urlParams = new URLSearchParams(window.location.search);
-
+        document
+          .getElementById("folder-correction")
+          .addEventListener("click", function () {
+            window.location.href = `travel-folder.html?tripId=${tripId}`;
+          });
         // tripId 파라미터 값 가져오기
         const tripId = urlParams.get("tripId");
         let currency = "";
