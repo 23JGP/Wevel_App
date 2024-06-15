@@ -182,6 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
             shareDiv.style.background = '#FFF';
             shareDiv.style.border = '1px solid #ccc';
             shareDiv.style.transform = 'translateX(-50%)';
+            shareDiv.style.borderRadius = '20px 20px 0 0';
 
             var shareInput = document.createElement('input');
             shareInput.type = 'number';
