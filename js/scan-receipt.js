@@ -160,61 +160,82 @@ document.addEventListener('DOMContentLoaded', function() {
     
     saveText.addEventListener('click', function() {
         if (saveText.textContent === '선택' && selectedItem) {
-            let shareAmount = null;
-            do {
-                shareAmount = prompt('몇 명과 나누시겠습니까?');
-            } while (shareAmount === null || shareAmount.trim() === '' || parseInt(shareAmount) === 0);
+            var shareDiv = document.createElement('div');
+            shareDiv.style.position = 'fixed';
+            shareDiv.style.left = '50%';
+            shareDiv.style.top = '50%';
+            shareDiv.style.transform = 'translate(-50%, -50%)';
+            shareDiv.style.padding = '20px';
+            shareDiv.style.background = '#FFF';
+            shareDiv.style.border = '1px solid #ccc';
+            shareDiv.style.zIndex = '1000';
 
-            if (shareAmount !== null && parseInt(shareAmount) > 0) {
-                shareAmount = parseInt(shareAmount);
+            var shareInput = document.createElement('input');
+            shareInput.type = 'number';
+            shareInput.placeholder = '몇 명과 나누시겠습니까?';
+            shareInput.style.marginRight = '10px';
 
-                var itemCntInput = selectedItem.querySelector('.list-cnt-input');
-                var itemPriceInput = selectedItem.querySelector('.list-price-input');
+            var shareButton = document.createElement('button');
+            shareButton.textContent = '확인';
+            shareButton.onclick = function() {
+                var shareAmount = shareInput.value;
+                if (shareAmount !== null && shareAmount.trim() !== '' && parseInt(shareAmount) > 0) {
+                    shareAmount = parseInt(shareAmount);
 
-                var originalCnt = parseFloat(itemCntInput.value);
-                var originalPrice = parseFloat(itemPriceInput.value);
+                    var itemCntInput = selectedItem.querySelector('.list-cnt-input');
+                    var itemPriceInput = selectedItem.querySelector('.list-price-input');
 
-                var oldCntContainer = document.createElement('p');
-                oldCntContainer.style.textDecoration = 'line-through';
-                oldCntContainer.textContent = itemCntInput.value;
-                oldCntContainer.classList.add('list-cnt');
+                    var originalCnt = parseFloat(itemCntInput.value);
+                    var originalPrice = parseFloat(itemPriceInput.value);
 
-                var oldPriceContainer = document.createElement('p');
-                oldPriceContainer.style.textDecoration = 'line-through';
-                oldPriceContainer.textContent = itemPriceInput.value;
-                oldPriceContainer.classList.add('list-price');
+                    var oldCntContainer = document.createElement('p');
+                    oldCntContainer.style.textDecoration = 'line-through';
+                    oldCntContainer.textContent = itemCntInput.value;
+                    oldCntContainer.classList.add('list-cnt');
 
-                var newCnt = document.createElement('p');
-                newCnt.textContent = originalCnt + "/" + shareAmount;
-                newCnt.style.color = '#ED4B62';
-                newCnt.style.fontSize = '10px';
-                newCnt.style.textAlign = 'center';
+                    var oldPriceContainer = document.createElement('p');
+                    oldPriceContainer.style.textDecoration = 'line-through';
+                    oldPriceContainer.textContent = itemPriceInput.value;
+                    oldPriceContainer.classList.add('list-price');
 
-                var newPrice = document.createElement('p');
-                newPrice.textContent = Math.round(originalPrice / shareAmount);
-                newPrice.style.color = '#ED4B62';
-                newPrice.style.fontSize = '10px';
-                newPrice.style.textAlign = 'right';
+                    var newCnt = document.createElement('p');
+                    newCnt.textContent = originalCnt + "/" + shareAmount;
+                    newCnt.style.color = '#ED4B62';
+                    newCnt.style.fontSize = '10px';
+                    newCnt.style.textAlign = 'center';
 
-                var newValuesWrapper = document.createElement('div');
-                newValuesWrapper.appendChild(newCnt);
-                newValuesWrapper.appendChild(newPrice);
-                newValuesWrapper.classList.add('list-child');
-                newValuesWrapper.style.display = 'flex';
+                    var newPrice = document.createElement('p');
+                    newPrice.textContent = Math.round(originalPrice / shareAmount);
+                    newPrice.style.color = '#ED4B62';
+                    newPrice.style.fontSize = '10px';
+                    newPrice.style.textAlign = 'right';
 
-                itemCntInput.replaceWith(oldCntContainer);
-                itemPriceInput.replaceWith(oldPriceContainer);
+                    var newValuesWrapper = document.createElement('div');
+                    newValuesWrapper.appendChild(newCnt);
+                    newValuesWrapper.appendChild(newPrice);
+                    newValuesWrapper.classList.add('list-child');
+                    newValuesWrapper.style.display = 'flex';
 
-                selectedItem.appendChild(newValuesWrapper);
-                selectedItem.style.border = '1px solid #F0F2F6';
-                selectedItem.style.backgroundColor = '#FFF';
-                selectedItem = null;
+                    itemCntInput.replaceWith(oldCntContainer);
+                    itemPriceInput.replaceWith(oldPriceContainer);
 
-                saveText.textContent = '다음';
-                if (shareBox) {
-                    shareBox.style.display = 'none';
+                    selectedItem.appendChild(newValuesWrapper);
+                    selectedItem.style.border = '1px solid #F0F2F6';
+                    selectedItem.style.backgroundColor = '#FFF';
+                    selectedItem = null;
+
+                    saveText.textContent = '다음';
+                    if (shareBox) {
+                        shareBox.style.display = 'none';
+                    }
+                    document.body.removeChild(shareDiv);
                 }
-            }
+            };
+
+            shareDiv.appendChild(shareInput);
+            shareDiv.appendChild(shareButton);
+            document.body.appendChild(shareDiv);
+            shareInput.focus();
         }
     });    
 
