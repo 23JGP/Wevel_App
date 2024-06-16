@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var saveText = document.getElementById('save-box');
     var sum = document.getElementById('sum');
     var tax = document.getElementById('tax');
-    var prices = document.getElementsByClassName('list-price');
     var titleText = document.getElementById('logo-title');
     var listHeaderDiv = document.querySelector('#list-header div');
     var listAddButton = document.querySelector('.list-add');
@@ -89,7 +88,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 input.addEventListener('input', calculateSum);
             });
             document.querySelector('.tax-input').addEventListener('input', calculateSum);
-
             calculateSum();
 
         } else {
