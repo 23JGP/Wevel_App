@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
             deleteButton.addEventListener('click', function() {
                 item.remove();
                 listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) - 35) + 'px';
+                calculateSum();
             });
 
             var itemName = item.querySelector('.list-name');
