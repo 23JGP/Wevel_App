@@ -85,6 +85,13 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.tax-input').style.paddingRight = '8px';
             document.querySelector('.tax-input').style.border = '1px solid #F0F2F6';
 
+            document.querySelectorAll('.list-name-input, .list-cnt-input, .list-price-input').forEach(input => {
+                input.addEventListener('input', calculateSum);
+            });
+            document.querySelector('.tax-input').addEventListener('input', calculateSum);
+
+            calculateSum();
+
         } else {
             correctionText.textContent = '수정';
             titleText.textContent = '영수증';
@@ -360,13 +367,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function calculateSum() {
         var total = 0;
-        var taxValue = parseFloat(tax.textContent);
-        for (var i = 0; i < prices.length; i++) {
-            total += parseFloat(prices[i].textContent);
-        }
+        var taxValue = parseFloat(document.querySelector('.tax-input').value);
+        var prices = document.querySelectorAll('.list-price-input');
+
+        prices.forEach(function(priceInput) {
+            total += parseFloat(priceInput.value);
+        });
+
         sum.textContent = total + taxValue;
     }
-    calculateSum();
 
     listAddButton.addEventListener('click', function() {
         var newItem = document.createElement('div');
