@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var saveText = document.getElementById('save-box');
     var sum = document.getElementById('sum');
     var tax = document.getElementById('tax');
-    var prices = document.getElementsByClassName('list-price');
     var titleText = document.getElementById('logo-title');
     var listHeaderDiv = document.querySelector('#list-header div');
     var listAddButton = document.querySelector('.list-add');
@@ -29,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
             deleteButton.addEventListener('click', function() {
                 item.remove();
                 listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) - 35) + 'px';
+                calculateSum();
             });
 
             var itemName = item.querySelector('.list-name');
@@ -57,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
             taxInput.style.outline = 'none';
             taxInput.style.textAlign = 'right';
             taxInput.style.borderRadius = '4px';
-            taxInput.style.paddingRight = '8px';
             taxInput.style.fontFamily = 'Pretendard';
             taxInput.style.border = '1px solid rgb(240, 242, 246)';
             tax.replaceWith(taxInput);
@@ -81,20 +80,34 @@ document.addEventListener('DOMContentLoaded', function() {
             listAddButton.style.display = 'block';
             addDeleteButtons();
             shareText.classList.remove('disabled');
+            document.querySelector('.tax-input').disabled = false;
+            document.querySelector('.tax-input').style.borderRadius = '4px';
+            document.querySelector('.tax-input').style.paddingRight = '8px';
+            document.querySelector('.tax-input').style.border = '1px solid #F0F2F6';
+
+            document.querySelectorAll('.list-name-input, .list-cnt-input, .list-price-input').forEach(input => {
+                input.addEventListener('input', calculateSum);
+            });
+            document.querySelector('.tax-input').addEventListener('input', calculateSum);
+            calculateSum();
 
         } else {
             correctionText.textContent = '수정';
             titleText.textContent = '영수증';
             listItems.forEach(function(item) {
                 item.style.border = 'none';
-                item.style.borderRadius = '0';
                 item.style.padding = '0';
+                item.style.borderRadius = '0';
             });
             listHeaderDiv.style.columnGap = '70px';
             listContainer.style.height = (parseInt(getComputedStyle(listContainer).height) - 56) + 'px';
             listAddButton.style.display = 'none';
             removeDeleteButtons(); 
             shareText.classList.add('disabled');
+            document.querySelector('.tax-input').disabled = true;
+            document.querySelector('.tax-input').style.border = 'none';
+            document.querySelector('.tax-input').style.paddingRight = '0';
+            document.querySelector('.tax-input').style.background = 'none';
         }
     });    
 
@@ -178,79 +191,159 @@ document.addEventListener('DOMContentLoaded', function() {
             shareDiv.style.zIndex = '1000';
             shareDiv.style.height = '348px';
             shareDiv.style.padding = '20px';
+            shareDiv.style.display = 'flex';
             shareDiv.style.position = 'fixed';
             shareDiv.style.background = '#FFF';
+            shareDiv.style.alignItems = 'center';
+            shareDiv.style.flexDirection = 'column';
             shareDiv.style.border = '1px solid #ccc';
+            shareDiv.style.fontFamily = 'Pretendard';
+            shareDiv.style.justifyContent = 'center';
             shareDiv.style.transform = 'translateX(-50%)';
             shareDiv.style.borderRadius = '20px 20px 0 0';
 
-            var shareInput = document.createElement('input');
-            shareInput.type = 'number';
-            shareInput.placeholder = '몇 명과 나누시겠습니까?';
-            shareInput.style.marginRight = '10px';
+            var shareText = document.createElement('p');
+            shareText.textContent = '몇 명과 나누시겠습니까?';
 
-            var shareButton = document.createElement('button');
-            shareButton.textContent = '확인';
-            shareButton.onclick = function() {
-                var shareAmount = shareInput.value;
-                if (shareAmount !== null && shareAmount.trim() !== '' && parseInt(shareAmount) > 0) {
-                    shareAmount = parseInt(shareAmount);
+            var selectedItemClone = selectedItem.cloneNode(true);
+            var deleteButton = selectedItemClone.querySelector('.delete-button');
+            deleteButton.remove();
+            selectedItemClone.style.marginTop = '16px';
+            selectedItemClone.style.background = 'none';
+            selectedItemClone.style.border = '1px solid #F0F2F6';
 
-                    var itemCntInput = selectedItem.querySelector('.list-cnt-input');
-                    var itemPriceInput = selectedItem.querySelector('.list-price-input');
+            var shareControls = document.createElement('div');
+            shareControls.style.display = 'flex';
+            shareControls.style.columnGap = '20px';
+            shareControls.style.alignItems = 'center';
+            shareControls.style.margin = '22px 0 40px 0';
+            shareControls.style.justifyContent = 'space-between';
 
-                    var originalCnt = parseFloat(itemCntInput.value);
-                    var originalPrice = parseFloat(itemPriceInput.value);
+            var shareMinus = document.createElement('button');
+            shareMinus.textContent = '-';
+            shareMinus.style.width = '32px';
+            shareMinus.style.height = '32px';
+            shareMinus.style.border = 'none';
+            shareMinus.style.color = '#707174';
+            shareMinus.style.fontSize = '24px';
+            shareMinus.style.borderRadius = '100%';
+            shareMinus.style.fontFamily = 'Pretendard';
+            shareMinus.style.backgroundColor = '#F0F2F6';
 
-                    var oldCntContainer = document.createElement('p');
-                    oldCntContainer.style.textDecoration = 'line-through';
-                    oldCntContainer.textContent = itemCntInput.value;
-                    oldCntContainer.classList.add('list-cnt');
+            var itemCntInput = selectedItem.querySelector('.list-cnt-input');
+            var initialShareValue = parseInt(itemCntInput.value, 10);
 
-                    var oldPriceContainer = document.createElement('p');
-                    oldPriceContainer.style.textDecoration = 'line-through';
-                    oldPriceContainer.textContent = itemPriceInput.value;
-                    oldPriceContainer.classList.add('list-price');
+            var shareValue = document.createElement('div');
+            shareValue.textContent = initialShareValue;
+            shareValue.style.width = '100px';
+            shareValue.style.height = '100px';
+            shareValue.style.display = 'flex';
+            shareValue.style.color = '#ED4B62';
+            shareValue.style.fontSize = '40px';
+            shareValue.style.fontWeight = 'bold';
+            shareValue.style.textAlign = 'center';
+            shareValue.style.alignItems = 'center';
+            shareValue.style.borderRadius = '100%';
+            shareValue.style.fontFamily = 'Pretendard';
+            shareValue.style.justifyContent = 'center';
+            shareValue.style.border = '2px solid #ED4B62';
 
-                    var newCnt = document.createElement('p');
-                    newCnt.textContent = originalCnt + "/" + shareAmount;
-                    newCnt.style.color = '#ED4B62';
-                    newCnt.style.fontSize = '10px';
-                    newCnt.style.textAlign = 'center';
-
-                    var newPrice = document.createElement('p');
-                    newPrice.textContent = Math.round(originalPrice / shareAmount);
-                    newPrice.style.color = '#ED4B62';
-                    newPrice.style.fontSize = '10px';
-                    newPrice.style.textAlign = 'right';
-
-                    var newValuesWrapper = document.createElement('div');
-                    newValuesWrapper.appendChild(newCnt);
-                    newValuesWrapper.appendChild(newPrice);
-                    newValuesWrapper.classList.add('list-child');
-                    newValuesWrapper.style.display = 'flex';
-
-                    itemCntInput.replaceWith(oldCntContainer);
-                    itemPriceInput.replaceWith(oldPriceContainer);
-
-                    selectedItem.appendChild(newValuesWrapper);
-                    selectedItem.style.border = '1px solid #F0F2F6';
-                    selectedItem.style.backgroundColor = '#FFF';
-                    selectedItem = null;
-
-                    saveText.textContent = '다음';
-                    if (shareBox) {
-                        shareBox.style.display = 'none';
-                    }
-                    document.body.removeChild(shareDiv);
-                    document.body.removeChild(overlay); 
+            var sharePlus = document.createElement('button');
+            sharePlus.textContent = '+';
+            sharePlus.style.width = '32px';
+            sharePlus.style.height = '32px';
+            sharePlus.style.border = 'none';
+            sharePlus.style.color = '#707174';
+            sharePlus.style.fontSize = '24px';
+            sharePlus.style.borderRadius = '100%';
+            sharePlus.style.fontFamily = 'Pretendard';
+            sharePlus.style.backgroundColor = '#F0F2F6';
+            
+            shareMinus.onclick = function() {
+                var currentValue = parseInt(shareValue.textContent, 10);
+                if (currentValue > 1) {
+                    shareValue.textContent = currentValue - 1;
                 }
             };
+    
+            sharePlus.onclick = function() {
+                var currentValue = parseInt(shareValue.textContent, 10);
+                shareValue.textContent = currentValue + 1;
+            };
 
-            shareDiv.appendChild(shareInput);
+            shareControls.appendChild(shareMinus);
+            shareControls.appendChild(shareValue);
+            shareControls.appendChild(sharePlus);    
+
+            var shareButton = document.createElement('button');
+            shareButton.textContent = '완료';
+            shareButton.style.color = '#FFF';
+            shareButton.style.width = '320px';
+            shareButton.style.border = 'none';
+            shareButton.style.height = '46px';
+            shareButton.style.fontSize = '14px';
+            shareButton.style.borderRadius = '8px';
+            shareButton.style.fontFamily = 'Pretendard';
+            shareButton.style.backgroundColor = '#ED4B62';
+
+            shareButton.onclick = function() {
+                var shareAmount = parseInt(shareValue.textContent);
+                var itemCntInput = selectedItem.querySelector('.list-cnt-input');
+                var itemPriceInput = selectedItem.querySelector('.list-price-input');
+                
+                var originalCnt = parseFloat(itemCntInput.value);
+                var originalPrice = parseFloat(itemPriceInput.value);
+
+                var oldCntContainer = document.createElement('p');
+                oldCntContainer.style.textDecoration = 'line-through';
+                oldCntContainer.textContent = itemCntInput.value;
+                oldCntContainer.classList.add('list-cnt');
+                
+                var oldPriceContainer = document.createElement('p');
+                oldPriceContainer.style.textDecoration = 'line-through';
+                oldPriceContainer.textContent = itemPriceInput.value;
+                oldPriceContainer.classList.add('list-price');
+
+                var newCnt = document.createElement('p');
+                newCnt.textContent = originalCnt + "/" + shareAmount;
+                newCnt.style.color = '#ED4B62';
+                newCnt.style.fontSize = '10px';
+                newCnt.style.textAlign = 'center';
+
+                var newPrice = document.createElement('p');
+                newPrice.textContent = Math.round(originalPrice / shareAmount);
+                newPrice.style.color = '#ED4B62';
+                newPrice.style.fontSize = '10px';
+                newPrice.style.textAlign = 'right';
+
+                var newValuesWrapper = document.createElement('div');
+                newValuesWrapper.appendChild(newCnt);
+                newValuesWrapper.appendChild(newPrice);
+                newValuesWrapper.classList.add('list-child');
+                newValuesWrapper.style.display = 'flex';
+
+                itemCntInput.replaceWith(oldCntContainer);
+                itemPriceInput.replaceWith(oldPriceContainer);
+                selectedItem.appendChild(newValuesWrapper);
+
+                selectedItem.style.border = '1px solid #F0F2F6';
+                selectedItem.style.backgroundColor = '#FFF';
+                selectedItem = null;
+                saveText.textContent = '다음';
+                if (shareBox) {
+                    shareBox.style.display = 'none';
+                }
+
+                document.body.removeChild(shareDiv);
+                document.body.removeChild(overlay); 
+            };
+
+            shareDiv.appendChild(shareText);
+            shareDiv.appendChild(selectedItemClone);
+            shareDiv.appendChild(shareControls);
             shareDiv.appendChild(shareButton);
             document.body.appendChild(shareDiv);
-            shareInput.focus();
+            shareText.focus();
         }
     });    
 
@@ -273,13 +366,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function calculateSum() {
         var total = 0;
-        var taxValue = parseFloat(tax.textContent);
-        for (var i = 0; i < prices.length; i++) {
-            total += parseFloat(prices[i].textContent);
-        }
+        var taxValue = parseFloat(document.querySelector('.tax-input').value);
+        var prices = document.querySelectorAll('.list-price-input');
+
+        prices.forEach(function(priceInput) {
+            total += parseFloat(priceInput.value);
+        });
+
         sum.textContent = total + taxValue;
     }
-    calculateSum();
 
     listAddButton.addEventListener('click', function() {
         var newItem = document.createElement('div');
