@@ -13,6 +13,16 @@ document.addEventListener('DOMContentLoaded', function() {
     var selectedItem = null;
     var shareBox = null;
 
+    function calculateInitialSum() {
+        var total = 0;
+        var prices = document.querySelectorAll('.list-price');
+        prices.forEach(function(price) {
+            total += parseFloat(price.textContent);
+        });
+        sum.textContent = total + parseFloat(tax.textContent);
+    }
+    calculateInitialSum();
+
     function addDeleteButtons() {
         listItems.forEach(function(item) {
             var deleteButton = document.createElement('img');
