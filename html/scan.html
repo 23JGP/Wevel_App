@@ -26,18 +26,14 @@
     </main>
 
     <footer>
-      <div id="gallery-div">
-        <img
-          src="../img/gallery.png"
-          id="gallery"
-          onclick="triggerFileInput()"
-        />
+      <div id="gallery-div" onclick="triggerFileInput()">
+        <img src="../img/gallery.png" id="gallery" />
         <input
           type="file"
           id="imageInput"
           accept="image/*"
           style="display: none"
-          onchange="displaySelectedImage()"
+          onchange="handleImageChange()"
         />
       </div>
 
@@ -46,8 +42,6 @@
         <canvas id="scanCanvas" style="display: none"></canvas>
         <p id="box-title" onclick="scanImage()">스캔하기</p>
       </div>
-      <!-- TODO : 파일 선택, 업로드 css 추가하기 -->
-      <!-- <button onclick="handleImageChange()">파일 업로드</button> -->
     </footer>
 
     <div id="result"></div>
