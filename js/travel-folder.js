@@ -190,6 +190,10 @@ document.addEventListener("DOMContentLoaded", function () {
           } else {
             document.getElementById('end-date').textContent = `${year}. ${String(month + 1).padStart(2, '0')}. ${String(date).padStart(2, '0')}`;
             selectingStartDate = true;
+
+            document.querySelectorAll('.date').forEach(dateElement => {
+              dateElement.style.color = '#2C2C2C';
+            });
           }
         };
         datesGrid.appendChild(dateCell);
