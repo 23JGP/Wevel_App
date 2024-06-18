@@ -6,6 +6,7 @@
     <title>여행 폴더</title>
     <link rel="stylesheet" href="../css/all.css" />
     <link rel="stylesheet" href="../css/travel-folder.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
       rel="stylesheet"
@@ -53,9 +54,15 @@
       <div id="travel-date">
         <p class="title">기간</p>
         <div id="date-container">
-          <input type="date" class="date" id="start-date" />
+          <div class="date">
+            <p id="start-date">출발하는 날</p>
+            <i class="bi bi-calendar4"></i>
+          </div>
           ~
-          <input type="date" class="date" id="end-date" />
+          <div class="date">
+            <p id="end-date">돌아오는 날</p>
+            <i class="bi bi-calendar4"></i>
+          </div>
         </div>
       </div>
 

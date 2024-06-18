@@ -176,6 +176,7 @@ main {
     width: 140px;
     display: flex;
     outline: none;
+    cursor: pointer;
     font-size: 14px;
     text-align: center;
     align-items: center;
@@ -185,6 +186,102 @@ main {
     font-family: 'Pretendard';
     color: var(--Gray-03, #C0C2C8);
     border: 1px solid var(--Gray-02, #F0F2F6);
+}
+
+.bi {
+    margin-left: 8px;
+}
+
+.overlay {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    opacity: 0.1;
+    height: 100vh;
+    display: none;
+    z-index: 1000;
+    position: fixed;
+    background-color: #000;
+}
+
+.date-picker {
+    bottom: 0;
+    width: 100%;
+    height: 459px;
+    z-index: 1200;
+    display: none;;
+    position: fixed;
+    background-color: #FFF;
+    font-family: 'Pretendard';
+    border-radius: 20px 20px 0 0;
+}
+
+.date-title {
+    color: #2C2C2C;
+    margin-top: 32px;
+    font-weight: bold;
+    font-family: 'NanumSquareRound';
+}
+
+.date-button {
+    bottom: 20px;
+    height: 46px;
+    color: #FFF;
+    display: flex;
+    position: fixed;
+    font-size: 14px;
+    margin-left: 20px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 40px);
+    font-family: 'Pretendard';
+    background-color: #ED4B62;
+}
+
+.hr {
+    width: 293px;
+    margin: 26px auto 18px auto;
+    border: 0.8px solid #F0F2F6;
+}
+
+.calendar-days-row {
+    width: 314px;
+    display: flex;
+    font-size: 10px;
+    color: #C0C2C8;
+    text-align: center;
+    align-items: center;
+    margin: 0 0 14px 20px;
+    justify-content: space-around;
+}
+
+.calendar-dates-grid {
+    width: 314px;
+    row-gap: 8px;
+    display: grid;
+    font-size: 14px;
+    color: #2C2C2C;
+    margin-left: 20px;
+    text-align: center;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-day-header {
+    width: 32px;
+    height: 24px;
+    display: flex;
+    font-size: 10px;
+    color: #C0C2C8;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-date {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #travel-recent {
