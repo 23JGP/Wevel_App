@@ -6,49 +6,97 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/all.css" />
     <link rel="stylesheet" href="../css/save-receipt.css" />
+    <script src="../js/currencySymbol.js" defer></script>
   </head>
   <body>
-
     <header>
-      <a href="../html/scan-receipt.html"><img src="../img/left.png" id="left" /></a>
+      <a href="../html/scan-receipt.html"
+        ><img src="../img/left.png" id="left"
+      /></a>
       <p id="title">저장하기</p>
     </header>
 
-    <main>
-        <div id="travel-box">
-            <div id="travel-img"></div>
-            <div id="travel-content">
-              <p id="travel-title"></p>
-              <p id="travel-recent">
-                여행예산 &nbsp;|&nbsp; <span id="totalBudget"></span>
-                <span id="currency"></span>
-              </p>
-              <p id="travel-date">
-                여행기간 &nbsp;|&nbsp; <span id="date"></span>
-              </p>
-            </div>
-        </div>
+    <main id="main-content"></main>
 
-        <div id="travel-box">
-            <div id="travel-img"></div>
-            <div id="travel-content">
-              <p id="travel-title"></p>
-              <p id="travel-recent">
-                여행예산 &nbsp;|&nbsp; <span id="totalBudget"></span>
-                <span id="currency"></span>
-              </p>
-              <p id="travel-date">
-                여행기간 &nbsp;|&nbsp; <span id="date"></span>
-              </p>
-            </div>
-        </div>
-    </main>
-    
     <footer>
-        <a href="#"><p>저장하기</p></a>
+      <a href="#"><p>저장하기</p></a>
     </footer>
 
-    <script src="../js/save-receipt"></script>
-    
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const userId = 1;
+        const apiUrl = `http://localhost:8085/api/trips/info/${userId}?orderBy=recent`;
+
+        fetch(apiUrl)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const mainContent = document.getElementById("main-content");
+
+            data.forEach((trip) => {
+              const tripElement = document.createElement("div");
+              tripElement.id = "travel-box"; // 기존 id 유지
+
+              let countryImage;
+              switch (trip.country) {
+                case "일본":
+                  countryImage = "nation-japen.png";
+                  break;
+                case "미국":
+                  countryImage = "nation-usa.png";
+                  break;
+                case "베트남":
+                  countryImage = "nation-vietnam.png";
+                  break;
+                case "태국":
+                  countryImage = "nation-thailand.png";
+                  break;
+                // 다른 국가에 대한 경우를 추가할 수 있음
+                default:
+                  // 기본 이미지 설정
+                  countryImage = "default-trip.png";
+              }
+
+              const currency = getCurrencySymbol(trip.country);
+
+              tripElement.innerHTML = `
+                  <div id="travel-img">
+                    <img src="../img/${countryImage}" alt="${
+                trip.country
+              }" style="width: 56px; height: 56px; flex-shrink: 0; margin-left: 4px; border-radius: 30px;">
+                  </div>
+                  <div id="travel-content">
+                    <p id="travel-title">${trip.tripName}</p>
+                    <p id="travel-recent">
+                      여행예산 &nbsp;|&nbsp; <span id="totalBudget">${trip.totalBudget.toLocaleString()}</span>
+                      <span id="currency">${currency}</span>
+                    </p>
+                    <p id="travel-date">
+                      여행기간 &nbsp;|&nbsp; <span id="date">${formatDate(
+                        trip.startDate
+                      )} ~ ${formatDate(trip.endDate)}</span>
+                    </p>
+                  </div>
+                `;
+
+              mainContent.appendChild(tripElement);
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching trip data:", error);
+          });
+
+        function formatDate(dateString) {
+          const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+          return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+      });
+    </script>
+
+    <script src="../js/save-receipt.js"></script>
   </body>
 </html>
