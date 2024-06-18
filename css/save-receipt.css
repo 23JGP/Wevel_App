@@ -1,0 +1,114 @@
+body {
+  margin: 0;
+  width: 360px;
+  height: 100vh;
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+}
+
+header {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+}
+
+#left {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-left: 13px;
+}
+
+#title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  font-style: normal;
+  margin: 0 0 7px 8px;
+  font-family: "NanumSquareRound";
+  color: var(--kakao-logo, #000);
+}
+
+main {
+  width: 100%;
+  row-gap: 8px;
+  display: flex;
+  margin-top: 56px;
+  flex-direction: column;
+}
+
+#travel-box {
+    width: 320px;
+    height: 93px;
+    display: flex;
+    margin: 0 auto;
+    flex-shrink: 0;
+    align-items: center;
+    border-radius: 12px;
+    background: var(--naver-text, #fff);
+    border: 1px solid var(--Gray-02, #f0f2f6);
+}
+
+#travel-box:hover {
+    background: #FFF6F8;
+    border: 1px solid #ED4B62;
+}
+
+#travel-img {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  margin-left: 12px;
+  border-radius: 30px;
+}
+
+#travel-content {
+  margin-left: 16px;
+}
+
+#travel-title {
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 22.4px;
+  font-family: 'Pretendard';
+  color: var(--Gray-05, #2c2c2c);
+}
+
+#travel-recent,
+#travel-date {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 16px;
+  font-style: normal;
+  font-family: "Pretendard";
+  color: var(--Gray-03, #c0c2c8);
+}
+
+footer {
+    bottom: 0;
+    height: 86px;
+    position: fixed;
+    margin-left: 20px;
+    width: calc(100% - 40px);
+}
+
+footer p {
+    width: 100%;
+    height: 46px;
+    color: #FFF;
+    display: flex;
+    font-size: 14px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Pretendard';
+    background-color: #F79FAB;
+}
+
+footer p.active {
+  background-color: #ED4B62;
+}
