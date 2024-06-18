@@ -78,3 +78,15 @@ function displaySelectedImage() {
     reader.readAsDataURL(input.files[0]);
   }
 }
+
+function showLoadingRedirect() {
+  const gifContainer = document.createElement('div');
+  gifContainer.className = 'gif';
+  gifContainer.innerHTML = '<img src="../img/loading.gif" alt="Loading...">';
+  document.body.appendChild(gifContainer);
+
+  setTimeout(function() {
+    window.location.href = './scan-receipt.html';
+    document.body.removeChild(gifContainer);
+  }, 3000);
+}
