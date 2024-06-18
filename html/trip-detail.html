@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/all.css" />
+    <link rel="stylesheet" href="../css/receipt-japan.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <a href="#" onclick="history.back();"
+          ><img src="../img/left.png" id="left"
+        /></a>
+        <p id="title">일본</p>
+      </div>
+      <div>
+        <img src="../img/search.png" id="search" />
+        <img src="../img/setting.png" id="setting" />
+        <div id="setting-menu">
+          <p id="folder-correction">폴더수정</p>
+          <p id="folder-delete">폴더 삭제</p>
+          <p id="delete-receipt">영수증 삭제</p>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div id="info-container">
+        <div id="trip-info">
+          <img id="flag-image" />
+          <p id="trip-date">2024.01.06 ~ 01.28</p>
+        </div>
+
+        <div id="money-info">
+          <div id="money-flex">
+            <p id="spend-money">30,000</p>
+            <p>/</p>
+            <p id="money">100,000</p>
+            <!-- <p>$</p> -->
+          </div>
+
+          <div id="money-bar">
+            <div id="spend-bar"></div>
+          </div>
+
+          <div id="save-money">
+            <p>남은 금액</p>
+            <p id="remain-money">70,000</p>
+            <!-- <p>$</p> -->
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div id="receipt-container">
+        <div id="sort-box">
+          <div id="sort-content">
+            <p id="sort-title">항목</p>
+            <p id="receipt-cnt">5</p>
+          </div>
+
+          <div id="sort-list">
+            <p>전체</p>
+            <p>오늘</p>
+            <p>이번 주</p>
+            <p>이번 달</p>
+          </div>
+        </div>
+
+        <div id="receipt-box">
+          <div class="money-box">
+            <img src="../img/money-list.png" class="money-img" />
+            <div>
+              <p class="money-title">돈키호테</p>
+              <p class="money-date">2024. 01. 16</p>
+            </div>
+            <p class="money-amount">3000 ¥</p>
+          </div>
+
+          <div class="money-box">
+            <img src="../img/money-list.png" class="money-img" />
+            <div>
+              <p class="money-title">편의점</p>
+              <p class="money-date">2024. 01. 16</p>
+            </div>
+            <p class="money-amount">1200 ¥</p>
+          </div>
+
+          <div class="money-box">
+            <img src="../img/money-list.png" class="money-img" />
+            <div>
+              <p class="money-title">슈퍼</p>
+              <p class="money-date">2024. 01. 16</p>
+            </div>
+            <p class="money-amount">2400 ¥</p>
+          </div>
+
+          <div class="money-box">
+            <img src="../img/money-list.png" class="money-img" />
+            <div>
+              <p class="money-title">택시비</p>
+              <p class="money-date">2024. 01. 16</p>
+            </div>
+            <p class="money-amount">600 ¥</p>
+          </div>
+
+          <div class="money-box">
+            <img src="../img/money-list.png" class="money-img" />
+            <div>
+              <p class="money-title">편의점</p>
+              <p class="money-date">2024. 01. 16</p>
+            </div>
+            <p class="money-amount">54 ¥</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="overlay"></div>
+
+    <div id="popup" style="display: none">
+      <p id="popup-title">정말 삭제하시겠습니까?</p>
+      <p id="popup-content">
+        한번 삭제하신 정보는 복구할 수 없습니다.<br />정말 삭제하시겠습니까?
+      </p>
+      <div>
+        <p id="popup-cancle">취소</p>
+        <p id="popup-delete" onclick="deleteTrip()">삭제</p>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // URLSearchParams를 사용하여 URL에서 파라미터 추출
+        const urlParams = new URLSearchParams(window.location.search);
+        document
+          .getElementById("folder-correction")
+          .addEventListener("click", function () {
+            window.location.href = `travel-folder.html?tripId=${tripId}`;
+          });
+        // tripId 파라미터 값 가져오기
+        const tripId = urlParams.get("tripId");
+        let currency = "";
+        // API 호출
+        fetch(`http://localhost:8085/api/trips/${tripId}`)
+          .then((response) => response.json())
+          .then((data) => {
+            // 데이터 로드 후 처리
+            console.log("API Response:", data);
+
+            // 국가 이미지 설정
+            let countryImage = ""; // 초기값 설정
+            switch (data.country) {
+              case "일본":
+                countryImage = "flag-japen.png";
+                break;
+              case "미국":
+                countryImage = "flag-usa.png";
+                break;
+              case "베트남":
+                countryImage = "flag-vietnam.png";
+                break;
+              case "태국":
+                countryImage = "flag-thailand.png";
+                break;
+              // 다른 국가에 대한 경우를 추가할 수 있음
+              default:
+                // 기본 이미지 설정
+                countryImage = "default-trip.png";
+            }
+
+            // 소비한 금액 퍼센트로 반환
+            const totalBudget = data.totalBudget;
+            const spentAmount = data.spentAmount;
+            const spentPercentage = (spentAmount / totalBudget) * 100;
+
+            // 소비한 금액 바
+            const spendBarElement = document.getElementById("spend-bar");
+            if (spentPercentage <= 100)
+              spendBarElement.style.width = `${spentPercentage}%`;
+            else spendBarElement.style.width = `100%`;
+
+            // 국가 이미지 요소에 반영
+            const flagImageElement = document.getElementById("flag-image");
+            flagImageElement.src = `../img/${countryImage}`;
+
+            // 나머지 데이터를 HTML 요소에 반영
+            const titleElement = document.getElementById("title");
+            titleElement.textContent = data.tripName;
+
+            const tripDateElement = document.getElementById("trip-date");
+            tripDateElement.textContent = formatDate(
+              data.startDate,
+              data.endDate
+            );
+
+            currency = getCurrencySymbol(data.country);
+            const spendMoneyElement = document.getElementById("spend-money");
+            spendMoneyElement.textContent = data.spentAmount.toLocaleString();
+
+            const moneyElement = document.getElementById("money");
+            moneyElement.textContent = `${data.totalBudget.toLocaleString()} ${currency}`;
+
+            const remainMoneyElement = document.getElementById("remain-money");
+            remainMoneyElement.textContent = `${data.remainingAmount.toLocaleString()} ${currency}`;
+          })
+          .catch((error) => {
+            console.error("API Error:", error);
+          });
+
+        const apiUrl = "http://localhost:8085/api/receipts";
+
+        // API를 호출하여 영수증 목록을 가져오는 함수
+        function fetchReceipts(tripId, tag = "") {
+          let url = `${apiUrl}/${tripId}`;
+          if (tag) {
+            url += `?tag=${tag}`;
+          }
+
+          fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+              displayReceipts(data); // 받은 데이터를 이용해 영수증 목록 표시
+              updateReceiptCount(data.length); // 총 영수증 개수 업데이트
+            })
+            .catch((error) => console.error("Error fetching receipts:", error));
+        }
+
+        // 영수증 목록을 표시하는 함수
+        function displayReceipts(receipts) {
+          const receiptBox = document.getElementById("receipt-box");
+          receiptBox.innerHTML = ""; // 기존 내용 초기화
+
+          receipts.forEach((receipt) => {
+            const moneyBox = document.createElement("div");
+            moneyBox.className = "money-box";
+
+            const img = document.createElement("img");
+            img.src = "../img/money-list.png";
+            img.className = "money-img";
+            moneyBox.appendChild(img);
+
+            const div = document.createElement("div");
+            const title = document.createElement("p");
+            title.className = "money-title";
+            title.textContent = receipt.title;
+            const date = document.createElement("p");
+            date.className = "money-date";
+            date.textContent = receipt.date;
+            div.appendChild(title);
+            div.appendChild(date);
+            moneyBox.appendChild(div);
+
+            const amount = document.createElement("p");
+            amount.className = "money-amount";
+            amount.textContent = `${receipt.total} ${currency}`;
+            moneyBox.appendChild(amount);
+
+            receiptBox.appendChild(moneyBox);
+          });
+        }
+
+        // 총 영수증 개수를 업데이트하는 함수
+        function updateReceiptCount(count) {
+          const receiptCntElement = document.getElementById("receipt-cnt");
+          receiptCntElement.textContent = count;
+        }
+
+        fetchReceipts(tripId);
+
+        function deleteTrip() {
+          if (!tripId) {
+            console.error("TripId가 없습니다.");
+            return;
+          }
+
+          const apiUrl = "http://localhost:8085/api/trips";
+
+          $.ajax({
+            url: `${apiUrl}/${tripId}`,
+            type: "DELETE",
+            success: function (response) {
+              console.log("Trip 삭제 성공:", response);
+              window.location.href = `../html/trip-detail.html?${tripId}`;
+            },
+            error: function (error) {
+              console.error("Trip 삭제 실패:", error);
+            },
+          });
+        }
+
+        // 필터 버튼 클릭 이벤트 처리
+        const filterButtons = document.querySelectorAll("#sort-list p");
+        filterButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const filter = button.textContent.trim();
+            let tag = "";
+            switch (filter) {
+              case "오늘":
+                tag = "today";
+                break;
+              case "이번 주":
+                tag = "this_week";
+                break;
+              case "이번 달":
+                tag = "this_month";
+                break;
+              default:
+                tag = "";
+                break;
+            }
+            fetchReceipts(tripId, tag);
+          });
+        });
+
+        // 날짜 형식 변환 함수
+        function formatDate(startDate, endDate) {
+          const start = new Date(startDate);
+          const end = new Date(endDate);
+          const formattedStart = `${start.getFullYear()}.${
+            start.getMonth() + 1
+          }.${start.getDate()}`;
+          const formattedEnd = `${end.getMonth() + 1}.${end.getDate()}`;
+          return `${formattedStart} ~ ${formattedEnd}`;
+        }
+
+        // 국가에 따른 화폐 기호 반환 함수
+        function getCurrencySymbol(country) {
+          switch (country) {
+            case "일본":
+              return "¥";
+            case "미국":
+              return "$";
+            case "베트남":
+              return "₫";
+            case "태국":
+              return "฿";
+            default:
+              return "";
+          }
+        }
+      });
+    </script>
+    <script src="../js/receipt-japan.js"></script>
+  </body>
+</html>
