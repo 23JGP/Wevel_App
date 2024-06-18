@@ -176,6 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
         datesGrid.appendChild(dateCell);
       }
       datePicker.appendChild(datesGrid);
+      datePicker.appendChild(dateButton);
     };
 
     setCalendar(year, month);
