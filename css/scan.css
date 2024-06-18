@@ -116,3 +116,18 @@ footer {
     font-family: 'NanumSquareRound';
     color: var(--Gray-White, var(--naver-text, #FFF));
 }
+
+.gif {
+    width: 100vw; 
+    height: 100vh; 
+    z-index: 1000; 
+    display: flex;
+    position: fixed; 
+    align-items: center;
+    justify-content: center;
+}
+
+.gif img {
+    width: 15%;
+    height: 8%;
+}

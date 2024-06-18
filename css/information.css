@@ -116,3 +116,73 @@ ul {
   list-style-type: none;
   justify-content: center;
 }
+
+a {
+  cursor: pointer;
+  color: #C0C2C8;
+  text-decoration: none;
+}
+
+.overlay {
+  width: 100vw;
+  opacity: 0.1;
+  height: 100vh;
+  display: none;
+  position: absolute;
+  background-color: #000;
+}
+
+.popup-div {
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  position: absolute;
+  border-radius: 12px;
+  background-color: #FFF;
+  font-family: 'Pretendard';
+  padding: 20px 24px 20px 16px;
+  transform: translate(-50%, -50%);
+  width: calc(320px - 24px - 16px);
+  height: calc(186px - 20px - 20px);
+}
+
+.popup-title {
+  color: #2c2c2c;
+  font-weight: bold;
+  margin: 20px 0 12px 0;
+}
+
+.popup-content {
+  color: #A8A8A8;
+  margin-bottom: 30px;
+}
+
+.button-div {
+  display: flex;
+  column-gap: 8px;
+  visibility: hidden;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cancle-button {
+  width: 62px;
+  height: 36px;
+  display: flex;
+  color: #C0C2C8;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #F0F2F6;
+}
+
+.delete-button {
+  width: 62px;
+  height: 36px;
+  color: #FFF;
+  display: flex;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  background-color: #ED4B62;
+}
