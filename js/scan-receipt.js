@@ -480,4 +480,11 @@ document.addEventListener('DOMContentLoaded', function() {
             itemPriceInput.replaceWith(itemPrice);
         });
     }
+
+    document.getElementById('save-box').addEventListener('click', function() {
+        var correctionText = document.getElementById('correction').textContent;
+        if (correctionText === "수정") {
+          window.location.href = "../html/save-receipt.html"; // 링크 이동
+        }
+    });
 });
