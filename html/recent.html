@@ -61,94 +61,62 @@
     </main>
     <script>
       const urlParams = new URLSearchParams(window.location.search);
-
       const tripId = urlParams.get("tripId");
+
       const userId = localStorage.getItem("userId");
-      const apiUrl = localStorage.getItem("apiUrl");
+      const apiUrl = `http://localhost:8085/api/receipts/${tripId}`;
 
-      // 오늘 날짜를 구하기
-      var today = new Date();
-      var formattedToday = formatDate(today);
+      // API를 호출하여 영수증 목록을 가져오는 함수
+      function fetchReceipts() {
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            displayReceipts(data); // 받은 데이터를 이용해 영수증 목록 표시
+          })
+          .catch((error) => console.error("Error fetching receipts:", error));
+      }
 
-      let currencySymbol = "";
-      let tripName = "";
-      $.ajax({
-        url: `${apiUrl}/api/trips/${tripId}`,
-        type: "GET",
-        success: function (data) {
-          var country = data.country;
-          tripName = data.tripName;
-          currencySymbol = getCurrencySymbol(country);
-          console.log("화폐 기호:", currencySymbol, tripName);
-        },
-        error: function () {
-          console.error("Failed to fetch data from the server.");
-        },
-      });
+      // 영수증 목록을 표시하는 함수
+      function displayReceipts(receipts) {
+        const moneyContainer = document.getElementById("moneyContainer");
+        moneyContainer.innerHTML = ""; // 기존 내용 초기화
 
-      // AJAX로 서버에서 데이터 가져오기
-      $.ajax({
-        url: `${apiUrl}/api/receipts/user/${userId}/trip/${tripId}`,
-        method: "GET",
-        dataType: "json",
-        success: function (data) {
-          // 오늘 소비한 데이터만 필터링
-          var todayData = data.filter(function (receipt) {
-            return formatDate(new Date(receipt.date)) === formattedToday;
-          });
+        receipts.forEach((receipt) => {
+          const moneyBox = document.createElement("div");
+          moneyBox.className = "money-box";
 
-          createMoneyBoxes(todayData);
-        },
-        error: function (error) {
-          console.error("Error fetching receipts:", error);
-        },
-      });
+          const moneyImg = document.createElement("img");
+          moneyImg.className = "money-img";
+          moneyImg.src = "../img/money-list.png";
+          moneyBox.appendChild(moneyImg);
 
-      // TODO : 영수증 페이지 생기면 영수증 id를 이용해서 넘어가게 수정하기
-      // HTML에 동적으로 money-box 요소 추가하는 함수
-      function createMoneyBoxes(data) {
-        var moneyContainer = $("#moneyContainer");
+          const moneyInfo = document.createElement("div");
 
-        data.forEach(function (receipt) {
-          var totalAmount = calculateTotalAmount(receipt.products);
-          var moneyBox = $("<div>").addClass("money-box");
-          var formattedStartDate = formatDate(receipt.date);
+          const moneyTitle = document.createElement("p");
+          moneyTitle.className = "money-title";
+          moneyTitle.textContent = receipt.title;
+          moneyInfo.appendChild(moneyTitle);
 
-          var img = $("<img>")
-            .attr("src", "../img/money-list.png")
-            .addClass("money-img");
+          const moneyDate = document.createElement("p");
+          moneyDate.className = "money-date";
+          moneyDate.textContent = receipt.date;
+          moneyInfo.appendChild(moneyDate);
 
-          var title = $("<p>").addClass("money-title").text(receipt.title);
-          var date = $("<p>").addClass("money-date").text(formattedStartDate);
+          moneyBox.appendChild(moneyInfo);
 
-          var moneyInfo = $("<div>").addClass("money-info");
-          moneyInfo.append(title);
-          moneyInfo.append(date);
+          const moneyAmount = document.createElement("p");
+          moneyAmount.className = "money-amount";
+          moneyAmount.textContent = `${receipt.total} ¥`;
+          moneyBox.appendChild(moneyAmount);
 
-          var amount = $("<p>")
-            .addClass("money-amount")
-            .text(totalAmount + " " + currencySymbol);
-
-          // img, moneyInfo, amount를 moneyBox에 추가
-          moneyBox.append(img, moneyInfo, amount);
-          moneyContainer.append(moneyBox);
+          moneyContainer.appendChild(moneyBox);
         });
       }
 
-      // 영수증 총액 계산 함수
-      function calculateTotalAmount(products) {
-        return products.reduce(function (total, product) {
-          return total + product.price;
-        }, 0);
-      }
-
-      // 날짜 포맷팅 함수
-      function formatDate(date) {
-        var year = date.getFullYear();
-        var month = ("0" + (date.getMonth() + 1)).slice(-2);
-        var day = ("0" + date.getDate()).slice(-2);
-        return `${year}.${month}.${day}`;
-      }
+      // 페이지 로드 시 영수증 목록 가져오기
+      $(document).ready(function () {
+        fetchReceipts();
+      });
     </script>
   </body>
 </html>

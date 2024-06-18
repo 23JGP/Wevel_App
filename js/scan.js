@@ -61,21 +61,20 @@ document.addEventListener("DOMContentLoaded", startWebcam);
 
 // 갤러리 버튼 클릭하면 파일 업로드
 function triggerFileInput() {
-    document.getElementById('imageInput').click();
+  document.getElementById("imageInput").click();
+}
+
+function displaySelectedImage() {
+  var input = document.getElementById("imageInput");
+  var img = document.getElementById("gallery");
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      img.src = e.target.result;
+    };
+
+    reader.readAsDataURL(input.files[0]);
   }
-  
-  function displaySelectedImage() {
-    var input = document.getElementById('imageInput');
-    var img = document.getElementById('gallery');
-  
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-  
-      reader.onload = function (e) {
-        img.src = e.target.result;
-      };
-  
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
-  
+}

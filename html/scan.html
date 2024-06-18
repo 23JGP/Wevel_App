@@ -12,7 +12,7 @@
 
   <body>
     <video id="webcam" autoplay></video>
-    
+
     <header>
       <a href="../index.html">
         <img src="../img/x.png" id="x" />
@@ -27,10 +27,20 @@
 
     <footer>
       <div id="gallery-div">
-        <img src="../img/gallery.png" id="gallery" onclick="triggerFileInput()">
-        <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="displaySelectedImage()">
-      </div>      
-      
+        <img
+          src="../img/gallery.png"
+          id="gallery"
+          onclick="triggerFileInput()"
+        />
+        <input
+          type="file"
+          id="imageInput"
+          accept="image/*"
+          style="display: none"
+          onchange="displaySelectedImage()"
+        />
+      </div>
+
       <a href="./scan-receipt.html">
         <div id="scan-div">
           <img src="../img/scan-box.png" id="scan-box" />
@@ -43,7 +53,7 @@
     </footer>
 
     <div id="result"></div>
-    
+
     <script src="../js/scan.js"></script>
   </body>
 </html>

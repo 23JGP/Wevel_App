@@ -9,76 +9,143 @@
   </head>
   <body>
     <header>
-        <a href="../index.html"><img src="../img/left.png" id="left" /></a>
-        <p id="title">알림</p>
+      <a href="../index.html"><img src="../img/left.png" id="left" /></a>
+      <p id="title">알림</p>
     </header>
 
     <main>
-        <div class="notice-container">
-            <div class="notice-box">
-                <div class="notice-content">
-                    <p class="date">2024. 01. 20</p>
-                    <div class="notice-write">
-                        <p class="type">[<span>알림</span>]&nbsp;</p>
-                        <p class="title">오늘의 소비 알림이 도착했습니다</p>
-                        <img src="../img/notice-message.png">
-                    </div>
-                </div>
+      <div class="notice-container">
+        <div class="notice-box">
+          <div class="notice-content">
+            <p class="date">2024. 01. 20</p>
+            <div class="notice-write">
+              <p class="type">[<span>알림</span>]&nbsp;</p>
+              <p class="title">오늘의 소비 알림이 도착했습니다</p>
+              <img src="../img/notice-message.png" />
             </div>
+          </div>
         </div>
+      </div>
 
-        <div class="notice-container">
-            <div class="notice-box">
-                <div class="notice-content">
-                    <p class="date">2024. 01. 16</p>
-                    <div class="notice-write">
-                        <p class="type">[<span>알림</span>]&nbsp;</p>
-                        <p class="title">일본 여행 예산금액을 초과하였습니다</p>
-                        <img src="../img/notice-message.png">
-                    </div>
-                </div>
+      <div class="notice-container">
+        <div class="notice-box">
+          <div class="notice-content">
+            <p class="date">2024. 01. 16</p>
+            <div class="notice-write">
+              <p class="type">[<span>알림</span>]&nbsp;</p>
+              <p class="title">일본 여행 예산금액을 초과하였습니다</p>
+              <img src="../img/notice-message.png" />
             </div>
+          </div>
         </div>
+      </div>
 
-        <div class="notice-container">
-            <div class="notice-box">
-                <div class="notice-content">
-                    <p class="date">2024. 01. 20</p>
-                    <div class="notice-write">
-                        <p class="type">[<span>알림</span>]&nbsp;</p>
-                        <p class="title">오늘의 소비 알림이 도착했습니다</p>
-                    </div>
-                </div>
+      <div class="notice-container">
+        <div class="notice-box">
+          <div class="notice-content">
+            <p class="date">2024. 01. 20</p>
+            <div class="notice-write">
+              <p class="type">[<span>알림</span>]&nbsp;</p>
+              <p class="title">오늘의 소비 알림이 도착했습니다</p>
             </div>
+          </div>
         </div>
+      </div>
 
-        <div class="notice-container">
-            <div class="notice-box">
-                <div class="notice-content">
-                    <p class="date">2024. 01. 18</p>
-                    <div class="notice-write">
-                        <p class="type">[<span>공지</span>]&nbsp;</p>
-                        <p class="title">위블 3.18.0 버전 업데이트 안내</p>
-                        <img src="../img/notice-message.png">
-                    </div>
-                </div>
+      <div class="notice-container">
+        <div class="notice-box">
+          <div class="notice-content">
+            <p class="date">2024. 01. 18</p>
+            <div class="notice-write">
+              <p class="type">[<span>공지</span>]&nbsp;</p>
+              <p class="title">위블 3.18.0 버전 업데이트 안내</p>
+              <img src="../img/notice-message.png" />
             </div>
-            <img src="../img/notice-right.png">
+          </div>
         </div>
+        <img src="../img/notice-right.png" />
+      </div>
 
-        <div class="notice-container">
-            <div class="notice-box">
-                <div class="notice-content">
-                    <p class="date">2024. 01. 18</p>
-                    <div class="notice-write">
-                        <p class="type">[<span>공지</span>]&nbsp;</p>
-                        <p class="title">위블 3.19.1 버전 업데이트 안내</p>
-                    </div>
-                </div>
+      <div class="notice-container">
+        <div class="notice-box">
+          <div class="notice-content">
+            <p class="date">2024. 01. 18</p>
+            <div class="notice-write">
+              <p class="type">[<span>공지</span>]&nbsp;</p>
+              <p class="title">위블 3.19.1 버전 업데이트 안내</p>
             </div>
-            <img src="../img/notice-right.png">
+          </div>
         </div>
+        <img src="../img/notice-right.png" />
+      </div>
     </main>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const apiUrl = `http://localhost:8085/api/notifies/1`;
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            data.forEach((notification) => {
+              const mainElement = document.querySelector("main");
 
+              const noticeContainer = document.createElement("div");
+              noticeContainer.className = "notice-container";
+
+              const noticeBox = document.createElement("div");
+              noticeBox.className = "notice-box";
+
+              const noticeContent = document.createElement("div");
+              noticeContent.className = "notice-content";
+
+              const datePara = document.createElement("p");
+              datePara.className = "date";
+              datePara.textContent = new Date(
+                notification.date
+              ).toLocaleDateString();
+
+              const noticeWrite = document.createElement("div");
+              noticeWrite.className = "notice-write";
+
+              const typePara = document.createElement("p");
+              typePara.className = "type";
+              typePara.innerHTML = `[<span>${notification.type}</span>]&nbsp;`;
+
+              const titlePara = document.createElement("p");
+              titlePara.className = "title";
+              titlePara.textContent = notification.message;
+
+              const imgElement = document.createElement("img");
+              imgElement.className = "notice-img";
+              imgElement.src = notification.isLead
+                ? "../img/lead-image.png"
+                : "../img/notice-message.png";
+
+              noticeWrite.appendChild(typePara);
+              noticeWrite.appendChild(titlePara);
+              noticeWrite.appendChild(imgElement);
+              noticeContent.appendChild(datePara);
+              noticeContent.appendChild(noticeWrite);
+              noticeBox.appendChild(noticeContent);
+              noticeContainer.appendChild(noticeBox);
+              mainElement.appendChild(noticeContainer);
+
+              // money-box 클릭 이벤트 리스너 추가
+              noticeBox.addEventListener("click", function () {
+                // 클릭한 알림의 tripId를 가져옴
+                const tripId = notification.tripId;
+
+                // 새로운 URL 생성
+                const url = `recent.html?tripId=${tripId}`;
+
+                // 페이지 이동
+                window.location.href = url;
+              });
+            });
+          })
+          .catch((error) =>
+            console.error("Error fetching notifications:", error)
+          );
+      });
+    </script>
   </body>
 </html>
