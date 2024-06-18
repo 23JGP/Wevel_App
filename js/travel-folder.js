@@ -186,6 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (selectingStartDate) {
             document.getElementById('start-date').textContent = `${year}. ${String(month + 1).padStart(2, '0')}. ${String(date).padStart(2, '0')}`;
             selectingStartDate = false;
+            dateTitle.textContent = '돌아오는 날';
           } else {
             document.getElementById('end-date').textContent = `${year}. ${String(month + 1).padStart(2, '0')}. ${String(date).padStart(2, '0')}`;
             selectingStartDate = true;
