@@ -89,13 +89,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const year = now.getFullYear();
     const month = now.getMonth();
     const datePicker = document.querySelector('.date-picker');
-    
+    let selectedDate = null;
+    let selectingStartDate = true;
+
     const setCalendar = (year, month) => {
       datePicker.innerHTML = ''; 
       
       const dateTitle = document.createElement('p');
       dateTitle.className = 'date-title';
-      dateTitle.textContent = '출발/도착하는 날';
+      dateTitle.textContent = '출발하는 날';
       dateTitle.style.textAlign = 'center';
       dateTitle.style.margin = '32px 0 20px 0';
       datePicker.appendChild(dateTitle);
@@ -173,6 +175,22 @@ document.addEventListener("DOMContentLoaded", function () {
         const dateCell = document.createElement('div');
         dateCell.className = 'calendar-date';
         dateCell.textContent = date;
+        dateCell.onclick = () => {
+          if (selectedDate) {
+            selectedDate.classList.remove('selected');
+          }
+          dateCell.style.color = '#ED4B62';
+          dateCell.classList.add('selected');
+          selectedDate = dateCell;
+
+          if (selectingStartDate) {
+            document.getElementById('start-date').textContent = `${year}. ${String(month + 1).padStart(2, '0')}. ${String(date).padStart(2, '0')}`;
+            selectingStartDate = false;
+          } else {
+            document.getElementById('end-date').textContent = `${year}. ${String(month + 1).padStart(2, '0')}. ${String(date).padStart(2, '0')}`;
+            selectingStartDate = true;
+          }
+        };
         datesGrid.appendChild(dateCell);
       }
       datePicker.appendChild(datesGrid);
@@ -180,7 +198,12 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     setCalendar(year, month);
-    datePicker.appendChild(dateButton);
+
+    dateButton.addEventListener('click', function() {
+      overlay.style.display = 'none';
+      datePicker.style.display = 'none';
+      selectingStartDate = true;
+    });
   }
 
   createDatePickerCalendar();
