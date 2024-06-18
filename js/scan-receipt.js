@@ -158,7 +158,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             listItems.forEach(function(item) {
-                item.addEventListener('click', toggleBorder);
+                item.addEventListener('click', function(event) {
+                    toggleBorder(event);
+                    saveText.textContent = '선택'; // Save text를 '선택'으로 변경
+                });
             });
 
         } else {
@@ -367,7 +370,7 @@ document.addEventListener('DOMContentLoaded', function() {
             item.style.backgroundColor = '#FFF6F8';
             item.style.border = '1px solid #FFBEC7';
             selectedItem = item;
-            saveText.textContent = '선택';
+            saveText.textContent = '다음';
         } else {
             selectedItem = null;
             saveText.textContent = '저장하기';
