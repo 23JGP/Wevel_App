@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/all.css">
     <link rel="stylesheet" href="../css/scan-receipt.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
     <header>
@@ -25,7 +26,10 @@
             <div id="input-box">
                 <input type="text" id="receipt-title" placeholder="영수증 이름" maxlength="12" autocomplete="off">
                 <div id="line"></div>
-                <input type="date" id="receipt-date">
+                <div id="receipt-date">
+                    <p id="start-date">날짜를 선택해 주세요</p>
+                    <i class="bi bi-calendar4"></i>
+                  </div>
             </div>
 
             <div id="list-box">

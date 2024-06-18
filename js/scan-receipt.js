@@ -12,6 +12,145 @@ document.addEventListener('DOMContentLoaded', function() {
     var listContainer = document.getElementById('receipt-container');
     var selectedItem = null;
     var shareBox = null;
+    var overlay = document.createElement('div');
+    var dateElement = document.getElementById('receipt-date');
+    var datePicker = document.createElement('div');
+    var dateBorder = document.createElement('hr');
+    var dateButton = document.createElement('div');
+
+    // 날짜 선택기 초기화 확인 플래그
+    var datePickerInitialized = false;
+
+    // date-picker
+    overlay.className = 'overlay';
+    datePicker.className = 'date-picker';
+    dateBorder.className = 'hr';
+    dateButton.classList = 'date-button';
+    dateButton.textContent = '선택하기';
+
+    dateElement.addEventListener('click', function() {
+        overlay.style.display = 'block';
+        datePicker.style.display = 'block';
+    });
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(datePicker);
+
+    function createDatePickerCalendar() {
+        if (datePickerInitialized) return; 
+        datePickerInitialized = true;
+
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth();
+        const datePicker = document.querySelector('.date-picker');
+        let selectedDate = null;
+    
+        const setCalendar = (year, month) => {
+          datePicker.innerHTML = '';
+    
+          const navigation = document.createElement('div');
+          navigation.className = 'calendar-navigation';
+          navigation.style.display = 'flex';
+          navigation.style.fontSize = '14px';
+          navigation.style.columnGap = '14px';
+          navigation.style.fontWeight = 'bold';
+          navigation.style.alignItems = 'center';
+          navigation.style.justifyContent = 'center';
+          navigation.style.fontFamily = 'NanumSquareRound';
+          datePicker.appendChild(navigation);
+          datePicker.appendChild(dateBorder);
+    
+          const prevButton = document.createElement('p');
+          prevButton.textContent = '<';
+          prevButton.style.color = '#2C2C2C';
+          prevButton.style.marginTop = '32px';
+          prevButton.onclick = () => {
+            if (month === 0) {
+              month = 11;
+              year -= 1;
+            } else {
+              month -= 1;
+            }
+            setCalendar(year, month);
+          };
+          navigation.appendChild(prevButton);
+    
+          const title = document.createElement('div');
+          title.className = 'calendar-title';
+          title.style.fontSize = '14px';
+          title.style.marginTop = '32px';
+          title.textContent = `${year}. ${String(month + 1).padStart(2, '0')}`;
+          navigation.appendChild(title);
+    
+          const nextButton = document.createElement('p');
+          nextButton.textContent = '>';
+          nextButton.style.color = '#2C2C2C';
+          nextButton.style.marginTop = '32px';
+          nextButton.onclick = () => {
+            if (month === 11) {
+              month = 0;
+              year += 1;
+            } else {
+              month += 1;
+            }
+            setCalendar(year, month);
+          };
+          navigation.appendChild(nextButton);
+    
+          const days = ['SEN', 'SEL', 'RAB', 'KAM', 'JUM', 'SAB', 'MIN'];
+          const daysRow = document.createElement('div');
+          daysRow.className = 'calendar-days-row';
+          days.forEach(day => {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day-header';
+            dayElement.textContent = day;
+            daysRow.appendChild(dayElement);
+          });
+          datePicker.appendChild(daysRow);
+    
+          const firstDay = new Date(year, month, 1).getDay();
+          const lastDate = new Date(year, month + 1, 0).getDate();
+    
+          const datesGrid = document.createElement('div');
+          datesGrid.className = 'calendar-dates-grid';
+    
+          for (let i = 0; i < firstDay; i++) {
+            const emptyCell = document.createElement('div');
+            emptyCell.className = 'calendar-date empty';
+            datesGrid.appendChild(emptyCell);
+          }
+    
+          for (let date = 1; date <= lastDate; date++) {
+            const dateCell = document.createElement('div');
+            dateCell.className = 'calendar-date';
+            dateCell.textContent = date;``
+            dateCell.onclick = () => {
+              if (selectedDate) {
+                selectedDate.classList.remove('selected');
+              }
+              dateCell.style.color = '#ED4B62';
+              dateCell.classList.add('selected');
+              selectedDate = dateCell;
+    
+              document.querySelectorAll('.date').forEach(dateElement => {
+                  dateElement.style.color = '#2C2C2C';
+              });
+            };
+            datesGrid.appendChild(dateCell);
+          }
+          datePicker.appendChild(datesGrid);
+          datePicker.appendChild(dateButton);
+        };
+        setCalendar(year, month);
+    
+        dateButton.addEventListener('click', function() {
+            overlay.style.display = 'none';
+            datePicker.style.display = 'none';
+            selectingStartDate = true;
+        });
+    }
+    createDatePickerCalendar();
 
     function calculateInitialSum() {
         var total = 0;
