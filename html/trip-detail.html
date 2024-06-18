@@ -119,6 +119,18 @@
       </div>
     </main>
 
+    <div id="overlay"></div>
+
+    <div id="popup" style="display: none">
+      <p id="popup-title">정말 삭제하시겠습니까?</p>
+      <p id="popup-content">
+        한번 삭제하신 정보는 복구할 수 없습니다.<br />정말 삭제하시겠습니까?
+      </p>
+      <div>
+        <p id="popup-cancle">취소</p>
+        <p id="popup-delete" onclick="deleteTrip()">삭제</p>
+      </div>
+    </div>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // URLSearchParams를 사용하여 URL에서 파라미터 추출
@@ -258,6 +270,27 @@
 
         fetchReceipts(tripId);
 
+        function deleteTrip() {
+          if (!tripId) {
+            console.error("TripId가 없습니다.");
+            return;
+          }
+
+          const apiUrl = "http://localhost:8085/api/trips";
+
+          $.ajax({
+            url: `${apiUrl}/${tripId}`,
+            type: "DELETE",
+            success: function (response) {
+              console.log("Trip 삭제 성공:", response);
+              window.location.href = `../html/trip-detail.html?${tripId}`;
+            },
+            error: function (error) {
+              console.error("Trip 삭제 실패:", error);
+            },
+          });
+        }
+
         // 필터 버튼 클릭 이벤트 처리
         const filterButtons = document.querySelectorAll("#sort-list p");
         filterButtons.forEach((button) => {
@@ -310,19 +343,6 @@
         }
       });
     </script>
-    <div id="overlay"></div>
-
-    <div id="popup" style="display: none">
-      <p id="popup-title">정말 삭제하시겠습니까?</p>
-      <p id="popup-content">
-        한번 삭제하신 정보는 복구할 수 없습니다.<br />정말 삭제하시겠습니까?
-      </p>
-      <div>
-        <p id="popup-cancle">취소</p>
-        <p id="popup-delete">삭제</p>
-      </div>
-    </div>
-
     <script src="../js/receipt-japan.js"></script>
   </body>
 </html>
