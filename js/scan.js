@@ -1,10 +1,10 @@
-const camera = document.getElementById("camera");
+const video = document.getElementById("webcam");
 
 const startWebcam = () => {
   navigator.mediaDevices
-    .getUserMedia({ camera: true })
+    .getUserMedia({ video: true })
     .then((stream) => {
-      camera.srcObject = stream;
+      video.srcObject = stream;
     })
     .catch((error) => {
       console.error("웹캠에 접근하는 중 오류 발생:", error);
@@ -14,9 +14,9 @@ const startWebcam = () => {
 const scanImage = () => {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
-  canvas.width = camera.cameraWidth;
-  canvas.height = camera.cameraHeight;
-  context.drawImage(camera, 0, 0, canvas.width, canvas.height);
+  canvas.width = video.cameraWidth;
+  canvas.height = video.cameraHeight;
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
   processImage(canvas);
 };
