@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/all.css" />
+    <link rel="stylesheet" href="../css/scan-receipt.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div id="logo-box">
+        <a href="../html/scan.html">
+          <img src="../img/x-black.png" id="x" alt="Close" />
+        </a>
+        <p id="logo-title">영수증</p>
+      </div>
+      <!-- <a href="#">
+        <p id="correction">수정</p>
+      </a> -->
+    </header>
+
+    <main>
+      <div id="receipt-container">
+        <div id="input-box">
+          <input
+            type="text"
+            id="receipt-title"
+            placeholder="영수증 이름"
+            maxlength="12"
+            autocomplete="off"
+          />
+          <div id="line"></div>
+          <div id="receipt-date">
+            <p id="start-date">날짜를 선택해 주세요</p>
+            <i class="bi bi-calendar4"></i>
+          </div>
+        </div>
+
+        <div id="list-box">
+          <div id="list-header">
+            <p>상품명</p>
+            <div>
+              <p>수량</p>
+              <p>금액</p>
+            </div>
+          </div>
+          <div id="table-line"></div>
+          <div id="list-body"></div>
+          <div id="list-footer">
+            <div class="table-line"></div>
+            <div id="list-tax">
+              <p>소비세</p>
+              <p id="tax">0</p>
+            </div>
+            <div class="table-line"></div>
+            <div id="list-sum">
+              <p>합계</p>
+              <p id="sum">0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="give-container">
+        <p class="container-title">줘야하는 돈</p>
+        <textarea
+          placeholder="누구에게 얼마를 주어야하는지 입력해 주세요"
+          id="give-box"
+          disabled
+        ></textarea>
+      </div>
+
+      <div id="receive-container">
+        <p class="container-title">받아야하는 돈</p>
+        <textarea
+          placeholder="누구에게 얼마를 받아야하는지 입력해 주세요"
+          id="receive-box"
+          disabled
+        ></textarea>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const storedData = localStorage.getItem("savedReceipt");
+        console.log(storedData);
+        if (storedData) {
+          const receiptData = JSON.parse(storedData);
+
+          if (receiptData) {
+            const receiptTitle = document.getElementById("receipt-title");
+            if (receiptTitle) {
+              receiptTitle.value = receiptData.title;
+            }
+
+            const formattedDate = new Date(
+              receiptData.date
+            ).toLocaleDateString();
+            const startDate = document.getElementById("start-date");
+            if (startDate) {
+              startDate.textContent = formattedDate;
+            }
+
+            const itemsContainer = document.getElementById("list-body");
+            if (itemsContainer && Array.isArray(receiptData.productDTOList)) {
+              itemsContainer.innerHTML = "";
+
+              receiptData.productDTOList.forEach((product) => {
+                const itemElement = document.createElement("div");
+                itemElement.classList.add("list");
+                itemElement.innerHTML = `
+                  <p class="list-name">${product.productName}</p>
+                  <p class="list-cnt">${product.quantity}</p>
+                  <p class="list-price">${product.price}</p>
+                `;
+                itemsContainer.appendChild(itemElement);
+              });
+            }
+
+            const taxElement = document.getElementById("tax");
+            if (taxElement) {
+              taxElement.textContent = receiptData.tax;
+            }
+
+            const totalSum = receiptData.productDTOList.reduce(
+              (acc, product) => acc + product.price * product.quantity,
+              0
+            );
+
+            const sumElement = document.getElementById("sum");
+            if (sumElement) {
+              sumElement.textContent = totalSum.toFixed(2);
+            }
+
+            const giveBox = document.getElementById("give-box");
+            if (giveBox) {
+              giveBox.value = receiptData.givenMemos;
+            }
+
+            const receiveBox = document.getElementById("receive-box");
+            if (receiveBox) {
+              receiveBox.value = receiptData.receivedMemos;
+            }
+
+            localStorage.removeItem("savedReceipt");
+          }
+        }
+      });
+    </script>
+    <script src="../js/scan-receipt.js"></script>
+  </body>
+</html>

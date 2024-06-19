@@ -79,24 +79,24 @@
                 const currency = getCurrencySymbol(trip.country);
 
                 tripElement.innerHTML = `
-                  <div id="travel-img">
-                    <img src="../img/${countryImage}" alt="${
+            <div id="travel-img">
+              <img src="../img/${countryImage}" alt="${
                   trip.country
                 }" style="width: 56px; height: 56px; flex-shrink: 0; margin-left: 4px; border-radius: 30px;">
-                  </div>
-                  <div id="travel-content">
-                    <p id="travel-title">${trip.tripName}</p>
-                    <p id="travel-recent">
-                      여행예산 &nbsp;|&nbsp; <span id="totalBudget">${trip.totalBudget.toLocaleString()}</span>
-                      <span id="currency">${currency}</span>
-                    </p>
-                    <p id="travel-date">
-                      여행기간 &nbsp;|&nbsp; <span id="date">${formatDate(
-                        trip.startDate
-                      )} ~ ${formatDate(trip.endDate)}</span>
-                    </p>
-                  </div>
-                `;
+            </div>
+            <div id="travel-content">
+              <p id="travel-title">${trip.tripName}</p>
+              <p id="travel-recent">
+                여행예산 &nbsp;|&nbsp; <span id="totalBudget">${trip.totalBudget.toLocaleString()}</span>
+                <span id="currency">${currency}</span>
+              </p>
+              <p id="travel-date">
+                여행기간 &nbsp;|&nbsp; <span id="date">${formatDate(
+                  trip.startDate
+                )} ~ ${formatDate(trip.endDate)}</span>
+              </p>
+            </div>
+          `;
 
                 mainContent.appendChild(tripElement);
               }
@@ -110,83 +110,84 @@
           const options = { year: "numeric", month: "2-digit", day: "2-digit" };
           return new Date(dateString).toLocaleDateString(undefined, options);
         }
-      });
 
-      function saveReceipt(tripId) {
-        const receiptData = JSON.parse(
-          localStorage.getItem("createReceiptData")
-        );
-
-        if (receiptData) {
-          const apiUrl = "http://localhost:8085/api/receipts";
-          const payload = {
-            userId: 1,
-            date: formatDateForStorage(receiptData.date),
-            tripId: tripId,
-            title: receiptData.title,
-            productDTOList: receiptData.items.map((item) => ({
-              productName: item.item,
-              quantity: item.quantity,
-              price: item.price,
-            })),
-            tax: receiptData.tax,
-            receivedMemos: receiptData.receivedMemos,
-            givenMemos: receiptData.givenMemos,
-          };
-
-          console.log(payload); // payload를 콘솔에 출력하여 확인
-
-          fetch(apiUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          })
-            .then((response) => {
-              if (!response.ok) {
-                return response.text().then((text) => {
-                  throw new Error(`Error: ${text}`);
-                });
-              }
-              return response.json();
-            })
-            .then((data) => {
-              console.log("Receipt saved successfully:", data);
-              // Optionally, redirect to another page or show a success message
-            })
-            .catch((error) => {
-              console.error("Error saving receipt:", error.message);
-            });
-        }
-      }
-
-      document
-        .getElementById("save-receipt-button")
-        .addEventListener("click", function () {
-          const selectedTripElement = document.querySelector(
-            "#travel-box.selected"
+        function saveReceipt(tripId) {
+          const receiptData = JSON.parse(
+            localStorage.getItem("createReceiptData")
           );
-          const tripId = selectedTripElement
-            ? selectedTripElement.dataset.tripId
-            : null;
-          if (tripId) {
-            saveReceipt(tripId);
-          } else {
-            alert("Please select a trip first");
-          }
-        });
 
-      function formatDateForStorage(dateString) {
-        const parts = dateString.split(". ");
-        if (parts.length === 3) {
-          const year = parts[0];
-          const month = parts[1].padStart(2, "0");
-          const day = parts[2].padStart(2, "0");
-          return `${year}-${month}-${day}`;
+          if (receiptData) {
+            const apiUrl = "http://localhost:8085/api/receipts";
+            const payload = {
+              userId: 1,
+              date: formatDateForStorage(receiptData.date),
+              tripId: tripId,
+              title: receiptData.title,
+              productDTOList: receiptData.items.map((item) => ({
+                productName: item.item,
+                quantity: item.quantity,
+                price: item.price,
+              })),
+              tax: receiptData.tax,
+              receivedMemos: receiptData.receivedMemos,
+              givenMemos: receiptData.givenMemos,
+            };
+
+            console.log(payload); // payload를 콘솔에 출력하여 확인
+
+            fetch(apiUrl, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(payload),
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  return response.text().then((text) => {
+                    throw new Error(`Error: ${text}`);
+                  });
+                }
+                return response.json();
+              })
+              .then((data) => {
+                console.log("Receipt saved successfully:", data);
+                localStorage.setItem("savedReceipt", JSON.stringify(data));
+                window.location.href = "../html/result-receipt.html";
+              })
+              .catch((error) => {
+                console.error("Error saving receipt:", error);
+              });
+          }
         }
-        return dateString;
-      }
+
+        document
+          .getElementById("save-receipt-button")
+          .addEventListener("click", function () {
+            const selectedTripElement = document.querySelector(
+              "#travel-box.selected"
+            );
+            const tripId = selectedTripElement
+              ? selectedTripElement.dataset.tripId
+              : null;
+            if (tripId) {
+              saveReceipt(tripId);
+            } else {
+              alert("Please select a trip first");
+            }
+          });
+
+        function formatDateForStorage(dateString) {
+          const parts = dateString.split(". ");
+          if (parts.length === 3) {
+            const year = parts[0];
+            const month = parts[1].padStart(2, "0");
+            const day = parts[2].padStart(2, "0");
+            return `${year}-${month}-${day}`;
+          }
+          return dateString;
+        }
+      });
     </script>
     <script src="../js/save-receipt.js"></script>
   </body>
