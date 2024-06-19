@@ -244,9 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .forEach((input) => {
           input.addEventListener("input", calculateSum);
         });
-      document
-        .querySelector(".tax-input")
-        .addEventListener("input", calculateSum);
+      document.querySelector(".tax-input").addEventListener("input", updateTax); // 소비세 업데이트
       calculateSum();
     } else {
       correctionText.textContent = "수정";
@@ -268,6 +266,10 @@ document.addEventListener("DOMContentLoaded", function () {
       document.querySelector(".tax-input").style.background = "none";
     }
   });
+
+  function updateTax() {
+    tax.textContent = document.querySelector(".tax-input").value;
+  }
 
   shareText.addEventListener("click", function () {
     if (correctionText.textContent !== "완료") {
@@ -526,14 +528,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function calculateSum() {
     var total = 0;
-    var taxValue = parseFloat(document.querySelector(".tax-input").value);
     var prices = document.querySelectorAll(".list-price-input");
 
     prices.forEach(function (priceInput) {
       total += parseFloat(priceInput.value);
     });
 
-    sum.textContent = total + taxValue;
+    sum.textContent = total;
   }
 
   listAddButton.addEventListener("click", function () {
@@ -580,6 +581,7 @@ document.addEventListener("DOMContentLoaded", function () {
       newItem.remove();
       listContainer.style.height =
         parseInt(getComputedStyle(listContainer).height) - 35 + "px";
+      calculateSum();
     });
 
     listBody.insertBefore(newItem, listAddButton);
@@ -593,14 +595,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     itemName.addEventListener("input", function () {
       newItem.style.textDecoration = "none";
+      calculateSum();
     });
 
     itemCnt.addEventListener("input", function () {
       newItem.style.textDecoration = "none";
+      calculateSum();
     });
 
     itemPrice.addEventListener("input", function () {
       newItem.style.textDecoration = "none";
+      calculateSum();
     });
   });
 
@@ -647,8 +652,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       var tax = parseFloat(document.querySelector(".tax-input").value);
-
-      // var tax = parseFloat(document.getElementById("tax").textContent);
       var total = parseFloat(document.getElementById("sum").textContent);
       var date = document.getElementById("start-date").textContent;
       var title = document.getElementById("receipt-title").value;
