@@ -9,7 +9,7 @@ body {
     flex-direction: column;
 }
 
-#camera {
+video {
     top: 0;
     left: 0;
     width: 100%;
