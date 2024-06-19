@@ -1,8 +1,12 @@
 const video = document.getElementById("webcam");
 
 const startWebcam = () => {
+  const constraints = {
+    video: { facingMode: "environment" }
+  };
+
   navigator.mediaDevices
-    .getUserMedia({ video: true })
+    .getUserMedia(constraints)
     .then((stream) => {
       video.srcObject = stream;
     })
