@@ -1,8 +1,11 @@
 // 웹캠을 시작하는 함수
 const startWebcam = () => {
-  const video = document.getElementById("webcam");
+  const constraints = {
+    video: { facingMode: "environment" },
+  };
+
   navigator.mediaDevices
-    .getUserMedia({ video: true })
+    .getUserMedia(constraints)
     .then((stream) => {
       video.srcObject = stream;
     })
@@ -16,8 +19,8 @@ const scanImage = () => {
   const video = document.getElementById("webcam");
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
+  canvas.width = video.cameraWidth;
+  canvas.height = video.cameraHeight;
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
   processImage(canvas);

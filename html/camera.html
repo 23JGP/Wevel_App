@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <input type="file" id="camera" name="camera" accept="image/*">
+    <img id="pic" style="width: 100%;">
+
+    <script>
+        var camera = document.getElementById('camera');
+        var pic = document.getElementById('pic');
+
+        camera.addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            pic.src = URL.createObjectURL(file);
+        });
+    </script>
+</body>
+</html>
