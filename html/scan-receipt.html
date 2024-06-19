@@ -128,12 +128,51 @@
           addButton.classList.add("list-add");
           addButton.textContent = "+";
           itemsContainer.appendChild(addButton);
-
           document.getElementById("tax").textContent = receiptData.tax;
           document.getElementById("sum").textContent = receiptData.total;
         }
       });
     </script>
     <script src="../js/scan-receipt.js"></script>
+    <script>
+      document
+        .getElementById("save-box")
+        .addEventListener("click", function () {
+          const items = [];
+          document.querySelectorAll("#list-body .list").forEach((item) => {
+            const itemName = item.querySelector(".list-name").textContent;
+            const itemCnt = parseInt(
+              item.querySelector(".list-cnt").textContent
+            );
+            const itemPrice = parseFloat(
+              item.querySelector(".list-price").textContent
+            );
+            items.push({ item: itemName, quantity: itemCnt, price: itemPrice });
+          });
+
+          const tax = parseFloat(document.getElementById("tax").textContent);
+          const total = parseFloat(document.getElementById("sum").textContent);
+          const date = document.getElementById("start-date").textContent;
+          const title = document.getElementById("receipt-title").value;
+          const receivedMemos = document.getElementById("receive-box").value;
+          const givenMemos = document.getElementById("give-box").value;
+
+          const createReceiptData = {
+            items: items,
+            tax: tax,
+            total: total,
+            date: date,
+            title: title,
+            receivedMemos: receivedMemos,
+            givenMemos: givenMemos,
+          };
+
+          localStorage.setItem(
+            "createReceiptData",
+            JSON.stringify(createReceiptData)
+          );
+          window.location.href = "../html/save-receipt.html";
+        });
+    </script>
   </body>
 </html>

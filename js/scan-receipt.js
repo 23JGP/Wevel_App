@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
     prices.forEach(function (price) {
       total += parseFloat(price.textContent);
     });
-    sum.textContent = total + parseFloat(tax.textContent);
+    sum.textContent = total;
   }
   calculateInitialSum();
 
@@ -646,7 +646,9 @@ document.addEventListener("DOMContentLoaded", function () {
         items.push({ item: itemName, quantity: itemCnt, price: itemPrice });
       });
 
-      var tax = parseFloat(document.getElementById("tax").textContent);
+      var tax = parseFloat(document.querySelector(".tax-input").value);
+
+      // var tax = parseFloat(document.getElementById("tax").textContent);
       var total = parseFloat(document.getElementById("sum").textContent);
       var date = document.getElementById("start-date").textContent;
       var title = document.getElementById("receipt-title").value;
