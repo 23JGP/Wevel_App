@@ -39,7 +39,10 @@
 
             data.forEach((trip) => {
               const tripElement = document.createElement("div");
-              tripElement.id = "travel-box"; // 기존 id 유지
+              tripElement.id = "travel-box";
+              tripElement.addEventListener("click", function () {
+                saveReceipt(trip.id);
+              });
 
               let countryImage;
               switch (trip.country) {
@@ -55,32 +58,30 @@
                 case "태국":
                   countryImage = "nation-thailand.png";
                   break;
-                // 다른 국가에 대한 경우를 추가할 수 있음
                 default:
-                  // 기본 이미지 설정
                   countryImage = "default-trip.png";
               }
 
               const currency = getCurrencySymbol(trip.country);
 
               tripElement.innerHTML = `
-                  <div id="travel-img">
-                    <img src="../img/${countryImage}" alt="${
+                    <div id="travel-img">
+                        <img src="../img/${countryImage}" alt="${
                 trip.country
               }" style="width: 56px; height: 56px; flex-shrink: 0; margin-left: 4px; border-radius: 30px;">
-                  </div>
-                  <div id="travel-content">
-                    <p id="travel-title">${trip.tripName}</p>
-                    <p id="travel-recent">
-                      여행예산 &nbsp;|&nbsp; <span id="totalBudget">${trip.totalBudget.toLocaleString()}</span>
-                      <span id="currency">${currency}</span>
-                    </p>
-                    <p id="travel-date">
-                      여행기간 &nbsp;|&nbsp; <span id="date">${formatDate(
-                        trip.startDate
-                      )} ~ ${formatDate(trip.endDate)}</span>
-                    </p>
-                  </div>
+                    </div>
+                    <div id="travel-content">
+                        <p id="travel-title">${trip.tripName}</p>
+                        <p id="travel-recent">
+                            여행예산 &nbsp;|&nbsp; <span id="totalBudget">${trip.totalBudget.toLocaleString()}</span>
+                            <span id="currency">${currency}</span>
+                        </p>
+                        <p id="travel-date">
+                            여행기간 &nbsp;|&nbsp; <span id="date">${formatDate(
+                              trip.startDate
+                            )} ~ ${formatDate(trip.endDate)}</span>
+                        </p>
+                    </div>
                 `;
 
               mainContent.appendChild(tripElement);
@@ -95,6 +96,50 @@
           return new Date(dateString).toLocaleDateString(undefined, options);
         }
       });
+
+      function saveReceipt(tripId) {
+        const receiptData = JSON.parse(localStorage.getItem("receiptData"));
+        if (receiptData) {
+          const apiUrl = "http://localhost:8085/api/receipts";
+          const payload = {
+            userId: 1,
+            date: receiptData.date,
+            tripId: tripId,
+            title: receiptData.title,
+            productDTOList: receiptData.items.map((item) => ({
+              productName: item.item,
+              quantity: item.quantity,
+              price: item.price,
+            })),
+            tax: receiptData.tax,
+            receivedMemos: receiptData.receivedMemos,
+            givenMemos: receiptData.givenMemos,
+          };
+
+          fetch(apiUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                return response.text().then((text) => {
+                  throw new Error(text);
+                });
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Receipt saved successfully:", data);
+              // Optionally, redirect to another page or show a success message
+            })
+            .catch((error) => {
+              console.error("Error saving receipt:", error.message);
+            });
+        }
+      }
     </script>
 
     <script src="../js/save-receipt.js"></script>

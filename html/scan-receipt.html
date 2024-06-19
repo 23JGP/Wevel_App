@@ -96,7 +96,18 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const storedData = JSON.parse(localStorage.getItem("receiptData"));
+        const storedData = {
+          items: [
+            { item: "라멘", price: 68, quantity: 1 },
+            { item: "오니자이", price: 98, quantity: 1 },
+            { item: "이치고 초콜릿", price: 228, quantity: 1 },
+            { item: "톤카우", price: 88, quantity: 2 },
+          ],
+          tax: 45,
+          total: 527,
+        };
+
+        // const storedData = JSON.parse(localStorage.getItem("receiptData"));
         if (storedData) {
           const receiptData = storedData;
           const itemsContainer = document.getElementById("list-body");
