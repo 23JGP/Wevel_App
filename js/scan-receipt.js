@@ -125,8 +125,11 @@ document.addEventListener('DOMContentLoaded', function() {
           for (let date = 1; date <= lastDate; date++) {
             const dateCell = document.createElement('div');
             dateCell.className = 'calendar-date';
-            dateCell.textContent = date;``
+            dateCell.textContent = date;
             dateCell.onclick = () => {
+                if (selectedDate) {
+                    selectedDate.style.color = '#707174';
+                }
                 dateCell.style.color = '#ED4B62';
                 dateCell.classList.add('selected');
                 selectedDate = dateCell;
