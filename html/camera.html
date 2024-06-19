@@ -7,14 +7,16 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <input type="file" id="camera" name="camera" accept="image/*;capture=camera">
+    <input type="file" id="camera" name="camera" accept="image/*">
     <img id="pic" style="width: 100%;">
 
     <script>
-        $(function() {
-            $('#camera').change(function(e) {
-                $('#pic').attr('src', URL.createObjectURL(e.target.files[0]));
-            });
+        var camera = document.getElementById('camera');
+        var pic = document.getElementById('pic');
+
+        camera.addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            pic.src = URL.createObjectURL(file);
         });
     </script>
 </body>
