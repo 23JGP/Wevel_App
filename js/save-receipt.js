@@ -1,8 +1,9 @@
-document.getElementById('travel-box').addEventListener('click', function() {
-  var footerP = document.querySelector('footer p');
-  if (footerP.classList.contains('active')) {
-    footerP.classList.remove('active');
-  } else {
-    footerP.classList.add('active');
-  }
+tripElement.id = "travel-box";
+tripElement.dataset.tripId = trip.id; // Add this line
+tripElement.addEventListener("click", function () {
+  document
+    .querySelectorAll("#travel-box")
+    .forEach((box) => box.classList.remove("selected"));
+  tripElement.classList.add("selected");
+  saveReceipt(trip.id);
 });

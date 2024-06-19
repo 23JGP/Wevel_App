@@ -14,14 +14,13 @@ const startWebcam = () => {
 const scanImage = () => {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
-  canvas.width = video.cameraWidth;
-  canvas.height = video.cameraHeight;
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
   processImage(canvas);
 };
 
-// 파일 입력이 변경되었을 때 이미지를 처리하는 함수
 const handleImageChange = () => {
   const input = document.getElementById("imageInput");
   const file = input.files[0];
@@ -43,7 +42,6 @@ const handleImageChange = () => {
   }
 };
 
-// 이미지를 인식하여 텍스트로 변환하는 함수
 const processImage = (image) => {
   showLoadingRedirect();
   Tesseract.recognize(image, "eng+jpn", {
@@ -57,7 +55,6 @@ const processImage = (image) => {
     .catch((err) => console.error(err));
 };
 
-// 일본식 숫자를 아라비아 숫자로 변환하는 함수
 const convertJapaneseNumbers = (input) => {
   const japaneseNumbers = {
     "①": "1",
@@ -90,7 +87,6 @@ const convertJapaneseNumbers = (input) => {
   return result;
 };
 
-// 텍스트를 API로 전송하는 함수
 const sendTextToAPI = (text) => {
   const convertedText = convertJapaneseNumbers(text);
   console.log(convertedText);
@@ -106,25 +102,13 @@ const sendTextToAPI = (text) => {
     })
       .then((response) => {
         if (!response.ok) throw new Error("Network response was not ok");
-        return response.text();
+        return response.json();
       })
       .then((data) => {
         console.log("API 응답:", data);
 
-        // 예시 데이터
-        const receiptData = {
-          items: [
-            { item: "라멘", price: 68, quantity: 1 },
-            { item: "오니자이", price: 98, quantity: 1 },
-            { item: "이치고 초콜릿", price: 228, quantity: 1 },
-            { item: "톤카우", price: 88, quantity: 2 },
-          ],
-          tax: 45,
-          total: 527,
-        };
-
-        localStorage.setItem("receiptData", JSON.stringify(receiptData));
-        // window.location.href = "scan-receipt.html";
+        localStorage.setItem("receiptData", JSON.stringify(data));
+        window.location.href = "scan-receipt.html";
       })
       .catch((error) => {
         console.error("API 요청 중 오류 발생:", error);
@@ -135,7 +119,6 @@ const sendTextToAPI = (text) => {
   }
 };
 
-// 선택한 이미지를 표시하는 함수
 const displaySelectedImage = () => {
   const input = document.getElementById("imageInput");
   const img = document.getElementById("gallery");
@@ -149,12 +132,10 @@ const displaySelectedImage = () => {
   }
 };
 
-// 파일 입력 트리거 함수
 const triggerFileInput = () => {
   document.getElementById("imageInput").click();
 };
 
-// 로딩 GIF를 표시하고 페이지를 리디렉션하는 함수
 const showLoadingRedirect = () => {
   const gifContainer = document.createElement("div");
   gifContainer.className = "gif";
@@ -167,5 +148,4 @@ const showLoadingRedirect = () => {
   }, 3000);
 };
 
-// DOM이 로드되면 웹캠을 시작
 document.addEventListener("DOMContentLoaded", startWebcam);
