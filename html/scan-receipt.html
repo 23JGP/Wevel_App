@@ -1,109 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../css/all.css">
-    <link rel="stylesheet" href="../css/scan-receipt.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../css/all.css" />
+    <link rel="stylesheet" href="../css/scan-receipt.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
     <header>
-        <div id="logo-box">
-            <a href="../html/scan.html">
-                <img src="../img/x-black.png" id="x" />
-            </a>
-          <p id="logo-title">영수증</p>
-        </div>
-        <a href="#">
-            <p id="correction">수정</p>
+      <div id="logo-box">
+        <a href="../html/scan.html">
+          <img src="../img/x-black.png" id="x" alt="Close" />
         </a>
+        <p id="logo-title">영수증</p>
+      </div>
+      <a href="#">
+        <p id="correction">수정</p>
+      </a>
     </header>
 
     <main>
-        <div id="receipt-container">
-            <div id="input-box">
-                <input type="text" id="receipt-title" placeholder="영수증 이름" maxlength="12" autocomplete="off">
-                <div id="line"></div>
-                <div id="receipt-date">
-                    <p id="start-date">날짜를 선택해 주세요</p>
-                    <i class="bi bi-calendar4"></i>
-                  </div>
+      <div id="receipt-container">
+        <div id="input-box">
+          <input
+            type="text"
+            id="receipt-title"
+            placeholder="영수증 이름"
+            maxlength="12"
+            autocomplete="off"
+          />
+          <div id="line"></div>
+          <div id="receipt-date">
+            <p id="start-date">날짜를 선택해 주세요</p>
+            <i class="bi bi-calendar4"></i>
+          </div>
+        </div>
+
+        <div id="list-box">
+          <div id="list-header">
+            <p>상품명</p>
+            <div>
+              <p>수량</p>
+              <p>금액</p>
             </div>
-
-            <div id="list-box">
-                <div id="list-header">
-                    <p>상품명</p>
-                    <div>
-                        <p>수량</p>
-                        <p>금액</p>
-                    </div>
-                </div>
-
-                <div id="table-line"></div>
-
-                <div id="list-body">
-                    <div class="list">
-                        <p class="list-name">나가라강의 천연수</p>
-                        <p class="list-cnt">1</p>
-                        <p class="list-price">68</p>
-                    </div>
-                    <div class="list">
-                        <p class="list-name">테마키 주먹밥</p>
-                        <p class="list-cnt">1</p>
-                        <p class="list-price">98</p>
-                    </div>
-                    <div class="list">
-                        <p class="list-name">딸기초콜릿</p>
-                        <p class="list-cnt">1</p>
-                        <p class="list-price">228</p>
-                    </div>
-                    <div class="list">
-                        <p class="list-name">코이케야 돈카코스아보카</p>
-                        <p class="list-cnt">1</p>
-                        <p class="list-price">88</p>
-                    </div>
-                    <div class="list-add">+</div>
-                </div>
-
-                <div id="list-footer">
-                    <div class="table-line"></div>
-                    <div id="list-tax">
-                        <p>소비세</p>
-                        <p id="tax">8</p>
-                    </div>
-                    <div class="table-line"></div>
-                    <div id="list-sum">
-                        <p>합계</p>
-                        <p id="sum"></p>
-                    </div>
-                </div>
+          </div>
+          <div id="table-line"></div>
+          <div id="list-body"></div>
+          <div id="list-footer">
+            <div class="table-line"></div>
+            <div id="list-tax">
+              <p>소비세</p>
+              <p id="tax">0</p>
             </div>
+            <div class="table-line"></div>
+            <div id="list-sum">
+              <p>합계</p>
+              <p id="sum">0</p>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div id="give-container">
-            <p class="container-title">줘야하는 돈</p>
-            <textarea placeholder="누구에게 얼마를 주어야하는지 입력해 주세요" id="give-box"></textarea>
-        </div>
+      <div id="give-container">
+        <p class="container-title">줘야하는 돈</p>
+        <textarea
+          placeholder="누구에게 얼마를 주어야하는지 입력해 주세요"
+          id="give-box"
+        ></textarea>
+      </div>
 
-        <div id="receive-container">
-            <p class="container-title">받아야하는 돈</p>
-            <textarea placeholder="누구에게 얼마를 받아야하는지 입력해 주세요" id="receive-box"></textarea>
-        </div>
+      <div id="receive-container">
+        <p class="container-title">받아야하는 돈</p>
+        <textarea
+          placeholder="누구에게 얼마를 받아야하는지 입력해 주세요"
+          id="receive-box"
+        ></textarea>
+      </div>
     </main>
 
     <footer>
-        <div id="flex-box">
-            <a href="#">
-                <div id="share-box">나누기</div>
-            </a>
-            <a>
-                <div id="save-box">저장하기</div>
-            </a>
-        </div>
+      <div id="flex-box">
+        <a href="#">
+          <div id="share-box">나누기</div>
+        </a>
+        <a href="#">
+          <div id="save-box">저장하기</div>
+        </a>
+      </div>
     </footer>
 
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const storedData = JSON.parse(localStorage.getItem("receiptData"));
+        if (storedData) {
+          const receiptData = storedData;
+          const itemsContainer = document.getElementById("list-body");
+          itemsContainer.innerHTML = "";
+
+          receiptData.items.forEach((item) => {
+            const itemElement = document.createElement("div");
+            itemElement.classList.add("list");
+            itemElement.innerHTML = `
+              <p class="list-name">${item.item}</p>
+              <p class="list-cnt">${item.quantity}</p>
+              <p class="list-price">${item.price}</p>
+            `;
+            itemsContainer.appendChild(itemElement);
+          });
+
+          const addButton = document.createElement("div");
+          addButton.classList.add("list-add");
+          addButton.textContent = "+";
+          itemsContainer.appendChild(addButton);
+
+          document.getElementById("tax").textContent = receiptData.tax;
+          document.getElementById("sum").textContent = receiptData.total;
+        }
+      });
+    </script>
     <script src="../js/scan-receipt.js"></script>
-</body>
+  </body>
 </html>
