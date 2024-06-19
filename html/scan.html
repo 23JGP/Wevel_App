@@ -37,17 +37,15 @@
           id="imageInput"
           accept="image/*"
           style="display: none"
-          onchange="displaySelectedImage()"
+          onchange="handleImageChange()"
         />
       </div>
 
-      <div id="scan-div" onclick="showLoadingRedirect()">
+      <div id="scan-div">
         <img src="../img/scan-box.png" id="scan-box" />
         <canvas id="scanCanvas" style="display: none"></canvas>
         <p id="box-title" onclick="scanImage()">스캔하기</p>
       </div>
-      <!-- TODO : 파일 선택, 업로드 css 추가하기 -->
-      <!-- <button onclick="handleImageChange()">파일 업로드</button> -->
     </footer>
 
     <div id="result"></div>
