@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var datePicker = document.createElement('div');
     var dateBorder = document.createElement('hr');
     var dateButton = document.createElement('div');
+    var startDate = document.getElementById('start-date');
 
     // 날짜 선택기 초기화 확인 플래그
     var datePickerInitialized = false;
@@ -126,16 +127,10 @@ document.addEventListener('DOMContentLoaded', function() {
             dateCell.className = 'calendar-date';
             dateCell.textContent = date;``
             dateCell.onclick = () => {
-              if (selectedDate) {
-                selectedDate.classList.remove('selected');
-              }
-              dateCell.style.color = '#ED4B62';
-              dateCell.classList.add('selected');
-              selectedDate = dateCell;
-    
-              document.querySelectorAll('.date').forEach(dateElement => {
-                  dateElement.style.color = '#2C2C2C';
-              });
+                dateCell.style.color = '#ED4B62';
+                dateCell.classList.add('selected');
+                selectedDate = dateCell;
+                startDate.textContent = `${year}. ${String(month + 1).padStart(2, '0')}. ${String(date).padStart(2, '0')}`;
             };
             datesGrid.appendChild(dateCell);
           }
